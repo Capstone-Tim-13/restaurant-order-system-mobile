@@ -1,3 +1,4 @@
+import 'package:capstone_restaurant/pages/login/onboarding4_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -19,14 +20,14 @@ class MyApp extends StatelessWidget {
       ),
      initialRoute: '/',
       routes: {
-        '/': (context) => const MyHomePage(),
-        '/login': (context) => const MyHomePage(),
-        '/home': (context) => const MyHomePage(),
-        '/pesanan': (context) => const MyHomePage(),
-        '/bantuan': (context) => const MyHomePage(),
-        '/profil': (context) => const MyHomePage(),
-        '/notifikasi': (context) => const MyHomePage(),
-        '/akun': (context) => const MyHomePage(),
+        '/': (context) => const SplashScreen4(),
+        // '/login': (context) => const MyHomePage(),
+        // '/home': (context) => const MyHomePage(),
+        // '/pesanan': (context) => const MyHomePage(),
+        // '/bantuan': (context) => const MyHomePage(),
+        // '/profil': (context) => const MyHomePage(),
+        // '/notifikasi': (context) => const MyHomePage(),
+        // '/akun': (context) => const MyHomePage(),
       },
     );
   }
