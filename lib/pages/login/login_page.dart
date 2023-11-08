@@ -1,6 +1,4 @@
 import 'package:capstone_restaurant/style.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -11,349 +9,214 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final CarouselController carouselController = CarouselController();
-  final TextEditingController emailInputLogin = TextEditingController();
-  final TextEditingController passwordInputLogin = TextEditingController();
-
-  final TextEditingController nameInputSignin = TextEditingController();
-  final TextEditingController emailInputSignin = TextEditingController();
-  final TextEditingController passwordInputSignin = TextEditingController();
-  final TextEditingController passwordRefaceInputSignin =
-      TextEditingController();
-  int currentCarouselIndex = 0;
-  bool toLoginForm = false;
-  bool showLoginForm = true;
-  bool hidePasswordLogin = true;
-  bool hidePasswordSignin = true;
-  bool hidePasswordRefaceSignin = true;
+  final TextEditingController emailInput = TextEditingController();
+  final TextEditingController passwordInput = TextEditingController();
+  bool passwordVisible = true;
 
   @override
   Widget build(BuildContext context) {
-    if (toLoginForm) {
-      return Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Center(
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/images/login/loginBg.png'),
+                  fit: BoxFit.contain,
+                  alignment: Alignment.topCenter)),
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 110, left: 44, right: 44),
-                child: Container(
-                  height: 432,
-                  width: 288,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.2),
-                          offset: const Offset(0, 4),
-                          blurRadius: 15,
-                          spreadRadius: 0,
-                        )
-                      ]),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 48),
-                        child: Container(
-                          height: 23,
-                          width: 206,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: primary3, width: 1),
-                          ),
-                          child: Row(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    showLoginForm = true;
-                                  });
-                                  debugPrint('login tertekan');
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color:
-                                        showLoginForm ? primary3 : Colors.white,
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  width: 102,
-                                  height: 23,
-                                  child: Center(
-                                    child: Text(
-                                      'Login',
-                                      style: poppins.copyWith(
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 12,
-                                          color: showLoginForm
-                                              ? Colors.white
-                                              : primary3),
-                                    ),
-                                  ),
-                                ),
+              const SizedBox(height: 172),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(56))),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 11),
+                    Image.asset('assets/images/login/handle.png'),
+                    const SizedBox(height: 27),
+                    Image.asset('assets/images/altaLogo.png', width: 105),
+                    const SizedBox(height: 24),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Selamat datang!',
+                                style: poppins.copyWith(
+                                    fontWeight: FontWeight.w600, fontSize: 24)),
+                            Text('Yuk, coba berbagai menu kami',
+                                style: poppins.copyWith(color: primary4)),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Email',
+                                style: poppins.copyWith(
+                                    fontSize: 16, color: gray)),
+                            userInput(emailInput),
+                            const SizedBox(height: 16),
+                            Text('Password',
+                                style: poppins.copyWith(
+                                    fontSize: 16, color: gray)),
+                            userPasswordInput(passwordInput),
+                            const SizedBox(height: 8),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(context, '/resetPassword');
+                                debugPrint('lupa password tertekan');
+                              },
+                              child: Text(
+                                'Lupa Password?',
+                                style:
+                                    poppins.copyWith(fontSize: 12, color: gray),
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    showLoginForm = false;
-                                  });
-                                  debugPrint(' sign up tertekan');
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color:
-                                        showLoginForm ? Colors.white : primary3,
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  width: 102,
-                                  height: 23,
-                                  child: Center(
-                                    child: Text(
-                                      'Sign Up',
-                                      style: poppins.copyWith(
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 12,
-                                          color: showLoginForm
-                                              ? primary3
-                                              : Colors.white),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, '/home', (route) => false);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: primary4,
+                          borderRadius: BorderRadius.circular(37),
+                        ),
+                        width: 335,
+                        height: 48,
+                        child: Center(
+                          child: Text(
+                            'Masuk',
+                            style: poppins.copyWith(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                                color: Colors.white),
                           ),
                         ),
                       ),
-                      const SizedBox(height: 52),
-                      showLoginForm ? loginForm() : signUpForm()
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 90),
-              GestureDetector(
-                onTap: () {
-                  debugPrint('tertekan');
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: primary3,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  width: 189,
-                  height: 52,
-                  child: Center(
-                    child: Text(
-                      showLoginForm ? 'Login' : 'Sign Up',
-                      style: poppins.copyWith(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 16,
-                          color: Colors.white),
                     ),
-                  ),
+                    const SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Belum punya akun?',
+                          style: poppins.copyWith(fontSize: 12, color: gray),
+                        ),
+                        const SizedBox(width: 5),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, '/createAcc');
+                            debugPrint('Buat akun tertekan');
+                          },
+                          child: Text(
+                            'Buat akun baru',
+                            style:
+                                poppins.copyWith(fontSize: 12, color: orange),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+                    SizedBox(
+                      child: Column(
+                        children: [
+                          Text(
+                            'Atau',
+                            style: poppins.copyWith(fontSize: 16),
+                          ),
+                          const SizedBox(height: 24),
+                          loginWithSocial('assets/images/login/facebook.png',
+                              'Login dengan Facebook', facebookBlue),
+                          const SizedBox(height: 16),
+                          loginWithSocial('assets/images/login/google.png',
+                              'Login dengan Google', googleBlue),
+                          const SizedBox(height: 67),
+                        ],
+                      ),
+                    )
+                  ],
                 ),
-              ),
+              )
             ],
           ),
         ),
-      );
-    } else {
-      return Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CarouselSlider(
-                items: [
-                  greetingsmaker('Order your food',
-                      'Now you can  order food any time\nright from your mobile'),
-                  greetingsmaker('Get Your\nFast food Delivery with us',
-                      'The standard chunk of used since the food\n is find make reproduced below  '),
-                  greetingsmaker('Fast delivery to\nyour place',
-                      'Fast delivery to your home, office\nand whwrever you are.'),
-                ],
-                carouselController: carouselController,
-                options: CarouselOptions(
-                  height: 470,
-                  enableInfiniteScroll: false,
-                  viewportFraction: 1,
-                  onPageChanged: (index, reason) {
-                    setState(() {
-                      currentCarouselIndex = index;
-                    });
-                  },
-                ),
+      ),
+    );
+  }
+
+  Widget userInput(controller) {
+    return TextField(
+      controller: controller,
+      style: poppins.copyWith(fontSize: 16),
+    );
+  }
+
+  Widget userPasswordInput(controller) {
+    return TextFormField(
+      controller: controller,
+      obscureText: passwordVisible,
+      style: poppins.copyWith(fontSize: 16),
+      decoration: InputDecoration(
+          suffixIcon: IconButton(
+              icon: Icon(
+                passwordVisible ? Icons.visibility : Icons.visibility_off,
+                color: gray,
               ),
-              const SizedBox(height: 100),
-              GestureDetector(
-                onTap: () {
-                  if (currentCarouselIndex == 2) {
-                    setState(() {
-                      toLoginForm = true;
-                    });
-                  } else {
-                    carouselController.nextPage(curve: Curves.easeOutCubic);
-                  }
-                  debugPrint('tertekan');
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: primary3,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  width: 189,
-                  height: 52,
-                  child: Center(
-                    child: Text(
-                      currentCarouselIndex == 2 ? 'Done' : 'Next',
-                      style: poppins.copyWith(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 16,
-                          color: Colors.white),
-                    ),
-                  ),
-                ),
+              onPressed: () {
+                setState(() {
+                  passwordVisible = !passwordVisible;
+                });
+              })),
+    );
+  }
+}
+
+Widget loginWithSocial(img, label, bgColor) {
+  return GestureDetector(
+    onTap: () {
+      debugPrint('$label ditekan');
+    },
+    child: Container(
+      decoration: BoxDecoration(
+        color: bgColor,
+        borderRadius: BorderRadius.circular(37),
+      ),
+      width: 335,
+      height: 48,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(img),
+            Expanded(
+              child: Center(
+                child: Text(label,
+                    style: poppins.copyWith(fontSize: 14, color: Colors.white)),
               ),
-              const SizedBox(height: 60),
-              Center(
-                child: DotsIndicator(
-                  dotsCount: 3,
-                  position: currentCarouselIndex,
-                  decorator: DotsDecorator(
-                    color: primary3,
-                    activeColor: primary1,
-                    activeSize: const Size(10, 10),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-    }
-  }
-
-  Widget greetingsmaker(title, subtitle) {
-    return Center(
-        child: Column(children: [
-      Container(
-        width: 308,
-        height: 308,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle, // Menentukan bentuk lingkaran
-          color: primary3, // Warna latar belakang lingkaran
+            )
+          ],
         ),
       ),
-      const SizedBox(height: 25),
-      Text(
-        title,
-        style: poppins.copyWith(fontWeight: FontWeight.w700, fontSize: 20),
-        textAlign: TextAlign.center,
-      ),
-      const SizedBox(height: 25),
-      Text(
-        subtitle,
-        style: poppins.copyWith(fontWeight: FontWeight.w500, fontSize: 12),
-        textAlign: TextAlign.center,
-      )
-    ]));
-  }
-
-  Widget loginForm() {
-    return SizedBox(
-      width: 192,
-      // height: 56,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          formMaker('Email or phone number', 'Input Email', emailInputLogin),
-          const SizedBox(height: 21),
-          passwordFormMaker('Password', 'Input Password', passwordInputLogin,
-              hidePasswordLogin)
-        ],
-      ),
-    );
-  }
-
-  Widget signUpForm() {
-    return SizedBox(
-      width: 192,
-      // height: 56,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          formMaker('Full Name', 'Input Full Name', nameInputSignin),
-          const SizedBox(height: 12),
-          formMaker('Email or phone number', 'Input Email', emailInputSignin),
-          const SizedBox(height: 12),
-          passwordFormMaker('Password', 'Input Password', passwordInputSignin,
-              hidePasswordSignin),
-          const SizedBox(height: 12),
-          passwordFormMaker('Reface Password', 'Retype Password',
-              passwordRefaceInputSignin, hidePasswordRefaceSignin),
-        ],
-      ),
-    );
-  }
-
-  Widget formMaker(title, label, controller) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(title,
-            style: poppins.copyWith(fontWeight: FontWeight.w500, fontSize: 12)),
-        const SizedBox(height: 8),
-        SizedBox(
-          height: 34,
-          child: TextFormField(
-            // cursorColor: itsYellowStatic,
-            controller: controller,
-            style: poppins.copyWith(fontSize: 12),
-            decoration: loginTheme.copyWith(
-              labelText: label,
-              labelStyle:
-                  poppins.copyWith(fontWeight: FontWeight.w500, fontSize: 12),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget passwordFormMaker(title, label, controller, obscurer) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(title,
-            style: poppins.copyWith(fontWeight: FontWeight.w500, fontSize: 12)),
-        const SizedBox(height: 8),
-        SizedBox(
-          height: 34,
-          child: TextFormField(
-            // cursorColor: itsYellowStatic,
-            obscureText: hidePasswordRefaceSignin,
-            controller: controller,
-            style: poppins.copyWith(fontSize: 12),
-            decoration: loginTheme.copyWith(
-                labelText: label,
-                labelStyle:
-                    poppins.copyWith(fontWeight: FontWeight.w500, fontSize: 12),
-                suffixIcon: IconButton(
-                    icon: Icon(
-                      hidePasswordRefaceSignin
-                          ? Icons.visibility
-                          : Icons.visibility_off,
-                      size: 19,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        hidePasswordRefaceSignin = !hidePasswordRefaceSignin;
-                      });
-                    })),
-          ),
-        ),
-      ],
-    );
-  }
+    ),
+  );
 }
