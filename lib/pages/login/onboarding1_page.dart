@@ -12,6 +12,9 @@ class SplashScreen1 extends StatefulWidget {
 class _SplashScreen1State extends State<SplashScreen1> {
   @override
   Widget build(BuildContext context) {
+    Future.delayed(Duration(seconds: 3)).then((value) {
+      
+    });
     return Scaffold(
       backgroundColor: Color(0xFFF0AF9F),
       body: Center(
