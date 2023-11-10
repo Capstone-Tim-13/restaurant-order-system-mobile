@@ -1,3 +1,4 @@
+import 'package:capstone_restaurant/pages/login/onboarding4_page.dart';
 import 'package:capstone_restaurant/pages/login/onboarding1_page.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,8 @@ class MyApp extends StatelessWidget {
       ),
      initialRoute: '/',
       routes: {
-        '/': (context) => const SplashScreen1(),
+        '/onboarding4': (context) => const SplashScreen4(),
+        '/splashscreen': (context) => const SplashScreen1(),
         // '/login': (context) => const MyHomePage(),
         // '/home': (context) => const MyHomePage(),
         // '/pesanan': (context) => const MyHomePage(),
