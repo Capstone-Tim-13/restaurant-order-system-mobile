@@ -44,7 +44,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     style: poppins.copyWith(
                         fontSize: 32,
                         fontWeight: FontWeight.w700,
-                        color: Colors.white),
+                        color: primary2),
                   ),
                   const SizedBox(height: 16),
                   Text(
@@ -61,7 +61,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: primary2,
                         borderRadius: BorderRadius.circular(37),
                       ),
                       width: 335,
@@ -132,7 +132,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   dotsCount: 4,
                   position: currentCarouselIndex,
                   decorator: DotsDecorator(
-                      color: gray,
+                      color: outline,
                       size: const Size(6, 6),
                       activeColor: primary4,
                       activeSize: const Size(22, 6),
@@ -162,7 +162,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       style: poppins.copyWith(
                           fontWeight: FontWeight.w700,
                           fontSize: 16,
-                          color: Colors.white),
+                          color: primary2),
                     ),
                   ),
                 ),
@@ -175,7 +175,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 child: Text(
                   'Lewati',
                   style: poppins.copyWith(
-                      fontWeight: FontWeight.w500, fontSize: 16, color: gray),
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                      color: outline),
                 ),
               ),
               const SizedBox(height: 45),
@@ -190,7 +192,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
     return Column(mainAxisAlignment: MainAxisAlignment.end, children: [
       Image.asset(image),
       Padding(
-          padding: EdgeInsets.symmetric(horizontal: 33),
+          padding: const EdgeInsets.symmetric(horizontal: 33),
           child: Column(
             children: [
               Text(

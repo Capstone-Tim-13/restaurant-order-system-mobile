@@ -52,9 +52,10 @@ class _ResetPasswordState extends State<ResetPassword> {
               Text('Lupa Password', style: poppins.copyWith(fontSize: 16)),
               Text(
                   'Masukan email kamu, dan kita akan mengirimkan intruksinya reset password',
-                  style: poppins.copyWith(fontSize: 12, color: gray)),
+                  style: poppins.copyWith(fontSize: 12, color: outline)),
               const SizedBox(height: 32),
-              Text('Email', style: poppins.copyWith(fontSize: 16, color: gray)),
+              Text('Email',
+                  style: poppins.copyWith(fontSize: 16, color: outline)),
               userInput(emailInput),
             ],
           ),
@@ -78,7 +79,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                   style: poppins.copyWith(
                       fontWeight: FontWeight.w500,
                       fontSize: 16,
-                      color: Colors.white),
+                      color: primary2),
                 ),
               ),
             ),
@@ -100,7 +101,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                   style: poppins.copyWith(fontSize: 16)),
               Text(
                   'Kami telah mengirimkan email instruksi ke balbalee@gmail.com',
-                  style: poppins.copyWith(fontSize: 12, color: gray))
+                  style: poppins.copyWith(fontSize: 12, color: outline))
             ],
           ),
           const SizedBox(height: 74),
@@ -119,7 +120,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                   style: poppins.copyWith(
                       fontWeight: FontWeight.w500,
                       fontSize: 16,
-                      color: Colors.white),
+                      color: primary2),
                 ),
               ),
             ),

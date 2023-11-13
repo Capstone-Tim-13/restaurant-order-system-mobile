@@ -29,10 +29,10 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 172),
               Container(
                 width: MediaQuery.of(context).size.width,
-                decoration: const BoxDecoration(
-                    color: Colors.white,
+                decoration: BoxDecoration(
+                    color: primary2,
                     borderRadius:
-                        BorderRadius.vertical(top: Radius.circular(56))),
+                        const BorderRadius.vertical(top: Radius.circular(56))),
                 child: Column(
                   children: [
                     const SizedBox(height: 11),
@@ -66,12 +66,12 @@ class _LoginPageState extends State<LoginPage> {
                           children: [
                             Text('Email',
                                 style: poppins.copyWith(
-                                    fontSize: 16, color: gray)),
+                                    fontSize: 16, color: outline)),
                             userInput(emailInput),
                             const SizedBox(height: 16),
                             Text('Password',
                                 style: poppins.copyWith(
-                                    fontSize: 16, color: gray)),
+                                    fontSize: 16, color: outline)),
                             userPasswordInput(passwordInput),
                             const SizedBox(height: 8),
                             GestureDetector(
@@ -81,8 +81,8 @@ class _LoginPageState extends State<LoginPage> {
                               },
                               child: Text(
                                 'Lupa Password?',
-                                style:
-                                    poppins.copyWith(fontSize: 12, color: gray),
+                                style: poppins.copyWith(
+                                    fontSize: 12, color: outline),
                               ),
                             )
                           ],
@@ -108,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                             style: poppins.copyWith(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 16,
-                                color: Colors.white),
+                                color: primary2),
                           ),
                         ),
                       ),
@@ -119,7 +119,7 @@ class _LoginPageState extends State<LoginPage> {
                       children: [
                         Text(
                           'Belum punya akun?',
-                          style: poppins.copyWith(fontSize: 12, color: gray),
+                          style: poppins.copyWith(fontSize: 12, color: outline),
                         ),
                         const SizedBox(width: 5),
                         GestureDetector(
@@ -179,7 +179,7 @@ class _LoginPageState extends State<LoginPage> {
           suffixIcon: IconButton(
               icon: Icon(
                 passwordVisible ? Icons.visibility : Icons.visibility_off,
-                color: gray,
+                color: outline,
               ),
               onPressed: () {
                 setState(() {
@@ -211,7 +211,7 @@ Widget loginWithSocial(img, label, bgColor) {
             Expanded(
               child: Center(
                 child: Text(label,
-                    style: poppins.copyWith(fontSize: 14, color: Colors.white)),
+                    style: poppins.copyWith(fontSize: 14, color: primary2)),
               ),
             )
           ],

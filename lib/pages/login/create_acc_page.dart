@@ -76,19 +76,19 @@ class _CreateAccState extends State<CreateAcc> {
                 ),
                 const SizedBox(height: 24),
                 Text('Nama',
-                    style: poppins.copyWith(fontSize: 16, color: gray)),
+                    style: poppins.copyWith(fontSize: 16, color: outline)),
                 userInput(nameInput),
                 const SizedBox(height: 16),
                 Text('Email',
-                    style: poppins.copyWith(fontSize: 16, color: gray)),
+                    style: poppins.copyWith(fontSize: 16, color: outline)),
                 userInput(emailInput),
                 const SizedBox(height: 16),
                 Text('Password',
-                    style: poppins.copyWith(fontSize: 16, color: gray)),
+                    style: poppins.copyWith(fontSize: 16, color: outline)),
                 userPasswordInput(passwordInput, passwordVisible),
                 const SizedBox(height: 16),
                 Text('Konfirmasi Password',
-                    style: poppins.copyWith(fontSize: 16, color: gray)),
+                    style: poppins.copyWith(fontSize: 16, color: outline)),
                 userPasswordInput(retypePasswordInput, retypePasswordVisible),
               ],
             ),
@@ -108,7 +108,7 @@ class _CreateAccState extends State<CreateAcc> {
                     style: poppins.copyWith(
                         fontWeight: FontWeight.w700,
                         fontSize: 16,
-                        color: Colors.white),
+                        color: primary2),
                   ),
                 ),
               ),
@@ -119,7 +119,7 @@ class _CreateAccState extends State<CreateAcc> {
               children: [
                 Text(
                   'Sudah punya akun?',
-                  style: poppins.copyWith(fontSize: 12, color: gray),
+                  style: poppins.copyWith(fontSize: 12, color: outline),
                 ),
                 const SizedBox(width: 5),
                 GestureDetector(
@@ -196,7 +196,7 @@ class _CreateAccState extends State<CreateAcc> {
                 passwordVisible
                     ? Icons.visibility
                     : Icons.visibility_off, // Perubahan di sini
-                color: gray,
+                color: outline,
               ),
               onPressed: () {
                 setState(() {
