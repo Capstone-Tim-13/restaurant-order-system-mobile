@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   carousel_slider: ^4.2.1
   dots_indicator: ^3.0.0
+  google_fonts: ^6.1.0
 
 dev_dependencies:
   flutter_test:
@@ -62,6 +63,11 @@ flutter:
   assets:
     - assets/images/Group40.png
     - assets/images/Leftcircle.png
+    - assets/images/sp6.png
+    - assets/images/3D Food Icon by @Odafe_UI.png
+    - assets/images/
+    - assets/images/logo.png
+    - assets/images/splashscreen5.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -77,8 +83,8 @@ flutter:
   fonts:
     - family: Poppins
       fonts:
-        - asset: assets/fonts/Poppins-Regular.ttf
-        - asset: assets/fonts/Poppins-Bold.ttf
+        - asset: assets/fonts/Poppins/Poppins-Regular.ttf
+        - asset: assets/fonts/Poppins/Poppins-Bold.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
