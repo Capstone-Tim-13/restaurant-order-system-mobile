@@ -1,3 +1,5 @@
+
+import 'package:capstone_restaurant/pages/login/register_page.dart';
 import 'package:capstone_restaurant/pages/login/onboarding4_page.dart';
 import 'package:capstone_restaurant/pages/login/onboarding1_page.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +21,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-     initialRoute: '/',
+      initialRoute: '/',
       routes: {
+        '/': (context) => const RegisterPage(),
         '/onboarding4': (context) => const SplashScreen4(),
         '/splashscreen': (context) => const SplashScreen1(),
         // '/login': (context) => const MyHomePage(),
@@ -34,5 +37,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
