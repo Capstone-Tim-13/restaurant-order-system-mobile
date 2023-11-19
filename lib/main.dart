@@ -1,4 +1,4 @@
-import 'package:capstone_restaurant/pages/profil/profil_saya.dart';
+import 'package:capstone_restaurant/pages/profil/profil_saya2.dart';
 import 'package:flutter/material.dart';
 
 void main() {

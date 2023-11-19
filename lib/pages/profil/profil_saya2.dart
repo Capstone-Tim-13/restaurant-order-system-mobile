@@ -89,7 +89,7 @@ class _ProfilSayaState extends State<ProfilSaya> {
             'Ganti Foto Profil',
             style: TextStyle(
               fontFamily: 'Poppins',
-              fontSize: 18,
+              fontSize: 16,
               color: Color(0xFF783525),
             ),
           ),
@@ -103,7 +103,7 @@ class _ProfilSayaState extends State<ProfilSaya> {
                   'Nama*',
                   style: TextStyle(
                     fontFamily: 'Poppins',
-                    fontSize: 18,
+                    fontSize: 16,
                     color: Colors.black,
                   ),
                 ),
@@ -128,7 +128,7 @@ class _ProfilSayaState extends State<ProfilSaya> {
                   'Email*',
                   style: TextStyle(
                     fontFamily: 'Poppins',
-                    fontSize: 18,
+                    fontSize: 16,
                     color: Colors.black,
                   ),
                 ),
@@ -153,7 +153,7 @@ class _ProfilSayaState extends State<ProfilSaya> {
                   'Nomor Hp*',
                   style: TextStyle(
                     fontFamily: 'Poppins',
-                    fontSize: 18,
+                    fontSize: 16,
                     color: Colors.black,
                   ),
                 ),
@@ -178,7 +178,7 @@ class _ProfilSayaState extends State<ProfilSaya> {
                   'Tanggal lahir',
                   style: TextStyle(
                     fontFamily: 'Poppins',
-                    fontSize: 18,
+                    fontSize: 16,
                     color: Colors.black,
                   ),
                 ),
@@ -201,7 +201,7 @@ class _ProfilSayaState extends State<ProfilSaya> {
               ],
             ),
           ),
-          SizedBox(height: 100),
+          SizedBox(height: 70),
           Align(
             alignment: Alignment.bottomCenter,
             child: ElevatedButton(
@@ -216,7 +216,7 @@ class _ProfilSayaState extends State<ProfilSaya> {
               child: Text(
                 'Simpan',
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 16,
                   fontFamily: 'Poppins',
                 ),
               ),
@@ -227,81 +227,108 @@ class _ProfilSayaState extends State<ProfilSaya> {
     );
   }
   void _GantiFotoProfil() {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return Container(
-          height: 283,
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Wrap(
-              children: [
-                Padding(
+  showModalBottomSheet(
+    context: context,
+    builder: (BuildContext context) {
+      return Container(
+        height: 283,
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Wrap(
+            children: [
+              Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Text(
                   'Ganti Foto Profile',
                   style: TextStyle(
                     fontFamily: 'Poppins',
-                    fontSize: 20,
+                    fontSize: 18,
                     color: Colors.black,
-                    fontWeight: FontWeight.bold
+                    fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.center,
                 ),
               ),
-                ListTile(
-                  leading: Icon(
-                    Icons.photo_library,
-                    color: Color(0xFF783525),
+              ListTile(
+                leading: Image.asset(
+                  'assets/images/Image 2.png',
+                  width: 24,
+                  height: 24,
+                ),
+                title: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        'Ambil dari galeri',
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: 16,
+                          color: Colors.black,
+                        ),
+                      ),
                     ),
-                  title: Text('Ambil dari galeri',
+                    Icon(
+                       Icons.chevron_right,
+                      color: Colors.black,
+                    ),
+                  ],
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                  // logika untuk memilih gambar dari galeri
+                },
+              ),
+              Divider(
+                height: 20,
+                color: Colors.grey,
+              ),
+              ListTile(
+                leading: Image.asset(
+                  'assets/images/Camera 1.png',
+                  width: 24,
+                  height: 24,
+                ),
+                title: Text(
+                  'Ambil Foto',
                   style: TextStyle(
                     fontFamily: 'Poppins',
-                    fontSize: 18,
+                    fontSize: 16,
                     color: Colors.black,
                   ),
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
-                    //logika untuk memilih gambar dari galeri
-                  },
                 ),
-                ListTile(
-                  leading: Icon(
-                  Icons.camera_alt,
-                  color: Color(0xFF783525),
-                  ),
-                  title: Text('Ambil Foto',
+                onTap: () {
+                  Navigator.pop(context);
+                  // logika untuk mengambil foto
+                },
+              ),
+              Divider(
+                height: 20,
+                color: Colors.grey,
+              ),
+              ListTile(
+                leading: Image.asset(
+                  'assets/images/Delete 2.png',
+                  width: 24,
+                  height: 24,
+                ),
+                title: Text(
+                  'Hapus Foto',
                   style: TextStyle(
                     fontFamily: 'Poppins',
-                    fontSize: 18,
+                    fontSize: 16,
                     color: Colors.black,
                   ),
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
-                    //logika untuk mengambil foto
-                  },
                 ),
-                ListTile(
-                  leading: Icon(Icons.delete),
-                  title: Text('Hapus Foto',
-                  style: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: 18,
-                    color: Colors.black,
-                  ),
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
-                    //logika untuk menghapus foto
-                  },
-                ),
-              ],
-            ),
+                onTap: () {
+                  Navigator.pop(context);
+                  // logika untuk menghapus foto
+                },
+              ),
+            ],
           ),
-        );
-      },
-    );
-  }
+        ),
+      );
+    },
+  );
+ }
 }
