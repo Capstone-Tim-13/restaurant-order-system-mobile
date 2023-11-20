@@ -1,4 +1,4 @@
-
+import 'package:capstone_restaurant/pages/login/forget_password_page.dart';
 import 'package:capstone_restaurant/pages/login/login_page.dart';
 import 'package:capstone_restaurant/pages/login/onboarding_page.dart';
 import 'package:capstone_restaurant/pages/login/register_page.dart';
@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
         '/onboarding': (context) => const OnboardingPage(),
         '/login': (context) => const LoginPage(),
         '/register': (context) => const RegisterPage(),
+        '/forgetPassword': (context) => const ForgetPassword(),
       },
     );
   }
