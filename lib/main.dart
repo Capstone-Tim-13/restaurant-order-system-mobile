@@ -1,11 +1,19 @@
+import 'package:capstone_restaurant/data.dart';
 import 'package:capstone_restaurant/pages/account/account_page.dart';
+import 'package:capstone_restaurant/pages/account/add_address_page.dart';
 import 'package:capstone_restaurant/pages/home/favorite_page.dart';
 import 'package:capstone_restaurant/pages/home/home.dart';
 import 'package:capstone_restaurant/pages/home/notification_page.dart';
-import 'package:capstone_restaurant/pages/login/create_acc_page.dart';
+import 'package:capstone_restaurant/pages/login/register_page.dart';
 import 'package:capstone_restaurant/pages/login/login_page.dart';
 import 'package:capstone_restaurant/pages/login/onboarding_page.dart';
 import 'package:capstone_restaurant/pages/login/reset_password_page.dart';
+import 'package:capstone_restaurant/pages/order/cart_page.dart';
+import 'package:capstone_restaurant/pages/order/history_order_page.dart';
+import 'package:capstone_restaurant/pages/order/input_rating_page.dart';
+import 'package:capstone_restaurant/pages/order/order_page.dart';
+import 'package:capstone_restaurant/pages/order/order_status.dart';
+import 'package:capstone_restaurant/pages/order/payment_page.dart';
 import 'package:capstone_restaurant/pages/splash.dart';
 import 'package:flutter/material.dart';
 
@@ -28,11 +36,11 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => const Splash(),
+        '/': (context) => OrderPage(),
         '/onboarding': (context) => const OnboardingPage(),
         '/login': (context) => const LoginPage(),
+        '/register': (context) => const RegisterPage(),
         '/resetPassword': (context) => const ResetPassword(),
-        '/createAcc': (context) => const CreateAcc(),
         '/home': (context) => const Home(),
         // '/homePage': (context) => const HomePage(),
         '/favPage': (context) => const FavoriteMenu(),

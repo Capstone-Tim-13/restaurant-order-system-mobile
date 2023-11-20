@@ -27,32 +27,28 @@ Color yellow = const Color.fromARGB(255, 239, 203, 63);
 Color facebookBlue = const Color.fromARGB(255, 57, 89, 152);
 Color googleBlue = const Color.fromARGB(255, 66, 133, 244);
 
-InputDecoration loginTheme = const InputDecoration(
-  enabledBorder: OutlineInputBorder(
-    borderRadius: BorderRadius.all(Radius.circular(12)),
-    borderSide: BorderSide(
-      width: 0.5,
-      color: Colors.black,
-    ),
+InputDecoration loginTheme = InputDecoration(
+  filled: true,
+  fillColor: Colors.amber.shade600,
+  enabledBorder: const OutlineInputBorder(
+    borderRadius: BorderRadius.all(Radius.circular(42)),
+    borderSide: BorderSide(width: 2, color: Colors.black38),
   ),
-  focusedBorder: OutlineInputBorder(
-    borderRadius: BorderRadius.all(Radius.circular(12)),
-    borderSide: BorderSide(
-      width: 0.5,
-      color: Colors.black,
-    ),
+  focusedBorder: const OutlineInputBorder(
+    borderRadius: BorderRadius.all(Radius.circular(42)),
+    borderSide: BorderSide(width: 2, color: Colors.black38),
   ),
 );
 
-InputDecoration userInputNote = const InputDecoration(
+InputDecoration userInputNote = InputDecoration(
   alignLabelWithHint: true,
   filled: true,
-  fillColor: Color.fromARGB(255, 241, 241, 241),
-  enabledBorder: OutlineInputBorder(
+  fillColor: moreBright,
+  enabledBorder: const OutlineInputBorder(
     borderRadius: BorderRadius.all(Radius.circular(12)),
     borderSide: BorderSide.none,
   ),
-  focusedBorder: OutlineInputBorder(
+  focusedBorder: const OutlineInputBorder(
     borderRadius: BorderRadius.all(Radius.circular(12)),
     borderSide: BorderSide.none,
   ),
