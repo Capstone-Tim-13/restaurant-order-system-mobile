@@ -1,4 +1,8 @@
-import 'package:capstone_restaurant/pages/login/lupa_password_2.dart';
+
+import 'package:capstone_restaurant/pages/login/login_page.dart';
+import 'package:capstone_restaurant/pages/login/onboarding_page.dart';
+import 'package:capstone_restaurant/pages/login/register_page.dart';
+import 'package:capstone_restaurant/pages/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -18,17 +22,12 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-     initialRoute: '/',
+      initialRoute: '/',
       routes: {
-        '/': (context) => const ForgetPassword2(),
-        '/forgetpassword2': (context) => const ForgetPassword2(),
-        // '/login': (context) => const MyHomePage(),
-        // '/home': (context) => const MyHomePage(),
-        // '/pesanan': (context) => const MyHomePage(),
-        // '/bantuan': (context) => const MyHomePage(),
-        // '/profil': (context) => const MyHomePage(),
-        // '/notifikasi': (context) => const MyHomePage(),
-        // '/akun': (context) => const MyHomePage(),
+        '/': (context) => const Splash(),
+        '/onboarding': (context) => const OnboardingPage(),
+        '/login': (context) => const LoginPage(),
+        '/register': (context) => const RegisterPage(),
       },
     );
   }
