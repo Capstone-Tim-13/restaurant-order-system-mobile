@@ -48,7 +48,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -56,16 +56,35 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
   # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
+  # included with your application, so that you can use the icons in 
   # the material Icons class.
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/
     - assets/images/
     - assets/images/login/
+    - assets/images/order/
     - assets/images/icons/
+<<<<<<< HEAD
     - assets/images/pesanan/
+=======
+    - assets/images/icons/payment/
+    - assets/images/icons/accPage/
+    - assets/images/home/accPage/
+    - assets/images/home/helpPage/
+    - assets/images/home/homePage/
+    - assets/images/home/homePage/menubyCat/
+    - assets/images/home/homePage/bestSeller/
+    - assets/images/home/homePage/banner/
+    - assets/images/home/homePage/category/
+    - assets/images/home/homePage/favorit/
+    - assets/images/home/homePage/recommendation/
+    - assets/images/home/orderPage/cancel/
+    - assets/images/home/orderPage/history/
+    - assets/images/home/orderPage/ongoing/
+>>>>>>> development
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

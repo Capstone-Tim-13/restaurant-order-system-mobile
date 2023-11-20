@@ -1,6 +1,5 @@
 // Ararya
 
-import 'package:capstone_restaurant/pages/login/register_page.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/material.dart';
 
@@ -79,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
                             const SizedBox(height: 8),
                             GestureDetector(
                               onTap: () {
-                                Navigator.pushNamed(context, '/resetPassword');
+                                Navigator.pushNamed(context, '/forgetPassword');
                                 debugPrint('lupa password tertekan');
                               },
                               child: Text(

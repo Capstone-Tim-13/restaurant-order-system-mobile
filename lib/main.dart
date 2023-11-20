@@ -1,3 +1,7 @@
+import 'package:capstone_restaurant/pages/profile/profile_page.dart';
+import 'package:capstone_restaurant/pages/profile/change_password_page.dart';
+import 'package:capstone_restaurant/pages/profile/my_account_page.dart';
+import 'package:capstone_restaurant/pages/login/forget_password_page.dart';
 import 'package:capstone_restaurant/pages/login/login_page.dart';
 import 'package:capstone_restaurant/pages/login/onboarding_page.dart';
 import 'package:capstone_restaurant/pages/login/register_page.dart';
@@ -24,11 +28,15 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => const Splash(),
+        '/': (context) => const ProfilePage(),
         '/onboarding': (context) => const OnboardingPage(),
         '/login': (context) => const LoginPage(),
         '/register': (context) => const RegisterPage(),
+<<<<<<< HEAD
         '/search': (context) => const SearchPage(),
+=======
+        '/forgetPassword': (context) => const ForgetPassword(),
+>>>>>>> development
       },
     );
   }
