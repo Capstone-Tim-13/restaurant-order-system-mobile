@@ -1,7 +1,9 @@
-import 'package:capstone_restaurant/pages/account/change_password_page.dart';
-import 'package:capstone_restaurant/pages/account/profile_page.dart';
+import 'package:capstone_restaurant/pages/profile/change_password_page.dart';
+import 'package:capstone_restaurant/pages/profile/profile_page.dart';
 import 'package:capstone_restaurant/pages/home/favorite_page.dart';
-import 'package:capstone_restaurant/pages/account/address_list_page.dart';
+import 'package:capstone_restaurant/pages/profile/address_list_page.dart';
+
+int defaultAddress = 0;
 
 List catData = [
   ['Appetizer', 'assets/images/home/homePage/category/appetizer.png'],

@@ -1,5 +1,5 @@
 import 'package:capstone_restaurant/data.dart';
-import 'package:capstone_restaurant/pages/account/profile_page.dart';
+import 'package:capstone_restaurant/pages/profile/profile_page.dart';
 import 'package:capstone_restaurant/pages/login/login_page.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/material.dart';

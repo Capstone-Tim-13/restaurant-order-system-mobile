@@ -1,6 +1,6 @@
 import 'package:capstone_restaurant/data.dart';
-import 'package:capstone_restaurant/pages/account/account_page.dart';
-import 'package:capstone_restaurant/pages/account/add_address_page.dart';
+import 'package:capstone_restaurant/pages/profile/my_account_page.dart';
+import 'package:capstone_restaurant/pages/profile/add_address_page.dart';
 import 'package:capstone_restaurant/pages/home/favorite_page.dart';
 import 'package:capstone_restaurant/pages/home/home.dart';
 import 'package:capstone_restaurant/pages/home/notification_page.dart';
@@ -36,12 +36,12 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => OrderPage(),
+        '/': (context) => Splash(),
         '/onboarding': (context) => const OnboardingPage(),
         '/login': (context) => const LoginPage(),
         '/register': (context) => const RegisterPage(),
         '/resetPassword': (context) => const ResetPassword(),
-        '/home': (context) => const Home(),
+        '/home': (context) => const Home(setIdx: 0),
         // '/homePage': (context) => const HomePage(),
         '/favPage': (context) => const FavoriteMenu(),
         '/pesanan': (context) => const MyHomePage(),

@@ -1,5 +1,5 @@
 import 'package:capstone_restaurant/data.dart';
-import 'package:capstone_restaurant/pages/account/add_address_page.dart';
+import 'package:capstone_restaurant/pages/profile/add_address_page.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/material.dart';
 
@@ -85,7 +85,8 @@ class _AddressListState extends State<AddressList> {
                       savedAddress[index][1],
                       savedAddress[index][2],
                       savedAddress[index][3],
-                      savedAddress[index][4]);
+                      savedAddress[index][4],
+                      index);
                 },
               ),
             )
@@ -95,7 +96,7 @@ class _AddressListState extends State<AddressList> {
     );
   }
 
-  Widget showAddressList(title, name, phone, address, note) {
+  Widget showAddressList(title, name, phone, address, note, index) {
     return GestureDetector(
       onTap: () {
         debugPrint('address $title tertekan');
@@ -105,7 +106,7 @@ class _AddressListState extends State<AddressList> {
         decoration:
             homePageMenu.copyWith(borderRadius: BorderRadius.circular(10)),
         child: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.only(left: 16, bottom: 16),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -123,18 +124,18 @@ class _AddressListState extends State<AddressList> {
                           fontSize: 15, fontWeight: FontWeight.w500),
                     ),
                     const Spacer(),
-                    GestureDetector(
-                      onTap: () {
-                        debugPrint('edit address tertekan');
-                      },
-                      child: Image.asset(
-                        'assets/images/icons/threeDots.png',
-                        width: 3,
-                      ),
-                    )
+                    threeDots(index),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     debugPrint('edit address tertekan');
+                    //   },
+                    //   child: Image.asset(
+                    //     'assets/images/icons/threeDots.png',
+                    //     width: 3,
+                    //   ),
+                    // )
                   ],
                 ),
-                const SizedBox(height: 8),
                 Row(
                   children: [
                     Text(
@@ -159,9 +160,40 @@ class _AddressListState extends State<AddressList> {
       ),
     );
   }
-}
 
-// title, name, phone, address, note
+  Widget threeDots(idx) {
+    return PopupMenuButton(
+      surfaceTintColor: primary4,
+      iconSize: 20,
+      itemBuilder: (context) => [
+        PopupMenuItem(
+          value: 1,
+          child: Text(
+            'Select address',
+            style: poppins.copyWith(fontSize: 13),
+          ),
+        ),
+        PopupMenuItem(
+          value: 2,
+          child: Text(
+            'Edit address',
+            style: poppins.copyWith(fontSize: 13),
+          ),
+        ),
+      ],
+      onSelected: (value) async {
+        switch (value) {
+          case 1:
+            setState(() {
+              defaultAddress = idx;
+            });
+            Navigator.pop(context, idx);
+            debugPrint('address ${savedAddress[idx]}');
+        }
+      },
+    );
+  }
+}
 
 //  SizedBox(
 //                 width: 290,
