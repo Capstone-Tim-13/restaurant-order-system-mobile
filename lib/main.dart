@@ -7,6 +7,7 @@ import 'package:capstone_restaurant/pages/login/onboarding_page.dart';
 import 'package:capstone_restaurant/pages/login/register_page.dart';
 import 'package:capstone_restaurant/pages/pesanan/searching_page.dart';
 import 'package:capstone_restaurant/pages/splash_screen.dart';
+import 'package:capstone_restaurant/pages/pesanan/popup_menu.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
         '/register': (context) => const RegisterPage(),
         '/search': (context) => const SearchPage(),
         '/forgetPassword': (context) => const ForgetPassword(),
+        '/popupmenupage': (context) => PopupMenuPage(),
       },
     );
   }
