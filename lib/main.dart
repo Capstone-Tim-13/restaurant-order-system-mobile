@@ -1,3 +1,4 @@
+import 'package:capstone_restaurant/pages/bantuan/rating_page.dart';
 import 'package:capstone_restaurant/pages/profile/profile_page.dart';
 import 'package:capstone_restaurant/pages/profile/change_password_page.dart';
 import 'package:capstone_restaurant/pages/profile/my_account_page.dart';
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
         '/search': (context) => const SearchPage(),
         '/forgetPassword': (context) => const ForgetPassword(),
         '/popupmenupage': (context) => PopupMenuPage(),
+        '/feedbackPage': (context) =>const FeedbackPage(),
       },
     );
   }
