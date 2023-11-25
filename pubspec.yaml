@@ -70,6 +70,9 @@ flutter:
     - assets/images/login/
     - assets/images/order/
     - assets/images/icons/
+<<<<<<< HEAD
+    - assets/images/pesanan/
+=======
     - assets/images/icons/payment/
     - assets/images/icons/accPage/
     - assets/images/home/accPage/
@@ -84,6 +87,7 @@ flutter:
     - assets/images/home/orderPage/cancel/
     - assets/images/home/orderPage/history/
     - assets/images/home/orderPage/ongoing/
+>>>>>>> development
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
