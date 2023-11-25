@@ -1,3 +1,4 @@
+import 'package:capstone_restaurant/pages/bantuan/rating_page.dart';
 import 'package:capstone_restaurant/pages/login/forget_password_page.dart';
 import 'package:capstone_restaurant/pages/login/login_page.dart';
 import 'package:capstone_restaurant/pages/login/onboarding_page.dart';
@@ -24,13 +25,12 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => const Splash(),
-        '/onboarding': (context) => const OnboardingPage(),
-        '/login': (context) => const LoginPage(),
-        '/register': (context) => const RegisterPage(),
-        '/forgetPassword': (context) => const ForgetPassword(),
+        '/': (context) => const FeedbackPage(),
+        // '/onboarding': (context) => const OnboardingPage(),
+        // '/login': (context) => const LoginPage(),
+        // '/register': (context) => const RegisterPage(),
+        // '/forgetPassword': (context) => const ForgetPassword(),
       },
     );
   }
 }
-
