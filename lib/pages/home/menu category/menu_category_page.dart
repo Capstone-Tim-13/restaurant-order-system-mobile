@@ -143,7 +143,7 @@ class _MenuCategoryPageState extends State<MenuCategoryPage> {
                       ),
                     ),
                 ),
-      
+              
                   
                   Padding(
                     padding: const EdgeInsets.only(top: 24, left: 21),
@@ -152,32 +152,32 @@ class _MenuCategoryPageState extends State<MenuCategoryPage> {
                       fontSize: 18, 
                       fontWeight:FontWeight.bold )),
                   ),
-
-                   SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Padding(
-                      padding:  EdgeInsets.only(top: 15, left: 30),
-                      child: Row(
-                        children: [
-                         Category(imagepath: "assets/images/food_a.png", title: "Appetizer"),
-                         Category(imagepath: "assets/images/food_b.png", title: "Dessert"),
-                         Category(imagepath: "assets/images/food_c.png", title: "Ala Carte"),
-                         Category(imagepath: "assets/images/food_d.png", title: "Paket Hemat"),
-                         Category(imagepath: "assets/images/food_e.png", title: "Minum"),
-                         ],
-                      ),
-                    ),
-                  ),
+        
                   
-                  SingleChildScrollView(
-                    child: Padding(padding: EdgeInsets.only(top: 17, left: 21),
-                    child: Text("Appetizer",
-                    style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 20,
-                      color: Color(0XFF010F07),
-                    ),),
-                    ),
+                     SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                       child: Padding(
+                        padding:  EdgeInsets.only(top: 15, left: 30),
+                        child: Row(
+                          children: [
+                           Category(imagepath: "assets/images/food_a.png", title: "Appetizer"),
+                           Category(imagepath: "assets/images/food_b.png", title: "Dessert"),
+                           Category(imagepath: "assets/images/food_c.png", title: "Ala Carte"),
+                           Category(imagepath: "assets/images/food_d.png", title: "Paket Hemat"),
+                           Category(imagepath: "assets/images/food_e.png", title: "Minum"),
+                           ],
+                        ),
+                                           ),
+                     ),
+                
+                  
+                  Padding(padding: EdgeInsets.only(top: 17, left: 21),
+                  child: Text("Appetizer",
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 20,
+                    color: Color(0XFF010F07),
+                  ),),
                   ),
                 
                   //Category Item Widget
@@ -189,35 +189,222 @@ class _MenuCategoryPageState extends State<MenuCategoryPage> {
                       description:  "kentang Goreng asin dengan\nsaus pedas untuk cocolannya",
                       price: "\Rp.10.000",
                     ),
-                  //  SizedBox(
-                  //      width: 335,
-                  //      height: 1,
-                  //      child: Container(
-                  //      color: Color(0xffC4C4C4).withOpacity(0.5), // Sesuaikan warna dengan desain Anda
-                  //          ),
-                  //        ),
-                  //    AppetizerItemsWidget(
-                  //     imagePath: "assets/images/appetizer_b.png",
-                  //     nameFood: "Garlic Bread",
-                  //     description:  "Roti dengan margarin di\npanggang dan salad tomat",
-                  //     price: "\Rp.15.000",
-                  //     ),
-                  //   SizedBox(
-                  //      width: 335,
-                  //      height: 1,
-                  //      child: Container(
-                  //      color: Color(0xffC4C4C4).withOpacity(0.5), // Sesuaikan warna dengan desain Anda
-                  //          ),
-                  //        ),
-                  //     AppetizerItemsWidget(
-                  //     imagePath: "assets/images/appetizer_c.png",
-                  //     nameFood: "kentang Goreng",
-                  //     description:  "kentang Goreng asin dengan saus pedas untuk cocolannya",
-                  //     price: "\Rp.10.000",
-                  //     ), 
+                   SizedBox(
+                       width: screenwidth,
+                       height: 1,
+                       child: Container(
+                       color: Color(0xffC4C4C4).withOpacity(0.5), // Sesuaikan warna dengan desain Anda
+                           ),
+                         ),
+                     AppetizerItemsWidget(
+                      imagePath: "assets/images/appetizer_b.png",
+                      nameFood: "Garlic Bread",
+                      description:  "Roti dengan margarin di\npanggang dan salad tomat",
+                      price: "\Rp.15.000",
+                      ),
+                    SizedBox(
+                       width: screenwidth,
+                       height: 1,
+                       child: Container(
+                       color: Color(0xffC4C4C4).withOpacity(0.5), // Sesuaikan warna dengan desain Anda
+                           ),
+                         ),
+                      AppetizerItemsWidget(
+                      imagePath: "assets/images/appetizer_c.png",
+                      nameFood: "Croissant",
+                      description:  "Roti Croissant yang renyah\ndan lembut,pas buat kamu",
+                      price: "\Rp.10.000",
+                      ), 
                   ],
                 ),
-                
+                   
+                Padding(padding: EdgeInsets.only(top: 17, left: 21),
+                  child: Text("Ala Carte",
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 20,
+                    color: Color(0XFF010F07),
+                  ),),
+                  ),
+
+                  //Category Item Widget
+                  Column(
+                  children: [
+                    AppetizerItemsWidget(
+                      imagePath: "assets/images/alacarte_a.png",
+                      nameFood: "Mie Goreng",
+                      description:  "Mie goreng bumbu ala alta-\nresto pasti kamu suka",
+                      price: "\Rp.12.000",
+                    ),
+                   SizedBox(
+                       width: screenwidth,
+                       height: 1,
+                       child: Container(
+                       color: Color(0xffC4C4C4).withOpacity(0.5), // Sesuaikan warna dengan desain Anda
+                           ),
+                         ),
+                     AppetizerItemsWidget(
+                      imagePath: "assets/images/alacarte_b.png",
+                      nameFood: "Nasi Kari",
+                      description:  "Nasi kari ayam gurih dengan\nedamame",
+                      price: "\Rp.16.000",
+                      ),
+                    SizedBox(
+                       width: screenwidth,
+                       height: 1,
+                       child: Container(
+                       color: Color(0xffC4C4C4).withOpacity(0.5), // Sesuaikan warna dengan desain Anda
+                           ),
+                         ),
+                      AppetizerItemsWidget(
+                      imagePath: "assets/images/alacarte_c.png",
+                      nameFood: "Ayam Kuluyuk",
+                      description:  "Ayam tepung dimasak\nbumbu asam manis",
+                      price: "\Rp.15.000",
+                      ), 
+                  ],
+                ),
+
+                Padding(padding: EdgeInsets.only(top: 17, left: 21),
+                  child: Text("Dessert",
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 20,
+                    color: Color(0XFF010F07),
+                  ),),
+                  ),
+
+                  //Category Item Widget
+                  Column(
+                  children: [
+                    AppetizerItemsWidget(
+                      imagePath: "assets/images/dessert_a.png",
+                      nameFood: "Donat Kentang",
+                      description:  "Donat kentang yang dihiasi\nmesses dan cokelat",
+                      price: "\Rp.15.000",
+                    ),
+                   SizedBox(
+                       width: screenwidth,
+                       height: 1,
+                       child: Container(
+                       color: Color(0xffC4C4C4).withOpacity(0.5), // Sesuaikan warna dengan desain Anda
+                           ),
+                         ),
+                     AppetizerItemsWidget(
+                      imagePath: "assets/images/dessert_b.png",
+                      nameFood: "Choco Brownies",
+                      description:  "Brownies cokelat lembut\ndengan topping saus cokelat",
+                      price: "\Rp.10.000",
+                      ),
+                    SizedBox(
+                       width: screenwidth,
+                       height: 1,
+                       child: Container(
+                       color: Color(0xffC4C4C4).withOpacity(0.5), // Sesuaikan warna dengan desain Anda
+                           ),
+                         ),
+                      AppetizerItemsWidget(
+                      imagePath: "assets/images/dessert_c.png",
+                      nameFood: "Lotus Muffin",
+                      description:  "Muffin kopi dengan krim\ncokelat dan biskuit",
+                      price: "\Rp.8.000",
+                      ), 
+                  ],
+                ),
+
+                Padding(padding: EdgeInsets.only(top: 17, left: 21),
+                  child: Text("Paket Hemat",
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 20,
+                    color: Color(0XFF010F07),
+                  ),),
+                  ),
+
+                  //Category Item Widget
+                  Column(
+                  children: [
+                    AppetizerItemsWidget(
+                      imagePath: "assets/images/pakethemat_a.png",
+                      nameFood: "PARE (Paket Rame)",
+                      description:  "Makan bersama kawanmu\nrame-rame biar makin seru!",
+                      price: "\Rp.115.000",
+                    ),
+                   SizedBox(
+                       width: screenwidth,
+                       height: 1,
+                       child: Container(
+                       color: Color(0xffC4C4C4).withOpacity(0.5), // Sesuaikan warna dengan desain Anda
+                           ),
+                         ),
+                     AppetizerItemsWidget(
+                      imagePath: "assets/images/pakethemat_b.png",
+                      nameFood: "Paket Berdua",
+                      description:  "Paket hemat unutk makan\nberdua sama kawanmu",
+                      price: "\Rp.45.000",
+                      ),
+                    SizedBox(
+                       width: screenwidth,
+                       height: 1,
+                       child: Container(
+                       color: Color(0xffC4C4C4).withOpacity(0.5), // Sesuaikan warna dengan desain Anda
+                           ),
+                         ),
+                      AppetizerItemsWidget(
+                      imagePath: "assets/images/pakethemat_c.png",
+                      nameFood: "Paket Berempat",
+                      description:  "Nikmatin menu beragam\npaket hemat berempat yuk",
+                      price: "\Rp.70.000",
+                      ), 
+                  ],
+                ),
+
+                Padding(padding: EdgeInsets.only(top: 17, left: 21),
+                  child: Text("Minum",
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 20,
+                    color: Color(0XFF010F07),
+                  ),),
+                  ),
+
+                  //Category Item Widget
+                  Column(
+                  children: [
+                    AppetizerItemsWidget(
+                      imagePath: "assets/images/minum_a.png",
+                      nameFood: "Soda Lemon",
+                      description:  "Air soda dengan gula dan\nlemon",
+                      price: "\Rp.15.000",
+                    ),
+                   SizedBox(
+                       width: screenwidth,
+                       height: 1,
+                       child: Container(
+                       color: Color(0xffC4C4C4).withOpacity(0.5), // Sesuaikan warna dengan desain Anda
+                           ),
+                         ),
+                     AppetizerItemsWidget(
+                      imagePath: "assets/images/minum_b.png",
+                      nameFood: "Capuccino",
+                      description:  "Espresso ditambah dengan\nsusu",
+                      price: "\Rp.10.000",
+                      ),
+                    SizedBox(
+                       width: screenwidth,
+                       height: 1,
+                       child: Container(
+                       color: Color(0xffC4C4C4).withOpacity(0.5), // Sesuaikan warna dengan desain Anda
+                           ),
+                         ),
+                      AppetizerItemsWidget(
+                      imagePath: "assets/images/minum_c.png",
+                      nameFood: "Americano",
+                      description:  "Espresso dengan air dan es\nbatu",
+                      price: "\Rp.70.000",
+                      ), 
+                  ],
+                ),
                  
                 
                 
@@ -232,68 +419,3 @@ class _MenuCategoryPageState extends State<MenuCategoryPage> {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-// class MenuCategoryPage extends StatelessWidget {
-//   static const String routeName = '/';
-
-//   const MenuCategoryPage({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
-
-//     return SafeArea(
-//       child: Scaffold(
-//         body: Container(
-//           width: double.infinity,
-//           decoration: BoxDecoration(
-//             color: Color(0xFFD9D9D9),
-//             boxShadow: [
-//               BoxShadow(
-//                 color: Color(0xFFD9D9D9).withOpacity(0.5), // Warna dan transparansi bayangan
-//                 blurRadius: 5.0, // Tingkat kaburan
-//                 spreadRadius: 2.0,
-//                 offset: Offset(0, 3),
-//               ),
-//             ],
-//           ),
-//           child: Column(
-//             children: [
-//               SizedBox(
-//                 height: 319,
-//                 width: 393,
-//                 child: Stack(
-//                   alignment: Alignment.bottomCenter,
-//                 children: [
-//                   Align(
-//                     alignment: Alignment.topCenter,
-//                     child: SizedBox(
-//                       height: 319,
-//                       width: 393,
-//                       child: Image.asset("assets/images/menu.png",
-//                       height: 319,
-//                       width: 393,
-//                       fit: BoxFit.cover,
-//                       ),
-//                     ),
-//                   )
-//                 ],),
-//               )
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }

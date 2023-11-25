@@ -32,15 +32,6 @@ class AppetizerItemsWidget extends StatelessWidget {
               height: 120,
               decoration: BoxDecoration(
                 color: Color(0xFFFEFEFE),
-                // borderRadius: BorderRadius.circular(115),
-                // boxShadow: [
-                //   BoxShadow(
-                //     color: Colors.grey.withOpacity(0.5),
-                //     spreadRadius: 3,
-                //     blurRadius: 10,
-                //     offset: Offset(0, 3),
-                //   ),
-                // ],
               ),
               child: Row(
                 children: [
@@ -140,17 +131,6 @@ class AppetizerItemsWidget extends StatelessWidget {
                          ),
                         
                   ),
-                    // Padding(
-                    // padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                    // child: Column(
-                    //   children: [
-                    //     SvgPicture.asset(
-                    //       "assets/svgs/heart.svg",
-                    //       height: 18,
-                    //       width: 20,
-                    //       color: Colors.grey[300],
-                    //  ) ]
-                    //      )),
                        
               
                   
