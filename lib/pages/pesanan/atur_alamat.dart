@@ -10,6 +10,7 @@ class AturAlamat extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
+        automaticallyImplyLeading: false,
         title: Row(
           children: [
             MouseRegion(
@@ -30,7 +31,7 @@ class AturAlamat extends StatelessWidget {
               'Atur alamat pengiriman',
               style: TextStyle(
                 fontFamily: 'Poppins',
-                fontSize: 20,
+                fontSize: 18,
                 fontWeight: FontWeight.w600,
                 color: Colors.black,
               ),
@@ -88,6 +89,85 @@ class AturAlamat extends StatelessWidget {
               ),
             ],
           ),
+          Column(
+  children: [
+    Container(
+      margin: EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 2,
+            blurRadius: 4,
+            offset: Offset(0, 1),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Image.asset(
+                'assets/images/ Home 4.png',
+                width: 19, 
+                height: 19, 
+              ),
+              SizedBox(width: 8),
+              Text(
+                'My Home',
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
+                ),
+              ),
+              Spacer(),
+    Icon(
+      Icons.more_vert,
+      color: Colors.black,
+      size: 24,
+    ),
+            ],
+          ),
+          SizedBox(height: 8),
+          Text(
+                'Balbalee - 0839874456984',
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
+                ),
+              ),
+          SizedBox(height: 8),
+          Text(
+                'Pager pelangi sebelah pager item ya pak.',
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 13,
+                  color: Colors.black,
+                ),
+              ),
+          SizedBox(height: 8),
+          Text(
+                'Jl. in aja dulu III, Blok mana lagi 1 E, No. 666, Tanah kusir, Depok, Jawa Barat, 08395, Indoensia.',
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 13,
+                  color: Colors.grey,
+                ),
+              ),
+        ],
+      ),
+    ),
+  ],
+),
+
         ],
       ),
     );

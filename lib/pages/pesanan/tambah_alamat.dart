@@ -1,3 +1,4 @@
+import 'package:capstone_restaurant/pages/pesanan/atur_alamat.dart';
 import 'package:flutter/material.dart';
 
 class TambahAlamat extends StatefulWidget {
@@ -12,7 +13,7 @@ class _TambahAlamatState extends State<TambahAlamat> {
   final TextEditingController _namaLengkap = TextEditingController();
   final TextEditingController _noHandphone = TextEditingController();
   final TextEditingController _tandaiLokasi = TextEditingController();
-  bool isAlamatUtama = false; // Tambahkan variabel untuk menyimpan status alamat utama
+  bool isAlamatUtama = false; 
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,10 @@ class _TambahAlamatState extends State<TambahAlamat> {
               cursor: SystemMouseCursors.click,
               child: GestureDetector(
                 onTap: () {
-                  // Navigator.pushReplacementNamed(context, '/home');
+                  Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AturAlamat()),
+                );
                 },
                 child: Image.asset(
                   'assets/images/ Left Circle 1.png',
@@ -41,7 +45,7 @@ class _TambahAlamatState extends State<TambahAlamat> {
               'Alamat Baru',
               style: TextStyle(
                 fontFamily: 'Poppins',
-                fontSize: 20,
+                fontSize: 18,
                 fontWeight: FontWeight.w600,
                 color: Colors.black,
               ),
