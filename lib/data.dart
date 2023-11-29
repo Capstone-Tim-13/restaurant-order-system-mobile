@@ -1,5 +1,7 @@
+import 'package:capstone_restaurant/pages/profile/app_rating_page.dart';
 import 'package:capstone_restaurant/pages/profile/change_password_page.dart';
-import 'package:capstone_restaurant/pages/profile/profile_page.dart';
+import 'package:capstone_restaurant/pages/profile/faq_page.dart';
+import 'package:capstone_restaurant/pages/profile/my_account_page.dart';
 import 'package:capstone_restaurant/pages/home/favorite_page.dart';
 import 'package:capstone_restaurant/pages/profile/address_list_page.dart';
 
@@ -29,7 +31,7 @@ List accMenu = [
     'Profil Saya',
     'Ubah informasi akun saya',
     'assets/images/icons/accPage/profil.png',
-    const ProfilePage()
+    const AccPage()
   ],
   [
     'Ubah Password',
@@ -41,19 +43,19 @@ List accMenu = [
     'Metode Pembayaran',
     'Tambahkan metode pembayaran',
     'assets/images/icons/accPage/pembayaran.png',
-    const AddressList()
+    const AccPage()
   ],
   [
     'Lokasi',
     'Atur alamat pengiriman',
     'assets/images/icons/accPage/location.png',
-    const AddressList()
+    const AddressList(isRebuild: false)
   ],
   [
     'Customer Service',
     'Hubungi kami jika ada masalah',
     'assets/images/icons/accPage/cs.png',
-    const AddressList()
+    const AccPage()
   ],
   [
     'Favorit',
@@ -68,272 +70,17 @@ List accExtraMenu = [
     'Beri Rating Untuk Kami',
     'Lihat menu favorit saya',
     'assets/images/icons/accPage/rating.png',
-    const AddressList()
+    const AppRating()
   ],
   [
     'FAQ',
     'Frequently Asked Question',
     'assets/images/icons/accPage/faq.png',
-    const AddressList()
+    const FAQPage()
   ],
 ];
 
 // ----------------------------
-
-List appetizerMenu = [
-  [
-    'Kentang Goreng',
-    'Kentang goreng asin dengan saus pedas untuk cocolannya',
-    '10.000',
-    'assets/images/home/homePage/menubyCat/appetizer.png',
-    4,
-    '394'
-  ],
-  [
-    'Kentang Goreng',
-    'Kentang goreng asin dengan saus pedas untuk cocolannya',
-    '10.000',
-    'assets/images/home/homePage/menubyCat/appetizer.png',
-    4,
-    '394'
-  ],
-  [
-    'Kentang Goreng',
-    'Kentang goreng asin dengan saus pedas untuk cocolannya',
-    '10.000',
-    'assets/images/home/homePage/menubyCat/appetizer.png',
-    4,
-    '394'
-  ],
-  [
-    'Kentang Goreng',
-    'Kentang goreng asin dengan saus pedas untuk cocolannya',
-    '10.000',
-    'assets/images/home/homePage/menubyCat/appetizer.png',
-    4,
-    '394'
-  ],
-  [
-    'Kentang Goreng',
-    'Kentang goreng asin dengan saus pedas untuk cocolannya',
-    '10.000',
-    'assets/images/home/homePage/menubyCat/appetizer.png',
-    4,
-    '394'
-  ],
-  [
-    'Kentang Goreng',
-    'Kentang goreng asin dengan saus pedas untuk cocolannya',
-    '10.000',
-    'assets/images/home/homePage/menubyCat/appetizer.png',
-    4,
-    '394'
-  ],
-  [
-    'Kentang Goreng',
-    'Kentang goreng asin dengan saus pedas untuk cocolannya',
-    '10.000',
-    'assets/images/home/homePage/menubyCat/appetizer.png',
-    4,
-    '394'
-  ],
-  [
-    'Kentang Goreng',
-    'Kentang goreng asin dengan saus pedas untuk cocolannya',
-    '10.000',
-    'assets/images/home/homePage/menubyCat/appetizer.png',
-    4,
-    '394'
-  ],
-  [
-    'Kentang Goreng',
-    'Kentang goreng asin dengan saus pedas untuk cocolannya',
-    '10.000',
-    'assets/images/home/homePage/menubyCat/appetizer.png',
-    4,
-    '394'
-  ],
-  [
-    'Kentang Goreng',
-    'Kentang goreng asin dengan saus pedas untuk cocolannya',
-    '10.000',
-    'assets/images/home/homePage/menubyCat/appetizer.png',
-    4,
-    '394'
-  ],
-  [
-    'Kentang Goreng',
-    'Kentang goreng asin dengan saus pedas untuk cocolannya',
-    '10.000',
-    'assets/images/home/homePage/menubyCat/appetizer.png',
-    4,
-    '394'
-  ],
-  [
-    'Kentang Goreng',
-    'Kentang goreng asin dengan saus pedas untuk cocolannya',
-    '10.000',
-    'assets/images/home/homePage/menubyCat/appetizer.png',
-    4,
-    '394'
-  ],
-];
-
-List dessertMenu = [
-  [
-    'Donat Kentang',
-    'Donat kentang yang dihiasi messes dan cokelat',
-    '15.000',
-    'assets/images/home/homePage/menubyCat/dessert.png',
-    3,
-    '200'
-  ],
-  [
-    'Donat Kentang',
-    'Donat kentang yang dihiasi messes dan cokelat',
-    '15.000',
-    'assets/images/home/homePage/menubyCat/dessert.png',
-    3,
-    '200'
-  ],
-  [
-    'Donat Kentang',
-    'Donat kentang yang dihiasi messes dan cokelat',
-    '15.000',
-    'assets/images/home/homePage/menubyCat/dessert.png',
-    3,
-    '200'
-  ],
-  [
-    'Donat Kentang',
-    'Donat kentang yang dihiasi messes dan cokelat',
-    '15.000',
-    'assets/images/home/homePage/menubyCat/dessert.png',
-    3,
-    '200'
-  ],
-];
-
-List alacarteMenu = [
-  [
-    'Mie Goreng',
-    'Mie goreng bumbu ala alta-resto, pasti kamu suka',
-    '12.000',
-    'assets/images/home/homePage/menubyCat/alacarte.png',
-    3,
-    '125'
-  ],
-  [
-    'Mie Goreng',
-    'Mie goreng bumbu ala alta-resto, pasti kamu suka',
-    '12.000',
-    'assets/images/home/homePage/menubyCat/alacarte.png',
-    3,
-    '125'
-  ],
-  [
-    'Mie Goreng',
-    'Mie goreng bumbu ala alta-resto, pasti kamu suka',
-    '12.000',
-    'assets/images/home/homePage/menubyCat/alacarte.png',
-    3,
-    '125'
-  ],
-  [
-    'Mie Goreng',
-    'Mie goreng bumbu ala alta-resto, pasti kamu suka',
-    '12.000',
-    'assets/images/home/homePage/menubyCat/alacarte.png',
-    3,
-    '125'
-  ],
-  [
-    'Mie Goreng',
-    'Mie goreng bumbu ala alta-resto, pasti kamu suka',
-    '12.000',
-    'assets/images/home/homePage/menubyCat/alacarte.png',
-    3,
-    '125'
-  ],
-  [
-    'Mie Goreng',
-    'Mie goreng bumbu ala alta-resto, pasti kamu suka',
-    '12.000',
-    'assets/images/home/homePage/menubyCat/alacarte.png',
-    3,
-    '125'
-  ],
-];
-
-List paketHematMenu = [
-  [
-    'PARE (Paket Rame)',
-    'Makan bersama kawanmu rame-rame biar makin seru!',
-    '115.000',
-    'assets/images/home/homePage/menubyCat/paket.png',
-    4,
-    '320'
-  ],
-  [
-    'PARE (Paket Rame)',
-    'Makan bersama kawanmu rame-rame biar makin seru!',
-    '115.000',
-    'assets/images/home/homePage/menubyCat/paket.png',
-    4,
-    '320'
-  ],
-  [
-    'PARE (Paket Rame)',
-    'Makan bersama kawanmu rame-rame biar makin seru!',
-    '115.000',
-    'assets/images/home/homePage/menubyCat/paket.png',
-    4,
-    '320'
-  ],
-];
-
-List minumanMenu = [
-  [
-    'Soda lemon',
-    'Air soda dengan gula dan lemon',
-    '15.000',
-    'assets/images/home/homePage/menubyCat/minuman.png',
-    5,
-    '1200'
-  ],
-  [
-    'Soda lemon',
-    'Air soda dengan gula dan lemon',
-    '15.000',
-    'assets/images/home/homePage/menubyCat/minuman.png',
-    5,
-    '1200'
-  ],
-  [
-    'Soda lemon',
-    'Air soda dengan gula dan lemon',
-    '15.000',
-    'assets/images/home/homePage/menubyCat/minuman.png',
-    5,
-    '1200'
-  ],
-  [
-    'Soda lemon',
-    'Air soda dengan gula dan lemon',
-    '15.000',
-    'assets/images/home/homePage/menubyCat/minuman.png',
-    5,
-    '1200'
-  ],
-  [
-    'Soda lemon',
-    'Air soda dengan gula dan lemon',
-    '15.000',
-    'assets/images/home/homePage/menubyCat/minuman.png',
-    5,
-    '1200'
-  ],
-];
 
 List paymentEWallet = [
   ['assets/images/icons/payment/gopay.png', 'Gopay'],
@@ -381,6 +128,195 @@ List savedAddress = [
     'No 42 sebelah no 43 ya pak'
   ],
 ];
+
+Map<String, dynamic> menuData = {
+  'Appetizer':[
+    [
+      'Kentang Goreng',
+      'Kentang goreng asin dengan saus pedas untuk cocolannya',
+      '10.000',
+      'assets/images/home/homePage/menubyCat/appetizer.png',
+      4,
+      '394'
+    ],
+    [
+      'Kentang Goreng',
+      'Kentang goreng asin dengan saus pedas untuk cocolannya',
+      '10.000',
+      'assets/images/home/homePage/menubyCat/appetizer.png',
+      4,
+      '394'
+    ],
+    [
+      'Kentang Goreng',
+      'Kentang goreng asin dengan saus pedas untuk cocolannya',
+      '10.000',
+      'assets/images/home/homePage/menubyCat/appetizer.png',
+      4,
+      '394'
+    ],
+    [
+      'Kentang Goreng',
+      'Kentang goreng asin dengan saus pedas untuk cocolannya',
+      '10.000',
+      'assets/images/home/homePage/menubyCat/appetizer.png',
+      4,
+      '394'
+    ],
+  ],
+  'Dessert':[
+    [
+      'Donat Kentang',
+      'Donat kentang yang dihiasi messes dan cokelat',
+      '15.000',
+      'assets/images/home/homePage/menubyCat/dessert.png',
+      3,
+      '200'
+    ],
+    [
+      'Donat Kentang',
+      'Donat kentang yang dihiasi messes dan cokelat',
+      '15.000',
+      'assets/images/home/homePage/menubyCat/dessert.png',
+      3,
+      '200'
+    ],
+    [
+      'Donat Kentang',
+      'Donat kentang yang dihiasi messes dan cokelat',
+      '15.000',
+      'assets/images/home/homePage/menubyCat/dessert.png',
+      3,
+      '200'
+    ],
+    [
+      'Donat Kentang',
+      'Donat kentang yang dihiasi messes dan cokelat',
+      '15.000',
+      'assets/images/home/homePage/menubyCat/dessert.png',
+      3,
+      '200'
+    ],
+  ],
+  'Ala Carte':[
+    [
+      'Mie Goreng',
+      'Mie goreng bumbu ala alta-resto, pasti kamu suka',
+      '12.000',
+      'assets/images/home/homePage/menubyCat/alacarte.png',
+      3,
+      '125'
+    ],
+    [
+      'Mie Goreng',
+      'Mie goreng bumbu ala alta-resto, pasti kamu suka',
+      '12.000',
+      'assets/images/home/homePage/menubyCat/alacarte.png',
+      3,
+      '125'
+    ],
+    [
+      'Mie Goreng',
+      'Mie goreng bumbu ala alta-resto, pasti kamu suka',
+      '12.000',
+      'assets/images/home/homePage/menubyCat/alacarte.png',
+      3,
+      '125'
+    ],
+    [
+      'Mie Goreng',
+      'Mie goreng bumbu ala alta-resto, pasti kamu suka',
+      '12.000',
+      'assets/images/home/homePage/menubyCat/alacarte.png',
+      3,
+      '125'
+    ],
+    [
+      'Mie Goreng',
+      'Mie goreng bumbu ala alta-resto, pasti kamu suka',
+      '12.000',
+      'assets/images/home/homePage/menubyCat/alacarte.png',
+      3,
+      '125'
+    ],
+    [
+      'Mie Goreng',
+      'Mie goreng bumbu ala alta-resto, pasti kamu suka',
+      '12.000',
+      'assets/images/home/homePage/menubyCat/alacarte.png',
+      3,
+      '125'
+    ],
+  ],
+  'Paket Hemat':[
+    [
+      'PARE (Paket Rame)',
+      'Makan bersama kawanmu rame-rame biar makin seru!',
+      '115.000',
+      'assets/images/home/homePage/menubyCat/paket.png',
+      4,
+      '320'
+    ],
+    [
+      'PARE (Paket Rame)',
+      'Makan bersama kawanmu rame-rame biar makin seru!',
+      '115.000',
+      'assets/images/home/homePage/menubyCat/paket.png',
+      4,
+      '320'
+    ],
+    [
+      'PARE (Paket Rame)',
+      'Makan bersama kawanmu rame-rame biar makin seru!',
+      '115.000',
+      'assets/images/home/homePage/menubyCat/paket.png',
+      4,
+      '320'
+    ],
+  ],
+  'Minum':[
+    [
+      'Soda lemon',
+      'Air soda dengan gula dan lemon',
+      '15.000',
+      'assets/images/home/homePage/menubyCat/minuman.png',
+      5,
+      '1200'
+    ],
+    [
+      'Soda lemon',
+      'Air soda dengan gula dan lemon',
+      '15.000',
+      'assets/images/home/homePage/menubyCat/minuman.png',
+      5,
+      '1200'
+    ],
+    [
+      'Soda lemon',
+      'Air soda dengan gula dan lemon',
+      '15.000',
+      'assets/images/home/homePage/menubyCat/minuman.png',
+      5,
+      '1200'
+    ],
+    [
+      'Soda lemon',
+      'Air soda dengan gula dan lemon',
+      '15.000',
+      'assets/images/home/homePage/menubyCat/minuman.png',
+      5,
+      '1200'
+    ],
+    [
+      'Soda lemon',
+      'Air soda dengan gula dan lemon',
+      '15.000',
+      'assets/images/home/homePage/menubyCat/minuman.png',
+      5,
+      '1200'
+    ],
+  ],
+};
 
 // ----------------------------
 
@@ -446,3 +382,84 @@ List orderHistory = [
   '052223',
   'sausnya tambah bangg'
 ];
+
+// ----------------------------
+
+Map<String, dynamic> faqData = {
+  'Pertanyaan Umum': {
+    'icon': 'assets/images/icons/accPage/pertanyaanUmum.png',
+    'tags': [
+      'pertanyaan',
+      'umum',
+      'aplikasi',
+      'layanan',
+      'produk',
+      'restoran',
+      'layanan pelanggan',
+      'troubleshooting'
+    ],
+    'questions': [
+      [
+        'Untuk Aplikasi ini:',
+        'Selain menyediakan informasi tentang produk dan restoran, melalui aplikasi ini kami juga memberikan layanan terbaik untuk anda.'
+      ],
+      [
+        'Jika aplikasi tidak berfungsi lakukan:',
+        '1. Langkah pertama, matikan ponsel lalu nyalakan kembali.\n2. Jika tidak berhasil, hapus aplikasi anda\n3. Terakhir, hubungi layanan pelanggan kami.'
+      ],
+    ],
+  },
+  'Pembayaran & Profil': {
+    'icon': 'assets/images/icons/accPage/pembayaranProfil.png',
+    'tags': [
+      'pembayaran',
+      'profil',
+      'metode',
+      'ganti',
+      'hubungi',
+      'ganti password',
+      'customer service',
+      'metode pembayaran'
+    ],
+    'questions': [
+      [
+        'Bagaimana cara mengubah PIN di Aplikasi Alta Resto?',
+        'Silahkan masuk ke akun kamu, pilih profil, pilih ubah Password, masukkan PIN lama, setelah itu silahkan masukkan PIN baru.'
+      ],
+      [
+        'Bisa kah saya mengganti metode pembayaran di aplikasi Alta Resto ini?',
+        'Selama pembayaran belum dilakukan, kamu bisa melakukan transaksi baru dan menggunakan metode pembayaran lainnya.'
+      ],
+      [
+        'Apabila ada pertanyaan, siapa yang harus saya hubungi?',
+        'Kamu bisa menghubungi Customer Service kami'
+      ],
+      [
+        'Pembayaran seperti apa yang bisa saya lakukan di Alta Resto?',
+        'Kakak bisa memilih pembayaran dengan menggunakan  E-wallet (Govay, dana, ovo, shopeepay), atau Bank (BCA, Permata Bank, BRI, Bank Mandiri, Cimb Niaga, Bank BTN)'
+      ],
+    ],
+  },
+  'Pick Up': {
+    'icon': 'assets/images/icons/accPage/pickUp.png',
+    'tags': [
+      'pick up',
+      'selesai',
+      'transaksi',
+      'refund',
+      'transaksi pick up',
+      'proses selesai',
+      'pengembalian dana'
+    ],
+    'questions': [
+      [
+        'Pesanan sudah di Pick up namun di aplikasi belum selesai.',
+        'Jika pesanan kamu di aplikasi belum selesai, mohon tunggu 1X24 jam maka pesanan kamu otomatis akan terselesaikan.'
+      ],
+      [
+        'Bagaimana kalau saya tidak jadi pick up pesanan saya?',
+        'Mohon maaf sekali untuk transaksi yang tidak dipick up maka akan dianggap hangus dan tidak bisa direfund.'
+      ],
+    ],
+  },
+};

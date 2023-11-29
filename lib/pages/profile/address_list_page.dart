@@ -2,9 +2,11 @@ import 'package:capstone_restaurant/data.dart';
 import 'package:capstone_restaurant/pages/profile/add_address_page.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 class AddressList extends StatefulWidget {
-  const AddressList({super.key});
+  final bool isRebuild;
+  const AddressList({super.key, required this.isRebuild});
 
   @override
   State<AddressList> createState() => _AddressListState();
@@ -61,8 +63,9 @@ class _AddressListState extends State<AddressList> {
                   onTap: () {
                     Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => const AddAddress()));
+                        PageTransition(
+                            child: const AddAddress(),
+                            type: PageTransitionType.rightToLeft));
                     debugPrint('Tambah alamat tertekan');
                   },
                   child: Text(
@@ -125,15 +128,6 @@ class _AddressListState extends State<AddressList> {
                     ),
                     const Spacer(),
                     threeDots(index),
-                    // GestureDetector(
-                    //   onTap: () {
-                    //     debugPrint('edit address tertekan');
-                    //   },
-                    //   child: Image.asset(
-                    //     'assets/images/icons/threeDots.png',
-                    //     width: 3,
-                    //   ),
-                    // )
                   ],
                 ),
                 Row(
@@ -187,30 +181,10 @@ class _AddressListState extends State<AddressList> {
             setState(() {
               defaultAddress = idx;
             });
-            Navigator.pop(context, idx);
+            widget.isRebuild ? Navigator.pop(context, idx) : null;
             debugPrint('address ${savedAddress[idx]}');
         }
       },
     );
   }
 }
-
-//  SizedBox(
-//                 width: 290,
-//                 child: Column(
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-//                   children: [
-//                     Text(
-//                       'My home',
-//                       style: poppins.copyWith(fontSize: 15),
-//                     ),
-//                     const SizedBox(height: 8),
-//                     Text(
-//                       'Jl. in aja dulu III, Blok mana lagi 1 E, No. 666, Tanah kusir, Depok, Jawa Barat, 08395, Indoensia ijsalgjnlk algjnlk jasalgjnlk jasalgjnlk jasalgjnlk jasalgjnlk jasalgjnlk jasalgjnlk jasjas ijsalgjnlk algjnlk jasalgjnlk jasalgjnlk jasalgjnlk jasalgjnlk jasalgjnlk jasalgjnlk jasjas ijsalgjnlk algjnlk jasalgjnlk jasalgjnlk jasalgjnlk jasalgjnlk jasalgjnlk jasalgjnlk jasjas ijsalgjnlk algjnlk jasalgjnlk jasalgjnlk jasalgjnlk jasalgjnlk jasalgjnlk jasalgjnlk jasjas',
-//                       maxLines: 3,
-//                       overflow: TextOverflow.ellipsis,
-//                       style: poppins.copyWith(fontSize: 13, color: outline),
-//                     ),
-//                   ],
-//                 ),
-//               )

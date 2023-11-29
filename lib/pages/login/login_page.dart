@@ -1,5 +1,9 @@
+import 'package:capstone_restaurant/logic/login/login_logic.dart';
+import 'package:capstone_restaurant/pages/login/register_page.dart';
+import 'package:capstone_restaurant/pages/login/reset_password_page.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -12,6 +16,13 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController emailInput = TextEditingController();
   final TextEditingController passwordInput = TextEditingController();
   bool passwordVisible = true;
+
+  @override
+  void dispose() {
+    emailInput.dispose();
+    passwordInput.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +87,11 @@ class _LoginPageState extends State<LoginPage> {
                             const SizedBox(height: 8),
                             GestureDetector(
                               onTap: () {
-                                Navigator.pushNamed(context, '/resetPassword');
+                                Navigator.push(
+                                    context,
+                                    PageTransition(
+                                        child: const ResetPassword(),
+                                        type: PageTransitionType.fade));
                                 debugPrint('lupa password tertekan');
                               },
                               child: Text(
@@ -92,8 +107,8 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(height: 32),
                     GestureDetector(
                       onTap: () {
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, '/home', (route) => false);
+                        userInputCheck(
+                            context, emailInput.text, passwordInput.text);
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -124,7 +139,11 @@ class _LoginPageState extends State<LoginPage> {
                         const SizedBox(width: 5),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pushNamed(context, '/createAcc');
+                            Navigator.push(
+                                context,
+                                PageTransition(
+                                    child: const RegisterPage(),
+                                    type: PageTransitionType.fade));
                             debugPrint('Buat akun tertekan');
                           },
                           child: Text(

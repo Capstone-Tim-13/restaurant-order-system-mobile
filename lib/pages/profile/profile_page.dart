@@ -1,17 +1,18 @@
 import 'package:capstone_restaurant/data.dart';
-import 'package:capstone_restaurant/pages/profile/profile_page.dart';
-import 'package:capstone_restaurant/pages/login/login_page.dart';
+import 'package:capstone_restaurant/pages/login/onboarding_page.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class AccPage extends StatefulWidget {
-  const AccPage({super.key});
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
 
   @override
-  State<AccPage> createState() => _AccPageState();
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _AccPageState extends State<AccPage> {
+class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,9 +75,9 @@ class _AccPageState extends State<AccPage> {
                                 onTap: () {
                                   Navigator.push(
                                       context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const ProfilePage()));
+                                      PageTransition(
+                                          child: const ProfilePage(),
+                                          type: PageTransitionType.fade));
                                   debugPrint('edit tertekan');
                                 },
                                 child: Image.asset(
@@ -167,10 +168,18 @@ class _AccPageState extends State<AccPage> {
                                     style: poppins.copyWith(fontSize: 16)),
                                 const Spacer(),
                                 GestureDetector(
-                                  onTap: () {
-                                    Navigator.pushReplacementNamed(
-                                        context, '/login');
-
+                                  onTap: () async {
+                                    bool isExit = await exitDialog();
+                                    if (isExit) {
+                                      final prefs =
+                                          await SharedPreferences.getInstance();
+                                      await prefs.remove('isLogin');
+                                      Navigator.pushReplacement(
+                                          context,
+                                          PageTransition(
+                                              child: const OnboardingPage(),
+                                              type: PageTransitionType.fade));
+                                    }
                                     debugPrint('Keluar tertekan');
                                   },
                                   child: RotatedBox(
@@ -197,6 +206,68 @@ class _AccPageState extends State<AccPage> {
       ),
     );
   }
+
+  Future<bool> exitDialog() async {
+    return await showDialog(
+        context: context,
+        builder: ((context) => AlertDialog(
+              backgroundColor: Colors.white,
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Image.asset(
+                        'assets/images/icons/closeW.png',
+                        color: primary4,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  Text(
+                    'Kamu yakin ingin keluar?',
+                    style: poppins.copyWith(
+                        fontWeight: FontWeight.w500, fontSize: 18),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'Kalau kamu yakin ingin keluar,\n silakan klik "keluar" di bawah ini ya.',
+                    style: poppins.copyWith(color: outline, fontSize: 14),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 25),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context, true);
+                      debugPrint('Ubah Password tertekan');
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: primary4,
+                        borderRadius: BorderRadius.circular(37),
+                      ),
+                      width: 335,
+                      height: 48,
+                      child: Center(
+                        child: Text(
+                          'Keluar',
+                          style: poppins.copyWith(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16,
+                              color: primary2),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 25),
+                ],
+              ),
+            )));
+  }
 }
 
 Widget accMenuMaker(context, title, subtitile, titleIcon, route) {
@@ -222,8 +293,10 @@ Widget accMenuMaker(context, title, subtitile, titleIcon, route) {
                   const Spacer(),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => route));
+                      Navigator.push(
+                          context,
+                          PageTransition(
+                              child: route, type: PageTransitionType.fade));
 
                       debugPrint('$title tertekan');
                     },

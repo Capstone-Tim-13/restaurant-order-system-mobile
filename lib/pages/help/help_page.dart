@@ -1,8 +1,10 @@
+import 'package:capstone_restaurant/pages/home/home.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 class HelpPage extends StatefulWidget {
-  final route;
+  final bool route;
   const HelpPage({super.key, required this.route});
 
   @override
@@ -52,7 +54,11 @@ class _HelpPageState extends State<HelpPage> {
               GestureDetector(
                 onTap: () {
                   widget.route
-                      ? Navigator.pushReplacementNamed(context, '/home')
+                      ? Navigator.pushReplacement(
+                          context,
+                          PageTransition(
+                              child: const Home(setIdx: 0),
+                              type: PageTransitionType.fade))
                       : Navigator.pop(context);
                   // Navigator.pushReplacementNamed(context, '/home');
                   // Navigator.pop(context);
@@ -105,7 +111,7 @@ class _HelpPageState extends State<HelpPage> {
                           'assets/images/home/helpPage/background.png'),
                       fit: BoxFit.fill)),
               padding: const EdgeInsets.only(left: 16, right: 16, top: 15),
-              child: Column(
+              child: const Column(
                 children: [
                   Text('aaa'),
                 ],
@@ -116,7 +122,7 @@ class _HelpPageState extends State<HelpPage> {
         Container(
           decoration: BoxDecoration(
             color: primary2,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.1),
@@ -128,7 +134,7 @@ class _HelpPageState extends State<HelpPage> {
           padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 17),
           child: Row(
             children: [
-              Container(
+              SizedBox(
                 height: 35,
                 width: 318,
                 child: TextField(

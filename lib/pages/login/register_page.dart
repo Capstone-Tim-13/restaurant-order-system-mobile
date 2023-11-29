@@ -1,22 +1,36 @@
+import 'package:capstone_restaurant/logic/login/register_logic.dart';
 import 'package:capstone_restaurant/pages/login/login_page.dart';
+import 'package:capstone_restaurant/pages/login/privacy_policy_page.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
-class CreateAcc extends StatefulWidget {
-  const CreateAcc({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
   @override
-  State<CreateAcc> createState() => _CreateAccState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _CreateAccState extends State<CreateAcc> {
+class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController nameInput = TextEditingController();
   final TextEditingController emailInput = TextEditingController();
   final TextEditingController passwordInput = TextEditingController();
   final TextEditingController retypePasswordInput = TextEditingController();
+  final GlobalKey<FormState> formKey1 = GlobalKey<FormState>();
   bool passwordVisible = true;
   bool retypePasswordVisible = true;
+
+  @override
+  void dispose() {
+    nameInput.dispose();
+    emailInput.dispose();
+    emailInput.dispose();
+    passwordInput.dispose();
+    retypePasswordInput.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,26 +89,17 @@ class _CreateAccState extends State<CreateAcc> {
                   style: poppins.copyWith(fontSize: 14, color: primary4),
                 ),
                 const SizedBox(height: 24),
-                Text('Nama',
-                    style: poppins.copyWith(fontSize: 16, color: outline)),
-                userInput(nameInput),
-                const SizedBox(height: 16),
-                Text('Email',
-                    style: poppins.copyWith(fontSize: 16, color: outline)),
-                userInput(emailInput),
-                const SizedBox(height: 16),
-                Text('Password',
-                    style: poppins.copyWith(fontSize: 16, color: outline)),
-                userPasswordInput(passwordInput, passwordVisible),
-                const SizedBox(height: 16),
-                Text('Konfirmasi Password',
-                    style: poppins.copyWith(fontSize: 16, color: outline)),
-                userPasswordInput(retypePasswordInput, retypePasswordVisible),
+                userInputData(),
               ],
             ),
             const SizedBox(height: 32),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                if (formKey1.currentState?.validate() == true) {
+                  passwordCheck(context, nameInput.text, emailInput.text,
+                      passwordInput.text, retypePasswordInput.text);
+                }
+              },
               child: Container(
                 decoration: BoxDecoration(
                   color: primary4,
@@ -146,6 +151,11 @@ class _CreateAccState extends State<CreateAcc> {
                     style: poppins.copyWith(color: Colors.green, fontSize: 12),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: const PrivacyPolicy(),
+                                type: PageTransitionType.fade));
                         debugPrint('open privacy n policy');
                       },
                   ),
@@ -178,31 +188,104 @@ class _CreateAccState extends State<CreateAcc> {
     );
   }
 
-  Widget userInput(controller) {
-    return TextField(
-      controller: controller,
-      style: poppins.copyWith(fontSize: 16),
-    );
-  }
-
-  Widget userPasswordInput(controller, passwordVisible) {
-    return TextFormField(
-      controller: controller,
-      obscureText: passwordVisible, // Perubahan di sini
-      style: poppins.copyWith(fontSize: 16),
-      decoration: InputDecoration(
-          suffixIcon: IconButton(
-              icon: Icon(
-                passwordVisible
-                    ? Icons.visibility
-                    : Icons.visibility_off, // Perubahan di sini
-                color: outline,
-              ),
-              onPressed: () {
-                setState(() {
-                  passwordVisible = !passwordVisible; // Perubahan di sini
-                });
-              })),
+  Widget userInputData() {
+    return Form(
+      key: formKey1,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Nama', style: poppins.copyWith(fontSize: 16, color: outline)),
+          TextFormField(
+            controller: nameInput,
+            style: poppins.copyWith(fontSize: 16),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Username harus terisi';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 16),
+          Text('Email', style: poppins.copyWith(fontSize: 16, color: outline)),
+          TextFormField(
+            controller: emailInput,
+            style: poppins.copyWith(fontSize: 16),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Email harus terisi';
+              }
+              if (value.contains('@gmail.com') ||
+                  value.contains('@yahoo.com') ||
+                  value.contains('@icloud.com')) {
+                return null; // Email valid
+              } else {
+                return 'Email tidak valid';
+              }
+            },
+          ),
+          const SizedBox(height: 16),
+          Text('Password',
+              style: poppins.copyWith(fontSize: 16, color: outline)),
+          TextFormField(
+            controller: passwordInput,
+            obscureText: passwordVisible, // Perubahan di sini
+            style: poppins.copyWith(fontSize: 16),
+            decoration: InputDecoration(
+                suffixIcon: IconButton(
+                    icon: Icon(
+                      passwordVisible
+                          ? Icons.visibility
+                          : Icons.visibility_off, // Perubahan di sini
+                      color: outline,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        passwordVisible = !passwordVisible; // Perubahan di sini
+                      });
+                    })),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Password harus terisi';
+              }
+              if (value.length < 8) {
+                return 'Password harus memiliki panjang minimal 8 karakter';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 16),
+          Text('Konfirmasi Password',
+              style: poppins.copyWith(fontSize: 16, color: outline)),
+          TextFormField(
+            controller: retypePasswordInput,
+            obscureText: retypePasswordVisible, // Perubahan di sini
+            style: poppins.copyWith(fontSize: 16),
+            decoration: InputDecoration(
+                suffixIcon: IconButton(
+                    icon: Icon(
+                      retypePasswordVisible
+                          ? Icons.visibility
+                          : Icons.visibility_off, // Perubahan di sini
+                      color: outline,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        retypePasswordVisible =
+                            !retypePasswordVisible; // Perubahan di sini
+                      });
+                    })),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Password harus terisi';
+              }
+              if (value.length < 8) {
+                return 'Password harus memiliki panjang minimal 8 karakter';
+              }
+              return null;
+            },
+          )
+        ],
+      ),
     );
   }
 }

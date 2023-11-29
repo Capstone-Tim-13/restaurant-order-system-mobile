@@ -1,7 +1,9 @@
+import 'package:capstone_restaurant/pages/login/login_page.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});
@@ -144,7 +146,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
               GestureDetector(
                 onTap: () {
                   if (currentCarouselIndex == 3) {
-                    Navigator.pushNamed(context, '/login');
+                    Navigator.push(
+                        context,
+                        PageTransition(
+                            child: const LoginPage(),
+                            type: PageTransitionType.fade));
                   } else {
                     carouselController.nextPage(curve: Curves.easeOutCubic);
                   }
@@ -170,7 +176,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
               const SizedBox(height: 16),
               GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, '/login');
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          child: const LoginPage(),
+                          type: PageTransitionType.fade));
                 },
                 child: Text(
                   'Lewati',

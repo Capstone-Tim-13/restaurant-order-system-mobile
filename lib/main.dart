@@ -1,6 +1,4 @@
-import 'package:capstone_restaurant/data.dart';
-import 'package:capstone_restaurant/pages/profile/my_account_page.dart';
-import 'package:capstone_restaurant/pages/profile/add_address_page.dart';
+import 'package:capstone_restaurant/logic/provider_handler.dart';
 import 'package:capstone_restaurant/pages/home/favorite_page.dart';
 import 'package:capstone_restaurant/pages/home/home.dart';
 import 'package:capstone_restaurant/pages/home/notification_page.dart';
@@ -8,21 +6,24 @@ import 'package:capstone_restaurant/pages/login/register_page.dart';
 import 'package:capstone_restaurant/pages/login/login_page.dart';
 import 'package:capstone_restaurant/pages/login/onboarding_page.dart';
 import 'package:capstone_restaurant/pages/login/reset_password_page.dart';
-import 'package:capstone_restaurant/pages/order/cart_page.dart';
-import 'package:capstone_restaurant/pages/order/history_order_page.dart';
-import 'package:capstone_restaurant/pages/order/input_rating_page.dart';
-import 'package:capstone_restaurant/pages/order/order_page.dart';
-import 'package:capstone_restaurant/pages/order/order_status.dart';
-import 'package:capstone_restaurant/pages/order/payment_page.dart';
+import 'package:capstone_restaurant/pages/profile/profile_page.dart';
 import 'package:capstone_restaurant/pages/splash.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
+  final isLogin = prefs.getBool('isLogin') ?? false;
+  runApp(MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => UserDataProvider())],
+      child: MyApp(isLogin: isLogin)));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool isLogin;
+  const MyApp({super.key, required this.isLogin});
 
   // This widget is the root of your application.
   @override
@@ -36,19 +37,18 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => Splash(),
+        '/': (context) => Splash(isLogin: isLogin),
         '/onboarding': (context) => const OnboardingPage(),
         '/login': (context) => const LoginPage(),
         '/register': (context) => const RegisterPage(),
         '/resetPassword': (context) => const ResetPassword(),
         '/home': (context) => const Home(setIdx: 0),
-        // '/homePage': (context) => const HomePage(),
         '/favPage': (context) => const FavoriteMenu(),
         '/pesanan': (context) => const MyHomePage(),
         '/bantuan': (context) => const MyHomePage(),
         '/profil': (context) => const MyHomePage(),
         '/notifikasi': (context) => const NotificationPage(),
-        '/account': (context) => const AccPage(),
+        '/account': (context) => const ProfilePage(),
       },
     );
   }
@@ -100,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text('a'),
+        title: const Text('a'),
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
