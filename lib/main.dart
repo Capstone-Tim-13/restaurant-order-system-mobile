@@ -1,4 +1,5 @@
 
+
 import 'package:capstone_restaurant/pages/bantuan/rating_page.dart';
 import 'package:capstone_restaurant/pages/profile/profile_page.dart';
 import 'package:capstone_restaurant/pages/profile/change_password_page.dart';
@@ -10,6 +11,7 @@ import 'package:capstone_restaurant/pages/login/register_page.dart';
 import 'package:capstone_restaurant/pages/pesanan/searching_page.dart';
 import 'package:capstone_restaurant/pages/splash_screen.dart';
 import 'package:capstone_restaurant/pages/pesanan/popup_menu.dart';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -27,10 +29,13 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+        // useMaterial3: true,
       ),
       initialRoute: '/',
       routes: {
+
+                     
+         
    
         '/': (context) => const ProfilePage(),
         '/onboarding': (context) => const OnboardingPage(),
@@ -40,6 +45,7 @@ class MyApp extends StatelessWidget {
         '/forgetPassword': (context) => const ForgetPassword(),
         '/popupmenupage': (context) => PopupMenuPage(),
         '/feedbackPage': (context) =>const FeedbackPage(),
+
       },
     );
   }
