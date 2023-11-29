@@ -1,3 +1,4 @@
+
 import 'package:capstone_restaurant/pages/bantuan/rating_page.dart';
 import 'package:capstone_restaurant/pages/profile/profile_page.dart';
 import 'package:capstone_restaurant/pages/profile/change_password_page.dart';
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
+   
         '/': (context) => const ProfilePage(),
         '/onboarding': (context) => const OnboardingPage(),
         '/login': (context) => const LoginPage(),
