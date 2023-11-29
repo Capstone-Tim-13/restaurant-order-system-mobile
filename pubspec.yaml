@@ -69,6 +69,7 @@ flutter:
 
 
 
+
     - assets/images/icons/payment/
     - assets/images/icons/accPage/
     - assets/images/home/accPage/
@@ -83,6 +84,7 @@ flutter:
     - assets/images/home/orderPage/cancel/
     - assets/images/home/orderPage/history/
     - assets/images/home/orderPage/ongoing/
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -101,6 +103,7 @@ flutter:
 
 
 
+
         - asset: assets/fonts/Poppins-Black.ttf
         - asset: assets/fonts/Poppins-Bold.ttf
         - asset: assets/fonts/Poppins-ExtraBold.ttf
@@ -110,6 +113,7 @@ flutter:
         - asset: assets/fonts/Poppins-Regular.ttf
         - asset: assets/fonts/Poppins-SemiBold.ttf
         - asset: assets/fonts/Poppins-Thin.ttf
+
 
 
 
