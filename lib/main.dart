@@ -1,4 +1,21 @@
-import 'package:capstone_restaurant/pages/pesanan/atur_alamat.dart';
+
+
+
+
+import 'package:capstone_restaurant/pages/bantuan/rating_page.dart';
+import 'package:capstone_restaurant/pages/profile/profile_page.dart';
+import 'package:capstone_restaurant/pages/profile/change_password_page.dart';
+import 'package:capstone_restaurant/pages/profile/my_account_page.dart';
+import 'package:capstone_restaurant/pages/login/forget_password_page.dart';
+import 'package:capstone_restaurant/pages/login/login_page.dart';
+import 'package:capstone_restaurant/pages/login/onboarding_page.dart';
+import 'package:capstone_restaurant/pages/login/register_page.dart';
+import 'package:capstone_restaurant/pages/pesanan/searching_page.dart';
+import 'package:capstone_restaurant/pages/splash_screen.dart';
+import 'package:capstone_restaurant/pages/pesanan/popup_menu.dart';
+
+
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,20 +33,28 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+        // useMaterial3: true,
       ),
-     initialRoute: '/',
+      initialRoute: '/',
       routes: {
-        '/': (context) => const AturAlamat(),
-        // '/login': (context) => const MyHomePage(),
-        // '/home': (context) => const MyHomePage(),
-        '/pesanan': (context) => const AturAlamat(),
-        // '/bantuan': (context) => const MyHomePage(),
-        // '/profil': (context) => const MyHomePage(),
-        // '/notifikasi': (context) => const MyHomePage(),
-        // '/akun': (context) => const MyHomePage(),
+
+
+
+                     
+         
+   
+        '/': (context) => const ProfilePage(),
+        '/onboarding': (context) => const OnboardingPage(),
+        '/login': (context) => const LoginPage(),
+        '/register': (context) => const RegisterPage(),
+        '/search': (context) => const SearchPage(),
+        '/forgetPassword': (context) => const ForgetPassword(),
+        '/popupmenupage': (context) => PopupMenuPage(),
+        '/feedbackPage': (context) =>const FeedbackPage(),
+
       },
     );
   }
 }
+
 
