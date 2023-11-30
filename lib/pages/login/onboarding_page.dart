@@ -199,8 +199,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
   }
 
   Widget greetingsmaker(title, subtitle, image) {
-    return Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-      Image.asset(image),
+    return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+      Image.asset(image, scale: 1),
       Padding(
           padding: const EdgeInsets.symmetric(horizontal: 33),
           child: Column(

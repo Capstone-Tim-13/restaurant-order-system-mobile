@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget showGreeting(Function changePageIndex) {
     return Padding(
-      padding: const EdgeInsets.only(top: 56, left: 21, right: 21, bottom: 21),
+      padding: const EdgeInsets.only(top: 26, left: 21, right: 21, bottom: 21),
       child: Row(
         children: [
           GestureDetector(
@@ -536,7 +536,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 // const SizedBox(height: 10),
                 Padding(
-                  padding:const EdgeInsets.only(left: 15, right: 15, top: 9),
+                  padding: const EdgeInsets.only(left: 15, right: 15, top: 9),
                   child: Column(
                     children: [
                       Row(

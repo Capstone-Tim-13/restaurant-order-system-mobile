@@ -1,5 +1,6 @@
 import 'package:capstone_restaurant/data.dart';
 import 'package:capstone_restaurant/pages/login/onboarding_page.dart';
+import 'package:capstone_restaurant/pages/profile/my_account_page.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -76,7 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   Navigator.push(
                                       context,
                                       PageTransition(
-                                          child: const ProfilePage(),
+                                          child: const AccPage(),
                                           type: PageTransitionType.fade));
                                   debugPrint('edit tertekan');
                                 },

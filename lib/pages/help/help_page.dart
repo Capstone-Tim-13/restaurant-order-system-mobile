@@ -48,7 +48,7 @@ class _HelpPageState extends State<HelpPage> {
               ),
             ],
           ),
-          padding: const EdgeInsets.only(top: 55, bottom: 14, left: 14),
+          padding: const EdgeInsets.only(top: 24, bottom: 14, left: 14),
           child: Row(
             children: [
               GestureDetector(
