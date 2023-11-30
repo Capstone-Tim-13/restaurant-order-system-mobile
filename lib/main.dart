@@ -2,10 +2,10 @@ import 'package:capstone_restaurant/logic/provider_handler.dart';
 import 'package:capstone_restaurant/pages/home/favorite_page.dart';
 import 'package:capstone_restaurant/pages/home/home.dart';
 import 'package:capstone_restaurant/pages/home/notification_page.dart';
+import 'package:capstone_restaurant/pages/login/forget_password_page.dart';
 import 'package:capstone_restaurant/pages/login/register_page.dart';
 import 'package:capstone_restaurant/pages/login/login_page.dart';
 import 'package:capstone_restaurant/pages/login/onboarding_page.dart';
-import 'package:capstone_restaurant/pages/login/reset_password_page.dart';
 import 'package:capstone_restaurant/pages/profile/profile_page.dart';
 import 'package:capstone_restaurant/pages/splash.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +16,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
   final isLogin = prefs.getBool('isLogin') ?? false;
-  runApp(MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => UserDataProvider())],
-      child: MyApp(isLogin: isLogin)));
+
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => UserDataProvider()),
+    // ChangeNotifierProvider(create: (_) => PaymentDataProvider()),
+  ], child: MyApp(isLogin: isLogin)));
 }
 
 class MyApp extends StatelessWidget {

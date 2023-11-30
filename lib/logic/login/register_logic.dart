@@ -19,16 +19,19 @@ registerMe(context, username, email, password) async {
   final userProvider = Provider.of<UserDataProvider>(context, listen: false);
   List data = [username, email, password];
   bool isRegister = await userProvider.userRegister(data);
+  // bool isRegister = false;
 
   if (isRegister) {
-    // login();
     summonDialog(context,
-        customTitle: 'Register berhasil',
-        customSubtitle: 'Silahkan login dengan email dan password anda.');
-    debugPrint('register berhasil');
-    Navigator.pop(context);
+            customTitle: 'Register berhasil',
+            customSubtitle: 'Silahkan login dengan akun baru anda.')
+        .then((_) {
+      Navigator.pop(context);
+    });
   } else {
-    summonDialog(context);
+    summonDialog(context,
+        customTitle: 'Register Gagal',
+        customSubtitle: 'Silahkan coba kembali nanti.');
     debugPrint('register tidak berhasil');
   }
 }

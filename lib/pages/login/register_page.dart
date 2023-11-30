@@ -18,14 +18,13 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController emailInput = TextEditingController();
   final TextEditingController passwordInput = TextEditingController();
   final TextEditingController retypePasswordInput = TextEditingController();
-  final GlobalKey<FormState> formKey1 = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool passwordVisible = true;
   bool retypePasswordVisible = true;
 
   @override
   void dispose() {
     nameInput.dispose();
-    emailInput.dispose();
     emailInput.dispose();
     passwordInput.dispose();
     retypePasswordInput.dispose();
@@ -95,7 +94,7 @@ class _RegisterPageState extends State<RegisterPage> {
             const SizedBox(height: 32),
             GestureDetector(
               onTap: () {
-                if (formKey1.currentState?.validate() == true) {
+                if (formKey.currentState?.validate() == true) {
                   passwordCheck(context, nameInput.text, emailInput.text,
                       passwordInput.text, retypePasswordInput.text);
                 }
@@ -190,7 +189,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget userInputData() {
     return Form(
-      key: formKey1,
+      key: formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

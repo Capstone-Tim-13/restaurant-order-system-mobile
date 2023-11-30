@@ -1,8 +1,11 @@
+// Rachel
+
 import 'package:capstone_restaurant/data.dart';
 import 'package:capstone_restaurant/pages/home/favorite_page.dart';
 import 'package:capstone_restaurant/pages/home/menu_by_cat_page.dart';
 import 'package:capstone_restaurant/pages/home/notification_page.dart';
 import 'package:capstone_restaurant/style.dart';
+import 'package:capstone_restaurant/widgets.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
@@ -20,23 +23,42 @@ class _HomePageState extends State<HomePage> {
   bool addToFav = false;
   int currentCarouselIndex = 0;
   int addToBasket = 0;
+  late Future<void> fetchData;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData = fetchDataFromSharedPreferences();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: SingleChildScrollView(
-      child: Column(
-        children: [
-          showGreeting(widget.changePageIndex),
-          showBanner(),
-          showCat(),
-          showRecommendation(),
-          showFavMenu(),
-          showPromo(),
-          showBestSeller()
-        ],
-      ),
-    ));
+    return FutureBuilder(
+      future: fetchData,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          // Handle errors
+          return Text('Error: ${snapshot.error}');
+        } else {
+          return Scaffold(
+              body: SingleChildScrollView(
+            child: Column(
+              children: [
+                showGreeting(widget.changePageIndex),
+                showBanner(),
+                showCat(),
+                showRecommendation(),
+                showFavMenu(),
+                showPromo(),
+                showBestSeller()
+              ],
+            ),
+          ));
+        }
+      },
+    );
   }
 
   Widget showGreeting(Function changePageIndex) {
@@ -59,7 +81,8 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Hello Hydre!',
+                'Hello ${userData[0]}!',
+                // 'Hello !',
                 style: poppins.copyWith(fontSize: 15),
               ),
               Text(

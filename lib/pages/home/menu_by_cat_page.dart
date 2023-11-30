@@ -1,6 +1,8 @@
+//  ali
+
 import 'package:capstone_restaurant/data.dart';
 import 'package:capstone_restaurant/pages/home/favorite_page.dart';
-import 'package:capstone_restaurant/pages/home/menu_detail_page.dart';
+import 'package:capstone_restaurant/pages/home/popup_menu_page.dart';
 import 'package:capstone_restaurant/pages/home/search_page.dart';
 import 'package:capstone_restaurant/pages/order/cart_page.dart';
 import 'package:capstone_restaurant/style.dart';
@@ -309,7 +311,9 @@ class _MenubyCatState extends State<MenubyCat> {
         Navigator.push(
             context,
             PageTransition(
-                child: MenuDetail(data: data,),
+                child: MenuDetail(
+                  data: data,
+                ),
                 type: PageTransitionType.fade));
         debugPrint('menu ${data[0]} tertekan');
       },

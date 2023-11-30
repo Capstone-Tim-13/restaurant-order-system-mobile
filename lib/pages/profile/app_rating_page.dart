@@ -55,38 +55,38 @@ class _AppRatingState extends State<AppRating> {
   }
 
   Widget showAppRating() {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 35),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Kirim feedback anda kepada kami!',
-                    style: poppins.copyWith(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
-                    ),
+    return Column(
+      children: [
+        SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 22),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Kirim feedback anda kepada kami!',
+                  style: poppins.copyWith(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
                   ),
-                  Text(
-                    'Bagikan masukkan mu tentang aplikasi ini ya!\nUntuk memberikan support terbaik bagi kami.',
-                    style: poppins.copyWith(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white,
-                    ),
+                ),
+                Text(
+                  'Bagikan masukkan mu tentang aplikasi ini ya!\nUntuk memberikan support terbaik bagi kami.',
+                  style: poppins.copyWith(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-          const SizedBox(height: 37),
-          Container(
+        ),
+        const SizedBox(height: 37),
+        Expanded(
+          child: Container(
             width: MediaQuery.of(context).size.width,
             decoration: const BoxDecoration(
               color: Colors.white,
@@ -134,11 +134,12 @@ class _AppRatingState extends State<AppRating> {
                   ),
                 ),
                 const SizedBox(height: 50),
-                Center(
+                Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         TextField(
                           controller: userFeedback,
@@ -169,7 +170,6 @@ class _AppRatingState extends State<AppRating> {
                             );
                           },
                         ),
-                        const SizedBox(height: 150),
                         Center(
                           child: GestureDetector(
                             onTap: () {
@@ -210,8 +210,8 @@ class _AppRatingState extends State<AppRating> {
               ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

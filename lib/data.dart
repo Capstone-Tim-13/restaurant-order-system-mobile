@@ -1,11 +1,14 @@
+import 'package:capstone_restaurant/pages/order/payment_method_page.dart';
 import 'package:capstone_restaurant/pages/profile/app_rating_page.dart';
 import 'package:capstone_restaurant/pages/profile/change_password_page.dart';
+import 'package:capstone_restaurant/pages/home/favorite_page.dart';
 import 'package:capstone_restaurant/pages/profile/faq_page.dart';
 import 'package:capstone_restaurant/pages/profile/my_account_page.dart';
-import 'package:capstone_restaurant/pages/home/favorite_page.dart';
-import 'package:capstone_restaurant/pages/profile/address_list_page.dart';
+import 'package:capstone_restaurant/pages/profile/address_page.dart';
 
-int defaultAddress = 0;
+
+List defaultPaymentMethod = [];
+List<String> userData = [];
 
 List catData = [
   ['Appetizer', 'assets/images/home/homePage/category/appetizer.png'],
@@ -43,13 +46,13 @@ List accMenu = [
     'Metode Pembayaran',
     'Tambahkan metode pembayaran',
     'assets/images/icons/accPage/pembayaran.png',
-    const AccPage()
+    const PaymentMethod()
   ],
   [
     'Lokasi',
     'Atur alamat pengiriman',
     'assets/images/icons/accPage/location.png',
-    const AddressList(isRebuild: false)
+    const AddressPage(isRebuild: false)
   ],
   [
     'Customer Service',
@@ -98,39 +101,9 @@ List paymentBank = [
   ['assets/images/icons/payment/btn.png', 'Bank BTN'],
 ];
 
-List savedAddress = [
-  [
-    'My home',
-    'Balbalee',
-    '0839874456984',
-    'Jl. in aja dulu III, Blok mana lagi 1 E, No. 666, Tanah kusir, Depok, Jawa Barat, 08395, Indoensia',
-    'Pager pelangi sebelah pager item ya pak'
-  ],
-  [
-    'Office',
-    'Oryngon',
-    '08458697543',
-    'Jl. besar raya 5, kecamatan sukarela, Cakung, Jakarta Timur, 127846, Indonesia',
-    'Di taro di pos satpam aja ya pak'
-  ],
-  [
-    'Kampus',
-    'Balbalee',
-    '0839874456984',
-    'Jl. in aja dulu III, Blok mana lagi 1 E, No. 666, Tanah kusir, Depok, Jawa Barat, 08395, Indoensia',
-    'Seberang Alfadidi'
-  ],
-  [
-    'Kost',
-    'Balbalee',
-    '0839874456984',
-    'Jl. in aja dulu III, Blok mana lagi 1 E, No. 666, Tanah kusir, Depok, Jawa Barat, 08395, Indoensia',
-    'No 42 sebelah no 43 ya pak'
-  ],
-];
 
 Map<String, dynamic> menuData = {
-  'Appetizer':[
+  'Appetizer': [
     [
       'Kentang Goreng',
       'Kentang goreng asin dengan saus pedas untuk cocolannya',
@@ -164,7 +137,7 @@ Map<String, dynamic> menuData = {
       '394'
     ],
   ],
-  'Dessert':[
+  'Dessert': [
     [
       'Donat Kentang',
       'Donat kentang yang dihiasi messes dan cokelat',
@@ -198,7 +171,7 @@ Map<String, dynamic> menuData = {
       '200'
     ],
   ],
-  'Ala Carte':[
+  'Ala Carte': [
     [
       'Mie Goreng',
       'Mie goreng bumbu ala alta-resto, pasti kamu suka',
@@ -248,7 +221,7 @@ Map<String, dynamic> menuData = {
       '125'
     ],
   ],
-  'Paket Hemat':[
+  'Paket Hemat': [
     [
       'PARE (Paket Rame)',
       'Makan bersama kawanmu rame-rame biar makin seru!',
@@ -274,7 +247,7 @@ Map<String, dynamic> menuData = {
       '320'
     ],
   ],
-  'Minum':[
+  'Minum': [
     [
       'Soda lemon',
       'Air soda dengan gula dan lemon',
@@ -463,3 +436,72 @@ Map<String, dynamic> faqData = {
     ],
   },
 };
+
+// -------------------------------
+class DataMenu {
+  List recMenu = [
+    {
+      'image': 'assets/images/tuna.png',
+      'title': 'Tuna With Lemon',
+      'price': 'Rp 15.000',
+      'dec': 'Tuna bumbu kuning dengan perasan lemon yang segar',
+    },
+    {
+      'image': 'assets/images/sushi.png',
+      'title': 'Sushi Ikan Lele',
+      'price': 'Rp 15.000',
+      'dec': 'Sushi Ikan Lele',
+    },
+    {
+      'image': 'assets/images/pasta.png',
+      'title': 'Pasta Ayam',
+      'price': 'Rp 10.000',
+      'dec': 'Pasta Ayam',
+    },
+    {
+      'image': 'assets/images/kopi.png',
+      'title': 'Kopi Hitam',
+      'price': 'Rp 5.000',
+      'dec': 'Kopi Hitam',
+    },
+    {
+      'image': 'assets/images/pie.png',
+      'title': 'Pie Coklat',
+      'price': 'Rp 10.000',
+      'dec': 'Pie Coklat',
+    },
+    {
+      'image': 'assets/images/sandwich.png',
+      'title': 'Sandwich',
+      'price': 'Rp 10.000',
+      'dec': 'Sandwich',
+    },
+  ];
+
+  List terlaris = [
+    {
+      'image': 'assets/images/napolifussili.png',
+      'title': 'Napolitana',
+      'price': 'Rp 15.000',
+      'dec': 'Fussili yang lezat dengan bumbu napoli yang segar',
+    },
+    {
+      'image': 'assets/images/miegoreng.png',
+      'title': 'Mie Goreng',
+      'price': 'Rp 15.000',
+      'dec': 'Mie goreng dengan seafood yang segar pas buat kamu',
+    },
+    {
+      'image': 'assets/images/sushi.png',
+      'title': 'Sushi Ikan Lele',
+      'price': 'Rp 15.000',
+      'dec': 'Sushi Ikan Lele',
+    },
+    {
+      'image': 'assets/images/pasta.png',
+      'title': 'Pasta Ayam',
+      'price': 'Rp 10.000',
+      'dec': 'Pasta Ayam',
+    }
+  ];
+}

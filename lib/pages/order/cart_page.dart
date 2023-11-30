@@ -1,6 +1,7 @@
 import 'package:capstone_restaurant/data.dart';
+import 'package:capstone_restaurant/logic/profil/address_logic.dart';
 import 'package:capstone_restaurant/pages/home/menu_by_cat_page.dart';
-import 'package:capstone_restaurant/pages/profile/address_list_page.dart';
+import 'package:capstone_restaurant/pages/profile/address_page.dart';
 import 'package:capstone_restaurant/pages/order/payment_method_page.dart';
 import 'package:capstone_restaurant/pages/order/payment_page.dart';
 import 'package:capstone_restaurant/style.dart';
@@ -25,6 +26,20 @@ class _CartPageState extends State<CartPage> {
   List paymentData = [];
   List notes = List.filled(5, '');
   var detailOrder = DetailOrder();
+
+  void updatePaymentData(List newPaymentData) {
+    setState(() {
+      paymentData = newPaymentData;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      paymentData = defaultPaymentMethod;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,342 +75,354 @@ class _CartPageState extends State<CartPage> {
 
   Widget confirmOrderPage() {
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          Padding(
-            padding:
-                const EdgeInsets.only(top: 20, bottom: 32, left: 16, right: 16),
-            child: GestureDetector(
-              onTap: () async {
-                final result = await Navigator.push(
-                    context,
-                    PageTransition(
-                        child: const AddressList(isRebuild: true),
-                        type: PageTransitionType.fade));
-                if (result != null) {
-                  setState(() {
-                    defaultAddress = result;
-                  });
-                }
-                debugPrint('alamat tertekan');
-              },
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(
+                  top: 20, bottom: 32, left: 16, right: 16),
+              child: GestureDetector(
+                onTap: () async {
+                  final result = await Navigator.push(
+                      context,
+                      PageTransition(
+                          child: const AddressPage(isRebuild: true),
+                          type: PageTransitionType.fade));
+                  if (result != null) {
+                    setState(() {
+                      defaultAddress = result;
+                    });
+                  }
+                  debugPrint('alamat tertekan');
+                },
+                child: Container(
+                  decoration: homePageMenu.copyWith(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  width: MediaQuery.of(context).size.width,
+                  child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Image.asset(
+                            'assets/images/icons/home2.png',
+                            width: 17,
+                          ),
+                          const SizedBox(width: 8),
+                          SizedBox(
+                            width: 290,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  savedAddress[defaultAddress][0],
+                                  style: poppins.copyWith(fontSize: 15),
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  savedAddress[defaultAddress][3],
+                                  maxLines: 3,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: poppins.copyWith(
+                                      fontSize: 13, color: outline),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      )),
+                ),
+              ),
+            ),
+            const Divider(),
+            Padding(
+              padding: const EdgeInsets.only(top: 24),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/images/icons/timer.png',
+                    width: 17,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Estimasi waktu pengiriman : 30 menit (4 km)',
+                    style: poppins.copyWith(fontSize: 13),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 28, left: 16, right: 16),
               child: Container(
                 decoration: homePageMenu.copyWith(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(28),
                 ),
                 width: MediaQuery.of(context).size.width,
-                child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Image.asset(
-                          'assets/images/icons/home2.png',
-                          width: 17,
-                        ),
-                        const SizedBox(width: 8),
-                        SizedBox(
-                          width: 290,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                savedAddress[defaultAddress][0],
-                                style: poppins.copyWith(fontSize: 15),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                savedAddress[defaultAddress][3],
-                                maxLines: 3,
-                                overflow: TextOverflow.ellipsis,
-                                style: poppins.copyWith(
-                                    fontSize: 13, color: outline),
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    )),
-              ),
-            ),
-          ),
-          const Divider(),
-          Padding(
-            padding: const EdgeInsets.only(top: 24),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'assets/images/icons/timer.png',
-                  width: 17,
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  'Estimasi waktu pengiriman : 30 menit (4 km)',
-                  style: poppins.copyWith(fontSize: 13),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 28, left: 16, right: 16),
-            child: Container(
-              decoration: homePageMenu.copyWith(
-                borderRadius: BorderRadius.circular(28),
-              ),
-              width: MediaQuery.of(context).size.width,
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: 20, right: 20, top: 33, bottom: 7),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Pesanan mu',
-                              style: poppins.copyWith(
-                                  fontWeight: FontWeight.w500, fontSize: 15),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.pushReplacement(
-                                    context,
-                                    PageTransition(
-                                        child: const MenubyCat(
-                                            selectedCat: 'Appetizer'),
-                                        type: PageTransitionType.fade));
-                              },
-                              child: Text(
-                                '+Tambah pesanan',
-                                style: poppins.copyWith(
-                                    color: primary1, fontSize: 13),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                      child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: 5,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: ((BuildContext context, index) {
-                      return listOrderMaker(index);
-                    }),
-                  )),
-                  Padding(
+                child: Column(
+                  children: [
+                    Padding(
                       padding: const EdgeInsets.only(
-                          left: 20, right: 20, bottom: 11, top: 14),
+                          left: 20, right: 20, top: 33, bottom: 7),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Subtotal',
+                                'Pesanan mu',
                                 style: poppins.copyWith(
-                                    fontWeight: FontWeight.w500, fontSize: 16),
+                                    fontWeight: FontWeight.w500, fontSize: 15),
                               ),
-                              Text(
-                                'Rp xxxxx',
-                                style: poppins.copyWith(
-                                    fontWeight: FontWeight.w500, fontSize: 16),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Ongkir',
-                                style: poppins.copyWith(
-                                    fontWeight: FontWeight.w500, fontSize: 16),
-                              ),
-                              Text(
-                                '   xxxxx',
-                                style: poppins.copyWith(
-                                    fontWeight: FontWeight.w500, fontSize: 16),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Biaya lain-lain',
-                                style: poppins.copyWith(
-                                    fontWeight: FontWeight.w500, fontSize: 16),
-                              ),
-                              Text(
-                                '   xxxxx',
-                                style: poppins.copyWith(
-                                    fontWeight: FontWeight.w500, fontSize: 16),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      PageTransition(
+                                          child: const MenubyCat(
+                                              selectedCat: 'Appetizer'),
+                                          type: PageTransitionType.fade));
+                                },
+                                child: Text(
+                                  '+Tambah pesanan',
+                                  style: poppins.copyWith(
+                                      color: primary1, fontSize: 13),
+                                ),
                               ),
                             ],
                           ),
                         ],
-                      )),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 13),
-                    child: Divider(),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: 20, right: 20, bottom: 39, top: 14),
+                      ),
+                    ),
+                    SizedBox(
+                        child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: 5,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: ((BuildContext context, index) {
+                        return listOrderMaker(index);
+                      }),
+                    )),
+                    Padding(
+                        padding: const EdgeInsets.only(
+                            left: 20, right: 20, bottom: 11, top: 14),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Subtotal',
+                                  style: poppins.copyWith(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16),
+                                ),
+                                Text(
+                                  'Rp xxxxx',
+                                  style: poppins.copyWith(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Ongkir',
+                                  style: poppins.copyWith(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16),
+                                ),
+                                Text(
+                                  '   xxxxx',
+                                  style: poppins.copyWith(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Biaya lain-lain',
+                                  style: poppins.copyWith(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16),
+                                ),
+                                Text(
+                                  '   xxxxx',
+                                  style: poppins.copyWith(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16),
+                                ),
+                              ],
+                            ),
+                          ],
+                        )),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 13),
+                      child: Divider(),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 20, right: 20, bottom: 39, top: 14),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Total Pembayaran',
+                            style: poppins.copyWith(
+                                fontWeight: FontWeight.w500, fontSize: 16),
+                          ),
+                          Text(
+                            'Rp xxxxx',
+                            style: poppins.copyWith(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                                color: primary4),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 24, left: 16, right: 16),
+              child: GestureDetector(
+                onTap: () async {
+                  final result = await Navigator.push(
+                      context,
+                      PageTransition(
+                          child: const PaymentMethod(),
+                          type: PageTransitionType.fade));
+                  if (result != null) {
+                    setState(() {
+                      paymentData = result;
+                    });
+                  }
+                  debugPrint('Metode pembayaran tertekan');
+                },
+                child: Container(
+                  decoration: homePageMenu.copyWith(
+                      borderRadius: BorderRadius.circular(14)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(23),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Total Pembayaran',
-                          style: poppins.copyWith(
-                              fontWeight: FontWeight.w500, fontSize: 16),
-                        ),
-                        Text(
-                          'Rp xxxxx',
+                          paymentData.isEmpty
+                              ? 'Metode Pembayaran'
+                              : paymentData[1],
                           style: poppins.copyWith(
                               fontWeight: FontWeight.w500,
                               fontSize: 16,
-                              color: primary4),
+                              color: paymentData.isEmpty
+                                  ? Colors.black
+                                  : primary4),
+                        ),
+                        Image.asset(
+                          'assets/images/icons/arrow.png',
+                          width: 20,
                         ),
                       ],
                     ),
-                  )
-                ],
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 24, left: 16, right: 16),
-            child: GestureDetector(
-              onTap: () async {
-                final result = await Navigator.push(
-                    context,
-                    PageTransition(
-                        child: const PaymentMethod(),
-                        type: PageTransitionType.fade));
-                if (result != null) {
-                  setState(() {
-                    paymentData = result;
-                  });
-                }
-                debugPrint('Metode pembayaran tertekan');
-              },
-              child: Container(
-                decoration: homePageMenu.copyWith(
-                    borderRadius: BorderRadius.circular(14)),
-                child: Padding(
-                  padding: const EdgeInsets.all(23),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        paymentData.isEmpty
-                            ? 'Metode Pembayaran'
-                            : paymentData[1],
-                        style: poppins.copyWith(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
-                            color:
-                                paymentData.isEmpty ? Colors.black : primary4),
-                      ),
-                      Image.asset(
-                        'assets/images/icons/arrow.png',
-                        width: 20,
-                      ),
-                    ],
                   ),
                 ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 24, left: 23),
-            child: Align(
-              alignment: AlignmentDirectional.centerStart,
-              child: Text(
-                'Optional',
-                style: poppins.copyWith(
-                    fontWeight: FontWeight.w500, fontSize: 16, color: outline),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Checkbox(
-                  value: checkBoxVal,
-                  checkColor:
-                      primary2, // warna tanda centang saat checkbox aktif
-                  fillColor: MaterialStateProperty.resolveWith<Color>(
-                    (Set<MaterialState> states) {
-                      if (states.contains(MaterialState.selected)) {
-                        return primary4;
-                      }
-                      return surface;
-                    },
-                  ),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(6)),
-                  side: BorderSide.none,
-                  onChanged: (bool? newValue) {
-                    setState(() {
-                      checkBoxVal = newValue!;
-                    });
-                  },
-                ),
-                Text(
-                  'Self Pick Up / Ambil sendiri',
+            Padding(
+              padding: const EdgeInsets.only(top: 24, left: 23),
+              child: Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: Text(
+                  'Optional',
                   style: poppins.copyWith(
                       fontWeight: FontWeight.w500,
                       fontSize: 16,
                       color: outline),
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 31, horizontal: 31),
-            child: GestureDetector(
-              onTap: () {
-                if (paymentData.isNotEmpty) {
-                  debugPrint(detailOrder.notes.toString());
-                  debugPrint(detailOrder.items.toString());
-                  Navigator.push(
-                      context,
-                      PageTransition(
-                          child: PaymentPage(data: paymentData),
-                          type: PageTransitionType.fade));
-                }
-                debugPrint('Pesan Sekarang tertekan');
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  color: paymentData.isEmpty ? surface : primary4,
-                  borderRadius: BorderRadius.circular(37),
-                ),
-                width: 335,
-                height: 48,
-                child: Center(
-                  child: Text(
-                    'Pesan Sekarang',
-                    style: poppins.copyWith(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16,
-                        color: paymentData.isEmpty ? outline : Colors.white),
-                  ),
                 ),
               ),
             ),
-          )
-        ],
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Checkbox(
+                    value: checkBoxVal,
+                    checkColor:
+                        primary2, // warna tanda centang saat checkbox aktif
+                    fillColor: MaterialStateProperty.resolveWith<Color>(
+                      (Set<MaterialState> states) {
+                        if (states.contains(MaterialState.selected)) {
+                          return primary4;
+                        }
+                        return surface;
+                      },
+                    ),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6)),
+                    side: BorderSide.none,
+                    onChanged: (bool? newValue) {
+                      setState(() {
+                        checkBoxVal = newValue!;
+                      });
+                    },
+                  ),
+                  Text(
+                    'Self Pick Up / Ambil sendiri',
+                    style: poppins.copyWith(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
+                        color: outline),
+                  )
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 31, horizontal: 31),
+              child: GestureDetector(
+                onTap: () {
+                  if (paymentData.isNotEmpty) {
+                    debugPrint(detailOrder.notes.toString());
+                    debugPrint(detailOrder.items.toString());
+                    Navigator.push(
+                        context,
+                        PageTransition(
+                            child: const PaymentPage(),
+                            type: PageTransitionType.fade));
+                  }
+                  debugPrint('Pesan Sekarang tertekan');
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: paymentData.isEmpty ? surface : primary4,
+                    borderRadius: BorderRadius.circular(37),
+                  ),
+                  width: 335,
+                  height: 48,
+                  child: Center(
+                    child: Text(
+                      'Pesan Sekarang',
+                      style: poppins.copyWith(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16,
+                          color: paymentData.isEmpty ? outline : Colors.white),
+                    ),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

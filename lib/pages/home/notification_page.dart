@@ -1,3 +1,4 @@
+import 'package:capstone_restaurant/data.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/material.dart';
 
@@ -96,7 +97,7 @@ class _NotificationPageState extends State<NotificationPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Hydre, Pesananmu sudah sampai!',
+                        '${userData[0]}, Pesananmu sudah sampai!',
                         style: poppins.copyWith(
                             fontWeight: FontWeight.w500, fontSize: 16),
                       ),
@@ -104,7 +105,8 @@ class _NotificationPageState extends State<NotificationPage> {
                           style: poppins.copyWith(fontSize: 14)),
                       const SizedBox(height: 3),
                       Text('Hari ini pukul 14.13 WIB ',
-                          style: poppins.copyWith(fontSize: 12, color: outline)),
+                          style:
+                              poppins.copyWith(fontSize: 12, color: outline)),
                     ],
                   ),
                 ),

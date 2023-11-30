@@ -1,5 +1,7 @@
+import 'package:capstone_restaurant/data.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 summonDialog(context, {customTitle, customSubtitle}) {
   return showDialog(
@@ -46,4 +48,20 @@ Widget fieldMaker(title, hint, controller) {
       ],
     ),
   );
+}
+
+
+// int findIndexOfTrue(List itemList) {
+//   for (int i = 0; i < itemList.length; i++) {
+//     if (itemList[i]) {
+//       return i;
+//     }
+//   }
+//   return -1;
+// }
+
+Future<void> fetchDataFromSharedPreferences() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  userData = prefs.getStringList('userData') ?? [];
+  debugPrint('Data dari SharedPreferences: $userData');
 }

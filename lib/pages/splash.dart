@@ -1,6 +1,8 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:capstone_restaurant/pages/home/home.dart';
 import 'package:capstone_restaurant/pages/login/onboarding_page.dart';
+import 'package:capstone_restaurant/pages/order/cart_page.dart';
+import 'package:capstone_restaurant/pages/profile/address_page.dart';
 // import 'package:capstone_restaurant/pages/order/cart_page.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:capstone_restaurant/style.dart';

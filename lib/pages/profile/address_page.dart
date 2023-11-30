@@ -1,19 +1,28 @@
-import 'package:capstone_restaurant/data.dart';
 import 'package:capstone_restaurant/logic/profil/address_logic.dart';
 import 'package:capstone_restaurant/pages/profile/add_address_page.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
-class AddressList extends StatefulWidget {
+class AddressPage extends StatefulWidget {
   final bool isRebuild;
-  const AddressList({super.key, required this.isRebuild});
+  const AddressPage({super.key, required this.isRebuild});
 
   @override
-  State<AddressList> createState() => _AddressListState();
+  State<AddressPage> createState() => _AddressPageState();
 }
 
-class _AddressListState extends State<AddressList> {
+class _AddressPageState extends State<AddressPage> {
+  List currentAddressList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      currentAddressList = savedAddress;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,12 +70,17 @@ class _AddressListState extends State<AddressList> {
                       fontSize: 16, fontWeight: FontWeight.w500),
                 ),
                 GestureDetector(
-                  onTap: () {
-                    Navigator.push(
+                  onTap: () async {
+                    final result = await Navigator.push(
                         context,
                         PageTransition(
                             child: const AddAddress(),
                             type: PageTransitionType.rightToLeft));
+                    if (result != null) {
+                      setState(() {
+                        currentAddressList = result;
+                      });
+                    }
                     debugPrint('Tambah alamat tertekan');
                   },
                   child: Text(
@@ -82,15 +96,9 @@ class _AddressListState extends State<AddressList> {
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 padding: EdgeInsets.zero,
-                itemCount: savedAddress.length,
+                itemCount: currentAddressList.length,
                 itemBuilder: (context, index) {
-                  return showAddressList(
-                      savedAddress[index][0],
-                      savedAddress[index][1],
-                      savedAddress[index][2],
-                      savedAddress[index][3],
-                      savedAddress[index][4],
-                      index);
+                  return showAddressList(index, currentAddressList[index]);
                 },
               ),
             )
@@ -100,7 +108,12 @@ class _AddressListState extends State<AddressList> {
     );
   }
 
-  Widget showAddressList(title, name, phone, address, note, index) {
+  Widget showAddressList(index, data) {
+    String title = data[0];
+    String name = data[1];
+    String phone = data[2];
+    String address = data[3];
+    String note = data[4];
     return GestureDetector(
       onTap: () {
         debugPrint('address $title tertekan');
@@ -183,7 +196,9 @@ class _AddressListState extends State<AddressList> {
               defaultAddress = idx;
             });
             widget.isRebuild ? Navigator.pop(context, idx) : null;
-            debugPrint('address ${savedAddress[idx]}');
+            debugPrint('address ${currentAddressList[idx]}');
+            debugPrint('address $idx');
+            debugPrint(findAddressIndex('www').toString());
         }
       },
     );

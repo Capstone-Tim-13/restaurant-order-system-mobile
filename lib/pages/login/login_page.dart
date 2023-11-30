@@ -1,6 +1,6 @@
 import 'package:capstone_restaurant/logic/login/login_logic.dart';
+import 'package:capstone_restaurant/pages/login/forget_password_page.dart';
 import 'package:capstone_restaurant/pages/login/register_page.dart';
-import 'package:capstone_restaurant/pages/login/reset_password_page.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';

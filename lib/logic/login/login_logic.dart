@@ -7,11 +7,14 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> login(context) async {
+  final userProvider = Provider.of<UserDataProvider>(context, listen: false);
   final prefs = await SharedPreferences.getInstance();
   await prefs.setBool('isLogin', true);
-  Navigator.pushReplacement(context,
-      PageTransition(child: Home(setIdx: 0), type: PageTransitionType.fade));
-  // Navigator.pushReplacementNamed(context, '/home');
+  await prefs.setStringList('userData', userProvider.getData);
+  Navigator.pushReplacement(
+      context,
+      PageTransition(
+          child: const Home(setIdx: 0), type: PageTransitionType.fade));
 }
 
 userInputCheck(context, email, password) async {

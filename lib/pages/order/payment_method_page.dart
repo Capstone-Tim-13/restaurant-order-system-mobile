@@ -15,6 +15,14 @@ class _PaymentMethodState extends State<PaymentMethod> {
   List data = [];
 
   @override
+  void initState() {
+    super.initState();
+    if (defaultPaymentMethod.isNotEmpty) {
+      selectedPaymentMethod = defaultPaymentMethod[1];
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: showAppBar(),
@@ -117,8 +125,10 @@ class _PaymentMethodState extends State<PaymentMethod> {
             padding: const EdgeInsets.only(top: 44, bottom: 67),
             child: GestureDetector(
               onTap: () {
-                Navigator.pop(context, data);
+                defaultPaymentMethod = data;
+                Navigator.pop(context, defaultPaymentMethod);
                 debugPrint('pembayaran dengan $selectedPaymentMethod');
+                debugPrint('data pembayaran $defaultPaymentMethod');
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -166,6 +176,8 @@ class _PaymentMethodState extends State<PaymentMethod> {
                         'assets/images/icons/checkCircle.png',
                         width: 21,
                         color: selectedPaymentMethod == paymentMethod
+                            // defaultPaymentMethod[1] != null &&
+                            //         defaultPaymentMethod[1] == paymentMethod
                             ? primary4
                             : null,
                       )),

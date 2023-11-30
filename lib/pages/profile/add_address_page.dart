@@ -1,3 +1,4 @@
+import 'package:capstone_restaurant/logic/profil/address_logic.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:capstone_restaurant/widgets.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,9 @@ class _AddAddressState extends State<AddAddress> {
   TextEditingController namaLengkap = TextEditingController();
   TextEditingController noHp = TextEditingController();
   TextEditingController tag = TextEditingController();
+  TextEditingController patokan = TextEditingController();
   bool isMain = false;
+  List newAddress = [];
 
   @override
   void dispose() {
@@ -28,6 +31,7 @@ class _AddAddressState extends State<AddAddress> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: showAppBar(),
       body: addAddressPage(),
     );
@@ -68,6 +72,7 @@ class _AddAddressState extends State<AddAddress> {
           fieldMaker('No. Handphone', 'Masukan no. Handphone', noHp),
           fieldMaker(
               'Tandai lokasi sebagai', 'Cth, rumah, kantor, kampus', tag),
+          fieldMaker('Patokan', 'Cth, warna rumah, warna pager', patokan),
           const SizedBox(height: 31),
           Row(
             children: [
@@ -85,6 +90,7 @@ class _AddAddressState extends State<AddAddress> {
                   onChanged: (bool value) {
                     setState(() {
                       isMain = !isMain;
+                      print(isMain);
                     });
                   })
             ],
@@ -92,6 +98,23 @@ class _AddAddressState extends State<AddAddress> {
           const Spacer(),
           GestureDetector(
             onTap: () {
+              savedAddress.add([
+                detailLokasi.text,
+                namaLengkap.text,
+                noHp.text,
+                tag.text,
+                patokan.text
+              ]);
+              if (isMain) {
+                setState(() {
+                  defaultAddress = savedAddress.length-1;
+                  print(defaultAddress);
+                });
+              }
+
+              Navigator.pop(context, savedAddress);
+              debugPrint(savedAddress.toString());
+              debugPrint(defaultAddress.toString());
               debugPrint('Konfirmasi alamat');
             },
             child: Container(

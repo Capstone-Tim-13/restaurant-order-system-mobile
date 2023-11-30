@@ -1,3 +1,4 @@
+import 'package:capstone_restaurant/data.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:capstone_restaurant/widgets.dart';
 import 'package:flutter/material.dart';
@@ -79,7 +80,7 @@ class _AccPageState extends State<AccPage> {
             padding: const EdgeInsets.only(left: 25, right: 40),
             child: Column(
               children: [
-                fieldMaker('Nama*', 'Hydre', nama),
+                fieldMaker('Nama*', userData[0], nama),
                 fieldMaker('Email*', 'Balbalee@gmail.com', email),
                 fieldMaker('Nomor Hp*', '+62666666666', noHP),
                 fieldMaker('Tanggal lahir*', 'xxxxxxxx', dob)

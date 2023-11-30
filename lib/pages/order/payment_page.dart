@@ -1,11 +1,11 @@
+import 'package:capstone_restaurant/data.dart';
 import 'package:capstone_restaurant/pages/order/confirmation_page.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
 class PaymentPage extends StatefulWidget {
-  final List data;
-  const PaymentPage({super.key, required this.data});
+  const PaymentPage({super.key});
 
   @override
   State<PaymentPage> createState() => _PaymentPageState();
@@ -37,7 +37,7 @@ class _PaymentPageState extends State<PaymentPage> {
             "Pembayaran",
             style: poppins.copyWith(
                 fontWeight: FontWeight.w500,
-                fontSize: 18), // Ganti warna teks "Lupa Password"
+                fontSize: 18),
           ),
         ],
       ),
@@ -196,7 +196,7 @@ class _PaymentPageState extends State<PaymentPage> {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Image.asset(
-                widget.data[0],
+                defaultPaymentMethod[0],
                 width: 83,
               ),
             ),
@@ -207,7 +207,7 @@ class _PaymentPageState extends State<PaymentPage> {
               Future.delayed(const Duration(seconds: 2), () {
                 Navigator.push(
                     context,
-                    PageTransition(
+                   PageTransition(
                         child: const ConfirmationPage(),
                         type: PageTransitionType.fade));
               });

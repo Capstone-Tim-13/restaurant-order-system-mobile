@@ -67,7 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         children: [
                           Row(
                             children: [
-                              Text('Hydre',
+                              Text(userData[0],
                                   style: poppins.copyWith(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 20)),
@@ -175,6 +175,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       final prefs =
                                           await SharedPreferences.getInstance();
                                       await prefs.remove('isLogin');
+                                      await prefs.remove('userData');
                                       Navigator.pushReplacement(
                                           context,
                                           PageTransition(
