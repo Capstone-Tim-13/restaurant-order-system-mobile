@@ -207,7 +207,7 @@ class _PaymentPageState extends State<PaymentPage> {
               Future.delayed(const Duration(seconds: 2), () {
                 Navigator.push(
                     context,
-                   PageTransition(
+                    PageTransition(
                         child: const ConfirmationPage(),
                         type: PageTransitionType.fade));
               });

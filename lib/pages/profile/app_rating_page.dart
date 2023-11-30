@@ -2,7 +2,7 @@ import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/material.dart';
 
 class AppRating extends StatefulWidget {
-  const AppRating({super.key});
+  const AppRating({Key? key}) : super(key: key);
 
   @override
   State<AppRating> createState() => _AppRatingState();
@@ -13,6 +13,7 @@ class _AppRatingState extends State<AppRating> {
   List<bool> ratings = [false, false, false, false, false];
   int userRating = 0;
   int wordCount = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +24,7 @@ class _AppRatingState extends State<AppRating> {
     );
   }
 
-  showAppBar() {
+  PreferredSizeWidget showAppBar() {
     return AppBar(
       backgroundColor: primary4,
       automaticallyImplyLeading: false,
@@ -43,9 +44,10 @@ class _AppRatingState extends State<AppRating> {
           Text(
             "Feedback",
             style: poppins.copyWith(
-                color: Colors.white,
-                fontWeight: FontWeight.w500,
-                fontSize: 18), // Ganti warna teks "Lupa Password"
+              color: Colors.white,
+              fontWeight: FontWeight.w500,
+              fontSize: 18,
+            ),
           ),
         ],
       ),
@@ -53,44 +55,45 @@ class _AppRatingState extends State<AppRating> {
   }
 
   Widget showAppRating() {
-    return Column(
-      children: [
-        SizedBox(
-          width: MediaQuery.of(context).size.width,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 35),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Kirim feedback anda kepada kami!',
-                  style: poppins.copyWith(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 35),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Kirim feedback anda kepada kami!',
+                    style: poppins.copyWith(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-                Text(
-                  'Bagikan masukkan mu tentang aplikasi ini ya!\nUntuk memberikan support terbaik bagi kami.',
-                  style: poppins.copyWith(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white,
+                  Text(
+                    'Bagikan masukkan mu tentang aplikasi ini ya!\nUntuk memberikan support terbaik bagi kami.',
+                    style: poppins.copyWith(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-        const SizedBox(height: 37),
-        Expanded(
-          child: Container(
+          const SizedBox(height: 37),
+          Container(
             width: MediaQuery.of(context).size.width,
             decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(56),
-                )),
+              color: Colors.white,
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(56),
+              ),
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -109,23 +112,24 @@ class _AppRatingState extends State<AppRating> {
                   child: Row(
                     children: List.generate(5, (index) {
                       return Padding(
-                          padding: const EdgeInsets.only(right: 24),
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                for (int i = 0; i < 5; i++) {
-                                  ratings[i] = i <= index;
-                                }
-                              });
-                              userRating = index + 1;
-                              debugPrint(userRating.toString());
-                            },
-                            child: Image.asset(
-                              'assets/images/icons/star.png',
-                              width: 37,
-                              color: ratings[index] ? tertiary3 : surface,
-                            ),
-                          ));
+                        padding: const EdgeInsets.only(right: 24),
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              for (int i = 0; i < 5; i++) {
+                                ratings[i] = i <= index;
+                              }
+                            });
+                            userRating = index + 1;
+                            debugPrint(userRating.toString());
+                          },
+                          child: Image.asset(
+                            'assets/images/icons/star.png',
+                            width: 37,
+                            color: ratings[index] ? tertiary3 : surface,
+                          ),
+                        ),
+                      );
                     }),
                   ),
                 ),
@@ -190,9 +194,10 @@ class _AppRatingState extends State<AppRating> {
                                 child: Text(
                                   'Kirim ulasan mu',
                                   style: poppins.copyWith(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 16,
-                                      color: primary2),
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 16,
+                                    color: primary2,
+                                  ),
                                 ),
                               ),
                             ),
@@ -205,8 +210,8 @@ class _AppRatingState extends State<AppRating> {
               ],
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -218,31 +223,31 @@ class _AppRatingState extends State<AppRating> {
       wordCount = count;
     });
   }
-}
 
-void showSuccessDialog(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Image.asset(
-              'assets/images/icons/thankyou.png',
-              width: 170,
-            ),
-            Text(
-              'Terimakasih ya,\nSudah memberikan feedback!',
-              style: poppins.copyWith(
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
+  void showSuccessDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.asset(
+                'assets/images/icons/thankyou.png',
+                width: 170,
               ),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-      );
-    },
-  );
+              Text(
+                'Terimakasih ya,\nSudah memberikan feedback!',
+                style: poppins.copyWith(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 }

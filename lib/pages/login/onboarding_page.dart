@@ -199,9 +199,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
   }
 
   Widget greetingsmaker(title, subtitle, image) {
-    return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-      Image.asset(image, scale: 1),
-      Padding(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Expanded(
+          child: Image.asset(image, scale: 1),
+        ),
+        Padding(
           padding: const EdgeInsets.symmetric(horizontal: 33),
           child: Column(
             children: [
@@ -217,9 +221,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 style:
                     poppins.copyWith(fontWeight: FontWeight.w500, fontSize: 16),
                 textAlign: TextAlign.center,
-              )
+              ),
             ],
-          )),
-    ]);
+          ),
+        ),
+      ],
+    );
   }
 }
