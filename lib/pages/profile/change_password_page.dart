@@ -1,5 +1,3 @@
-// Bima
-
 import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/material.dart';
 
@@ -146,7 +144,7 @@ class _ChangePasswordState extends State<ChangePassword> {
         builder: (context) {
           return AlertDialog(
             content: Container(
-              padding: EdgeInsets.symmetric(vertical: 16),
+              padding: const EdgeInsets.symmetric(vertical: 16),
               height: 160,
               child: Column(
                 children: [
@@ -191,4 +189,5 @@ class _ChangePasswordState extends State<ChangePassword> {
           );
         });
   }
+
 }

@@ -1,29 +1,31 @@
-
-
-
-
-import 'package:capstone_restaurant/pages/bantuan/rating_page.dart';
-import 'package:capstone_restaurant/pages/profile/profile_page.dart';
-import 'package:capstone_restaurant/pages/profile/change_password_page.dart';
-import 'package:capstone_restaurant/pages/profile/my_account_page.dart';
+import 'package:capstone_restaurant/logic/provider_handler.dart';
+import 'package:capstone_restaurant/pages/home/favorite_page.dart';
+import 'package:capstone_restaurant/pages/home/home.dart';
+import 'package:capstone_restaurant/pages/home/notification_page.dart';
 import 'package:capstone_restaurant/pages/login/forget_password_page.dart';
+import 'package:capstone_restaurant/pages/login/register_page.dart';
 import 'package:capstone_restaurant/pages/login/login_page.dart';
 import 'package:capstone_restaurant/pages/login/onboarding_page.dart';
-import 'package:capstone_restaurant/pages/login/register_page.dart';
-import 'package:capstone_restaurant/pages/pesanan/searching_page.dart';
-import 'package:capstone_restaurant/pages/splash_screen.dart';
-import 'package:capstone_restaurant/pages/pesanan/popup_menu.dart';
-
-
-
+import 'package:capstone_restaurant/pages/profile/profile_page.dart';
+import 'package:capstone_restaurant/pages/splash.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
+  final isLogin = prefs.getBool('isLogin') ?? false;
+
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => UserDataProvider()),
+    // ChangeNotifierProvider(create: (_) => PaymentDataProvider()),
+  ], child: MyApp(isLogin: isLogin)));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool isLogin;
+  const MyApp({super.key, required this.isLogin});
 
   // This widget is the root of your application.
   @override
@@ -33,28 +35,20 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        // useMaterial3: true,
+        useMaterial3: true,
       ),
       initialRoute: '/',
       routes: {
-
-
-
-                     
-         
-   
-        '/': (context) => const ProfilePage(),
+        '/': (context) => Splash(isLogin: isLogin),
         '/onboarding': (context) => const OnboardingPage(),
         '/login': (context) => const LoginPage(),
         '/register': (context) => const RegisterPage(),
-        '/search': (context) => const SearchPage(),
-        '/forgetPassword': (context) => const ForgetPassword(),
-        '/popupmenupage': (context) => PopupMenuPage(),
-        '/feedbackPage': (context) =>const FeedbackPage(),
-
+        '/resetPassword': (context) => const ResetPassword(),
+        '/home': (context) => const Home(setIdx: 0),
+        '/favPage': (context) => const FavoriteMenu(),
+        '/notifikasi': (context) => const NotificationPage(),
+        '/account': (context) => const ProfilePage(),
       },
     );
   }
 }
-
-

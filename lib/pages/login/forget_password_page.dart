@@ -1,16 +1,14 @@
-// Bima, Ararya
-
 import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/material.dart';
 
-class ForgetPassword extends StatefulWidget {
-  const ForgetPassword({super.key});
+class ResetPassword extends StatefulWidget {
+  const ResetPassword({super.key});
 
   @override
-  State<ForgetPassword> createState() => _ForgetPasswordState();
+  State<ResetPassword> createState() => _ResetPasswordState();
 }
 
-class _ForgetPasswordState extends State<ForgetPassword> {
+class _ResetPasswordState extends State<ResetPassword> {
   final TextEditingController emailInput = TextEditingController();
   bool sentAgain = false;
   @override

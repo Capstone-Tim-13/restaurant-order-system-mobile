@@ -1,6 +1,6 @@
-// Bima
-
+import 'package:capstone_restaurant/data.dart';
 import 'package:capstone_restaurant/style.dart';
+import 'package:capstone_restaurant/widgets.dart';
 import 'package:flutter/material.dart';
 
 class AccPage extends StatefulWidget {
@@ -11,6 +11,11 @@ class AccPage extends StatefulWidget {
 }
 
 class _AccPageState extends State<AccPage> {
+  TextEditingController nama = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController noHP = TextEditingController();
+  TextEditingController dob = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,10 +76,17 @@ class _AccPageState extends State<AccPage> {
             ),
           ),
           const SizedBox(height: 33),
-          fieldMaker('Nama*', 'Hydre'),
-          fieldMaker('Email*', 'Balbalee@gmail.com'),
-          fieldMaker('Nomor Hp*', '+62666666666'),
-          fieldMaker('Tanggal lahir*', 'xxxxxxxx'),
+          Padding(
+            padding: const EdgeInsets.only(left: 25, right: 40),
+            child: Column(
+              children: [
+                fieldMaker('Nama*', userData[0], nama),
+                fieldMaker('Email*', 'Balbalee@gmail.com', email),
+                fieldMaker('Nomor Hp*', '+62666666666', noHP),
+                fieldMaker('Tanggal lahir*', 'xxxxxxxx', dob)
+              ],
+            ),
+          ),
           const SizedBox(height: 63),
           GestureDetector(
             onTap: () {
@@ -98,26 +110,6 @@ class _AccPageState extends State<AccPage> {
               ),
             ),
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget fieldMaker(title, hint) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 25, right: 40, bottom: 12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: poppins.copyWith(fontSize: 16),
-          ),
-          const SizedBox(height: 16),
-          TextField(
-            decoration: InputDecoration(
-                hintText: hint, hintStyle: poppins.copyWith(color: outline)),
-          )
         ],
       ),
     );

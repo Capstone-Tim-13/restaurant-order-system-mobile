@@ -1,11 +1,10 @@
-// Delia
-
 import 'package:capstone_restaurant/data.dart';
+import 'package:capstone_restaurant/pages/login/onboarding_page.dart';
 import 'package:capstone_restaurant/pages/profile/my_account_page.dart';
-import 'package:capstone_restaurant/pages/profile/profile_page.dart';
-import 'package:capstone_restaurant/pages/login/login_page.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -29,6 +28,13 @@ class _ProfilePageState extends State<ProfilePage> {
       scrolledUnderElevation: 0,
       title: Row(
         children: [
+          // GestureDetector(
+          //   onTap: () {
+          //     Navigator.pop(context);
+          //   },
+          //   child: Image.asset('assets/images/icons/backButton.png'),
+          // ),
+          // const SizedBox(width: 8),
           Text(
             "Profil Saya",
             style: poppins.copyWith(fontWeight: FontWeight.w500, fontSize: 18),
@@ -61,7 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         children: [
                           Row(
                             children: [
-                              Text('Hydre',
+                              Text(userData[0],
                                   style: poppins.copyWith(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 20)),
@@ -70,9 +76,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                 onTap: () {
                                   Navigator.push(
                                       context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const AccPage()));
+                                      PageTransition(
+                                          child: const AccPage(),
+                                          type: PageTransitionType.fade));
                                   debugPrint('edit tertekan');
                                 },
                                 child: Image.asset(
@@ -163,10 +169,19 @@ class _ProfilePageState extends State<ProfilePage> {
                                     style: poppins.copyWith(fontSize: 16)),
                                 const Spacer(),
                                 GestureDetector(
-                                  onTap: () {
-                                    Navigator.pushReplacementNamed(
-                                        context, '/login');
-
+                                  onTap: () async {
+                                    bool isExit = await exitDialog();
+                                    if (isExit) {
+                                      final prefs =
+                                          await SharedPreferences.getInstance();
+                                      await prefs.remove('isLogin');
+                                      await prefs.remove('userData');
+                                      Navigator.pushReplacement(
+                                          context,
+                                          PageTransition(
+                                              child: const OnboardingPage(),
+                                              type: PageTransitionType.fade));
+                                    }
                                     debugPrint('Keluar tertekan');
                                   },
                                   child: RotatedBox(
@@ -193,6 +208,68 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
+
+  Future<bool> exitDialog() async {
+    return await showDialog(
+        context: context,
+        builder: ((context) => AlertDialog(
+              backgroundColor: Colors.white,
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Image.asset(
+                        'assets/images/icons/closeW.png',
+                        color: primary4,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  Text(
+                    'Kamu yakin ingin keluar?',
+                    style: poppins.copyWith(
+                        fontWeight: FontWeight.w500, fontSize: 18),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'Kalau kamu yakin ingin keluar,\n silakan klik "keluar" di bawah ini ya.',
+                    style: poppins.copyWith(color: outline, fontSize: 14),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 25),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context, true);
+                      debugPrint('Ubah Password tertekan');
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: primary4,
+                        borderRadius: BorderRadius.circular(37),
+                      ),
+                      width: 335,
+                      height: 48,
+                      child: Center(
+                        child: Text(
+                          'Keluar',
+                          style: poppins.copyWith(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16,
+                              color: primary2),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 25),
+                ],
+              ),
+            )));
+  }
 }
 
 Widget accMenuMaker(context, title, subtitile, titleIcon, route) {
@@ -218,8 +295,10 @@ Widget accMenuMaker(context, title, subtitile, titleIcon, route) {
                   const Spacer(),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => route));
+                      Navigator.push(
+                          context,
+                          PageTransition(
+                              child: route, type: PageTransitionType.fade));
 
                       debugPrint('$title tertekan');
                     },
