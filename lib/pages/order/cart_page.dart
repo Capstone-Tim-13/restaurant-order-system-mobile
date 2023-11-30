@@ -314,6 +314,7 @@ class _CartPageState extends State<CartPage> {
                       borderRadius: BorderRadius.circular(14)),
                   child: Padding(
                     padding: const EdgeInsets.all(23),
+
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -344,6 +345,7 @@ class _CartPageState extends State<CartPage> {
                 alignment: AlignmentDirectional.centerStart,
                 child: Text(
                   'Optional',
+
                   style: poppins.copyWith(
                       fontWeight: FontWeight.w500,
                       fontSize: 16,
@@ -423,6 +425,7 @@ class _CartPageState extends State<CartPage> {
             )
           ],
         ),
+
       ),
     );
   }

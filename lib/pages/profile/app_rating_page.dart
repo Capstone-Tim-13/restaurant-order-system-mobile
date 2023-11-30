@@ -2,7 +2,8 @@ import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/material.dart';
 
 class AppRating extends StatefulWidget {
-  const AppRating({Key? key}) : super(key: key);
+  const AppRating({super.key});
+
 
   @override
   State<AppRating> createState() => _AppRatingState();
@@ -13,7 +14,7 @@ class _AppRatingState extends State<AppRating> {
   List<bool> ratings = [false, false, false, false, false];
   int userRating = 0;
   int wordCount = 0;
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,8 +24,7 @@ class _AppRatingState extends State<AppRating> {
       body: showAppRating(),
     );
   }
-
-  PreferredSizeWidget showAppBar() {
+  showAppBar() {
     return AppBar(
       backgroundColor: primary4,
       automaticallyImplyLeading: false,
@@ -223,7 +223,6 @@ class _AppRatingState extends State<AppRating> {
       wordCount = count;
     });
   }
-
   void showSuccessDialog(BuildContext context) {
     showDialog(
       context: context,
