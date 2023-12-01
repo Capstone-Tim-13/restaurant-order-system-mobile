@@ -1,12 +1,18 @@
 // Ali
 
+import "package:capstone_restaurant/pages/pesanan/dibatalkan_widget.dart";
 import "package:capstone_restaurant/pages/pesanan/ongoing_widget.dart";
 import "package:capstone_restaurant/pages/pesanan/riwayat_widget.dart";
 import "package:flutter/material.dart";
+import "package:google_fonts/google_fonts.dart";
 
 
 class OrderPage extends StatefulWidget {
-  const OrderPage({Key? key}) : super(key: key);
+ 
+  const OrderPage({
+    Key? key,
+   
+    }) : super(key: key);
 
   @override
   State<OrderPage> createState() => _OrderPageState();
@@ -58,10 +64,43 @@ class _OrderPageState extends State<OrderPage> {
               ],
             ), 
         ),
-          body: TabBarView(children:[
-              ongoingWidget(context), 
-              riwayatWidget(context),
-              Container(color: Colors.blue),
+          body: TabBarView(
+            children:[ 
+              Padding(padding: EdgeInsets.all(10),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    ongoingWidget(context),
+                  ],
+                ),
+              ),
+              ),
+              Padding(padding: EdgeInsets.only(left: 10),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                   riwayatWidget(context),
+                   riwayatWidget(context),
+                   riwayatWidget(context),
+                   riwayatWidget(context),
+                  ]
+                ),
+              ),
+              ),
+              Padding(padding: EdgeInsets.all(10),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                   dibatalkanWidget(context),
+                   dibatalkanWidget(context),
+                   dibatalkanWidget(context),
+                  ],
+                ),
+              ),
+              ),
+              // ongoingWidget(context), 
+              // RiwayatWidget(),
+              // Container(color: Colors.blue),
            
           ],
         ),
@@ -95,3 +134,5 @@ class _OrderPageState extends State<OrderPage> {
     
 //    );
 //  }
+
+

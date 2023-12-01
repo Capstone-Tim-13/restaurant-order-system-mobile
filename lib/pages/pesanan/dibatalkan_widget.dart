@@ -1,18 +1,23 @@
-import "package:flutter/material.dart";
+import 'package:flutter/material.dart';
 
-  Widget riwayatWidget(BuildContext context) {
-    return  Column(
+
+
+
+   Widget dibatalkanWidget(BuildContext context) {
+    return Column(
     children: [
       Padding(
         padding: const EdgeInsets.only(bottom: 8, left: 16),
         child: Align(
           alignment: AlignmentDirectional.centerStart,
           child: Text(
-            '12 September 2023',
+            '14 September 2023',
             style: TextStyle(fontFamily: 'Poppins', fontSize: 15, color: Color(0xfff737373)),
           ),
         ),
       ),
+    
+    
     
     
     Container(
@@ -37,8 +42,8 @@ import "package:flutter/material.dart";
           descFood(context),
         ],
       ),
-    )
-    ]
+    ),
+    ],
     );
   }
 
@@ -54,7 +59,7 @@ import "package:flutter/material.dart";
             child: SizedBox(
               width: double.infinity,
               child: Image.asset(
-                'assets/images/home/orderPage/history/historyMenu.png',
+                'assets/images/home/orderPage/cancel/cancelMenu.png',
                 fit: BoxFit.cover,
               ),
             ),
@@ -97,7 +102,7 @@ import "package:flutter/material.dart";
                           icon: Image.asset('assets/images/icons/heart_1.png',
                           height: 18,
                           width: 20,
-                          color: Color(0xffD8D8D8),
+                          color: Color(0xffD8D8D8)
                           ),
                              
                            
@@ -119,31 +124,51 @@ import "package:flutter/material.dart";
   Flexible descFood(BuildContext context) {
     return Flexible(
       child: Container(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  // Mediaquery untuk mengambii ukuran layar device
-                  width: MediaQuery.of(context).size.width / 3,
-                  child: const Text(
-                    'Oglio Olio, Nasi Kar..',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      color: Color(0xfff000000),
-                    ),
+                Column(
+                  children: [
+                    SizedBox(
+                      // Mediaquery untuk mengambii ukuran layar device
+                      width: MediaQuery.of(context).size.width / 3,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Tuna Grill, Tofu sal..',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Color(0xfff000000),
+                            ),
+                          ),
+                           Text(
+                  '3 items | 4 km',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.black54,
                   ),
                 ),
-                const SizedBox(width: 10),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+               // const SizedBox(width: 10),
                
                 const Spacer(),
                 const Text(
-                  'Rp 24.000',
+                  'Rp 30.000',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
@@ -155,30 +180,50 @@ import "package:flutter/material.dart";
             const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                const Text(
-                  '2 items | 4 km',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.black54,
+                
+                SizedBox(
+                  width: 165,
+                  child: Text(
+                    'Dibatalkan: salah kustom',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.black54,
+                    ),
                   ),
                 ),
-                Text(
-                  'Dikirim ke alamat',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: 15,
-                    color: Colors.black54,
-                  ),
+                 GestureDetector(
+          onTap: () {},
+          child: Container(
+            padding: const EdgeInsets.symmetric(
+              vertical: 5,
+              horizontal: 15,
+            ),
+            decoration: BoxDecoration(
+                color: Color(0xfffC6C6C6),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color:  Color(0xfffC6C6C6),
+                )),
+            child: const Center(
+              child: Text(
+                'Dibatalkan',
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 13,
+                  color: Color(0xfff737373),
                 ),
+              ),
+            ),
+          ),
+        )
               ],
             ),
-            Spacer(),
-            footerOrderFavorite()
+            // Spacer(),
+            // foodorderRating()
            
           ],
         ),
@@ -188,63 +233,61 @@ import "package:flutter/material.dart";
 
   
 
-  Row footerOrderFavorite() {
-    return Row(
-      children: [
-        Expanded(
-          child : GestureDetector(
-          onTap: () {},
-          child: Container(
-            padding: const EdgeInsets.symmetric(
-              vertical: 5,
-              horizontal: 10,
-            ),
-            decoration: BoxDecoration(
-                color: Color(0xfff783525),
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(
-                  color:  Color(0xfff783525),
-                )),
-            child: const Center(
-              child: Text(
-                'Kasih Rating',
-                style: TextStyle(
-                  fontFamily: "Poppins",
-                  fontSize: 15,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
-        )
-        ),
-        const Spacer(),
-        GestureDetector(
-          onTap: () {},
-          child: Container(
-            padding: const EdgeInsets.symmetric(
-              vertical: 5,
-              horizontal: 10,
-            ),
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(
-                  color:  Color(0xfff783525),
-                )),
-            child: const Center(
-              child: Text(
-                'Pesan Lagi',
-                style: TextStyle(
-                  fontFamily: "Poppins",
-                  fontSize: 15,
-                  color: Color(0xfff783525),
-                ),
-              ),
-            ),
-          ),
-        )
-      ],
-    );
-  }
+  // Row foodorderRating() {
+  //   return Row(
+  //     children: [
+  //       Expanded(
+  //         child : GestureDetector(
+  //         onTap: () {},
+  //         child: Container(
+  //           padding: const EdgeInsets.symmetric(
+  //             vertical: 5,
+  //             horizontal: 10,
+  //           ),
+  //           decoration: BoxDecoration(
+  //               color: Color(0xfff783525),
+  //               borderRadius: BorderRadius.circular(20),
+  //               border: Border.all(
+  //                 color:  Color(0xfff783525),
+  //               )),
+  //           child: const Center(
+  //             child: Text(
+  //               'Kasih Rating',
+  //               style: TextStyle(
+  //                 fontSize: 18,
+  //                 color: Colors.white,
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //       )
+  //       ),
+  //       const Spacer(),
+  //       GestureDetector(
+  //         onTap: () {},
+  //         child: Container(
+  //           padding: const EdgeInsets.symmetric(
+  //             vertical: 5,
+  //             horizontal: 10,
+  //           ),
+  //           decoration: BoxDecoration(
+  //               color: Colors.white,
+  //               borderRadius: BorderRadius.circular(20),
+  //               border: Border.all(
+  //                 color:  Color(0xfff783525),
+  //               )),
+  //           child: const Center(
+  //             child: Text(
+  //               'Pesan Lagi',
+  //               style: TextStyle(
+  //                 fontSize: 18,
+  //                 color: Color(0xfff783525),
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //       )
+  //     ],
+  //   );
+  // }
   

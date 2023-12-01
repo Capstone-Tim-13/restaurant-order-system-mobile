@@ -1,129 +1,193 @@
 import "package:flutter/material.dart";
 
 
-//   Widget ongoingWidget(BuildContext context) {
-//     return Container(
-//      width: double.infinity,
-//     // height: 251,
-//     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-//      child: Column(
-//        children: [
-//          Stack(           //tambahkan container di stack
-//           children: [
-//             Card(
-              
-//               clipBehavior: Clip.antiAliasWithSaveLayer,
-//               shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(20),),
-//               elevation: 10,
-//               child: Column(
-//                 children: [
-//                   SizedBox(
-//                      width: double.infinity,
-//                       height: 120,
-//                     child: Image.asset('assets/images/home/orderPage/ongoing/ongoingMenu.png',
-//                           fit: BoxFit.cover,
-                         
-                         
-//                           ),
-//                   ),
-//                 ],
-//               ),     
-//                   ),
-//                Positioned(
-//                 top:85,
-//                 left : 18,
-//                 child : Row(
-//                   children: [
-//                     Text(
-//                     '30 Min',
-//                     style: TextStyle(
-//                       fontFamily: 'Poppins',
-//                       color: Colors.white,
-//                       fontSize: 16,
-//                       fontWeight: FontWeight.normal,
-//                     ),
-//                     ),
-//                     SizedBox(width:238 ),
-         
-//                     IconButton(onPressed: (){},
-//                      icon: Image.asset("assets/images/icons/heart_1.png",
-//                      height: 18,
-//                      width: 20,
-//                      color: Color(0xffF0AF9F),
-//                      ),
-//                      )
-//                   ],
-//                 ))
-//           ],
-//          ),
-//        ],
-//      ),
-//     );
-//   }
+      Widget ongoingWidget(BuildContext context) {
+    return Container(
+      height: 260,
+      width: double.infinity,
+      margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 2,
+            blurRadius: 6,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          foodImage(),
+          descFood(context),
+        ],
+      ),
+    );
+  }
 
-
-      // Widget ongoingWidget (BuildContext context){
-      //   return GridView.count(
-      //     crossAxisCount: 2,
-      //     shrinkWrap: true,
-      //     childAspectRatio: 0.76,
-      //     children: [
-      //        for (int i= 1; i < 5; i++)
-      //        Container(
-      //         padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-      //         margin: EdgeInsets.symmetric(vertical: 8, horizontal: 13),
-      //         decoration: BoxDecoration(
-      //           borderRadius: BorderRadius.circular(20),
-      //           color: Colors.black,
-      //           boxShadow: [
-      //           BoxShadow(
-      //             color: Colors.black.withOpacity(0.4),
-      //             spreadRadius: 1,
-      //             blurRadius: 8,                )
-      //           ],
-                
-      //         ),
-      //         child: Column(
-      //           children: [
-      //             InkWell(
-      //               onTap: () {},
-      //               child: Container(
-      //                 margin: EdgeInsets.all(10),
-      //                 child: Image.asset("assets/images/home/homePage/bestSeller/bestSeller.png",
-      //                 width: 120,
-      //                 height: 120,),
-      //               ),
-      //             )
-      //           ],
-      //         ),
-      //        )
-      //     ],
-
-      //   );
-
-      // }
-
-       Widget ongoingWidget(BuildContext context) {
-        return SizedBox(
-          width: double.infinity,
-          height: 251,
-          child: Stack(
-            children: [
-              Card(
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                child: Column(
-                  children: [
-                    SizedBox(
-                      width: double.infinity,
-                      height: 150,
-                      child: Image.asset('assets/images/home/orderPage/ongoing/ongoingMenu.png',
-                          fit: BoxFit.cover,),
-
-                    )
+  Flexible foodImage() {
+    return Flexible(
+      child: Stack(
+        children: [
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(12),
+              topRight: Radius.circular(12),
+            ),
+            child: SizedBox(
+              width: double.infinity,
+              child: Image.asset(
+                'assets/images/home/orderPage/ongoing/ongoingMenu.png',
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(12),
+                  topRight: Radius.circular(12),
+                ),
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.transparent,
+                    Colors.black.withOpacity(0.8),
                   ],
                 ),
-              )
-            ],
+              ),
+              child:  Padding(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Text(
+                            '30 Min',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: IconButton( 
+                          onPressed:  (){},
+                          icon: Image.asset('assets/images/icons/heart_1.png',
+                          height: 18,
+                          width: 20,
+                          color: Color(0xffF0AF9F)
+                          ),
+                             
+                           
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
-        );
-       }
+        ],
+      ),
+    );
+  }
+
+
+  Flexible descFood(BuildContext context) {
+    return Flexible(
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                SizedBox(
+                  // Mediaquery untuk mengambii ukuran layar device
+                  width: MediaQuery.of(context).size.width / 3,
+                  child: const Text(
+                    'Kentang Goreng',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Color(0xfff000000),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
+               
+                const Spacer(),
+                const Text(
+                  'Rp 25.000',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Color(0xfff000000),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  '3 items | 4 km',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.black54,
+                  ),
+                ),
+                Text(
+                  'Dikirim ke alamat',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.black54,
+                  ),
+                ),
+              ],
+            ),
+            Spacer(),
+            Padding(
+              padding: const EdgeInsets.only(left: 183),
+              child: Container(
+              padding: const EdgeInsets.symmetric(
+                vertical: 5,
+                horizontal:5,
+              ),
+              decoration: BoxDecoration(
+                  color: Color(0xfff783525), borderRadius: BorderRadius.circular(15)),
+              child: const Center(
+                child: Text(
+                  'Lacak status pesanan ',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+                        ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  
+
+ 
