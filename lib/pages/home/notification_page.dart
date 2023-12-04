@@ -75,8 +75,8 @@ class _NotificationPageState extends State<NotificationPage> {
     return Container(
         decoration: BoxDecoration(
             border: Border(
-                top: BorderSide(color: outline, width: 0.5),
-                bottom: BorderSide(color: outline, width: 0.5))),
+          top: BorderSide(color: outline, width: 0.5),
+        )),
         height: 108,
         width: MediaQuery.of(context).size.width,
         child: Stack(

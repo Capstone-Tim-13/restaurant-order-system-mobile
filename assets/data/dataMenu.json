@@ -1,0 +1,558 @@
+{
+  "1": {
+    "name": "Nasi Goreng",
+    "description": "Nasi goreng dengan campuran bumbu dan daging",
+    "price": 25000,
+    "rating": 4.5,
+    "reviews": [
+      { "user": "John Doe", "comment": "Enak banget!", "rating": 5 },
+      { "user": "Jane Doe", "comment": "Rasanya standar", "rating": 3 }
+    ],
+    "image": "https://img.kurio.network/ewrCJ9eRNpljU-80vrqWDQkN7o4=/1200x675/filters:quality(80)/https://kurio-img.kurioapps.com/20/10/10/a7e9eaa0-1c22-42b0-a11f-0a5ad1d30126.jpeg"
+  },
+  "2": {
+    "name": "Mie Ayam",
+    "description": "Mie dengan ayam goreng dan kuah kaldu",
+    "price": 20000,
+    "rating": 4.0,
+    "reviews": [
+      { "user": "Alice", "comment": "Suka kuahnya", "rating": 4 },
+      { "user": "Bob", "comment": "Ayamnya lezat", "rating": 4 }
+    ],
+    "image": "https://img.kurio.network/Xr7GD_ySxqB5vnupRPihpEH9ipw=/1200x1200/filters:quality(80)/https://kurio-img.kurioapps.com/21/12/01/c0002ce2-2ee1-4f6e-aa6a-ac6aa9387e01.jpe"
+  },
+  "3": {
+    "name": "Sate Padang",
+    "description": "Sate daging sapi khas Padang",
+    "price": 30000,
+    "rating": 4.8,
+    "reviews": [
+      { "user": "Charlie", "comment": "Pedasnya pas", "rating": 5 },
+      { "user": "David", "comment": "Sate enak", "rating": 4 }
+    ],
+    "image": "https://www.indonesia.travel/content/dam/indtravelrevamp/id-id/ide-liburan/fakta-menarik-di-balik-nikmatnya-sate-padang/thumbnail.jpg"
+  },
+
+  "4": {
+    "name": "Chicken Wings",
+    "description": "Sayap ayam yang digoreng dengan bumbu khusus",
+    "price": 18000,
+    "rating": 4.2,
+    "reviews": [
+      { "user": "Eve", "comment": "Crispy dan enak", "rating": 4 },
+      { "user": "Frank", "comment": "Bumbunya pas", "rating": 4 }
+    ],
+    "image": "https://tastesbetterfromscratch.com/wp-content/uploads/2014/09/Baked-Chicken-Wings-3.jpg"
+  },
+  "5": {
+    "name": "Spring Rolls",
+    "description": "Lumpia isi sayuran dan daging",
+    "price": 15000,
+    "rating": 4.0,
+    "reviews": [
+      { "user": "Grace", "comment": "Isinya fresh", "rating": 4 },
+      { "user": "Harry", "comment": "Lumpianya renyah", "rating": 4 }
+    ],
+    "image": "https://redhousespice.com/wp-content/uploads/2021/12/whole-spring-rolls-and-halved-ones-scaled.jpg"
+  },
+  "6": {
+    "name": "Chocolate Cake",
+    "description": "Kue cokelat lembut dengan hiasan buah",
+    "price": 25000,
+    "rating": 4.7,
+    "reviews": [
+      { "user": "Ivy", "comment": "Manisnya pas", "rating": 5 },
+      { "user": "Jack", "comment": "Kue yang lezat", "rating": 5 }
+    ],
+    "image": "https://sugargeekshow.com/wp-content/uploads/2023/10/easy_chocolate_cake_slice.jpg"
+  },
+  "7": {
+    "name": "Ice Cream Sundae",
+    "description": "Es krim dengan berbagai toping",
+    "price": 12000,
+    "rating": 4.5,
+    "reviews": [
+      { "user": "Kim", "comment": "Topingnya unik", "rating": 4 },
+      { "user": "Leo", "comment": "Es krim lembut", "rating": 4 }
+    ],
+    "image": "https://www.keep-calm-and-eat-ice-cream.com/wp-content/uploads/2022/08/Ice-cream-sundae-hero-11.jpg"
+  },
+  "8": {
+    "name": "Spaghetti Bolognese",
+    "description": "Spaghetti dengan saus bolognese dan daging cincang",
+    "price": 28000,
+    "rating": 4.3,
+    "reviews": [
+      { "user": "Mike", "comment": "Spaghetti al dente", "rating": 4 },
+      { "user": "Nina", "comment": "Sausnya lezat", "rating": 4 }
+    ],
+    "image": "https://www.slimmingeats.com/blog/wp-content/uploads/2010/04/spaghetti-bolognese-36-720x720.jpg"
+  },
+  "9": {
+    "name": "Grilled Salmon",
+    "description": "Salmon panggang dengan rempah-rempah",
+    "price": 35000,
+    "rating": 4.8,
+    "reviews": [
+      { "user": "Oscar", "comment": "Salmon segar", "rating": 5 },
+      { "user": "Penny", "comment": "Panggangnya pas", "rating": 5 }
+    ],
+    "image": "https://littlesunnykitchen.com/wp-content/uploads/2022/05/Grilled-Salmon-1.jpg"
+  },
+  "10": {
+    "name": "Family Feast",
+    "description": "Paket hemat untuk keluarga",
+    "price": 80000,
+    "rating": 4.6,
+    "reviews": [
+      { "user": "Quincy", "comment": "Paketnya lengkap", "rating": 5 },
+      { "user": "Rachel", "comment": "Hemat dan enak", "rating": 4 }
+    ],
+    "image": "https://www.pfchangshomemenu.com/sites/g/files/qyyrlu311/files/images/pairings/S3CA0220_PFC_FamilyFeast_084_Hero_LR_r2_0.jpg"
+  },
+  "11": {
+    "name": "Fruit Punch",
+    "description": "Minuman segar dengan campuran buah-buahan",
+    "price": 10000,
+    "rating": 4.0,
+    "reviews": [
+      { "user": "Sam", "comment": "Segar dan enak", "rating": 4 },
+      { "user": "Tina", "comment": "Cocok untuk bersantai", "rating": 4 }
+    ],
+    "image": "https://mindfulmocktail.com/wp-content/uploads/2022/04/fruit-punch-mocktail.jpg"
+  },
+  "12": {
+    "name": "Vegetarian Salad",
+    "description": "Salad segar dengan berbagai sayuran",
+    "price": 18000,
+    "rating": 4.2,
+    "reviews": [
+      { "user": "Ursula", "comment": "Sayurannya fresh", "rating": 4 },
+      { "user": "Victor", "comment": "Salad sehat", "rating": 4 }
+    ],
+    "image": "https://www.eatingwell.com/thmb/H8ldmJ7nz2tNtBsYHNYLTpGbRKc=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/kale-and-quinoa-salad-with-lemon-dressing-50e7ff379b924df8ab3dd665e2efefb5.jpg"
+  },
+  "13": {
+    "name": "Panna Cotta",
+    "description": "Panna cotta dengan saus caramel",
+    "price": 22000,
+    "rating": 4.6,
+    "reviews": [
+      { "user": "Walter", "comment": "Panna cotta lembut", "rating": 5 },
+      { "user": "Xena", "comment": "Enak banget!", "rating": 5 }
+    ],
+    "image": "https://assets.epicurious.com/photos/62d6c513077a952f4a8c338c/1:1/w_2848,h_2848,c_limit/PannaCotta_RECIPE_04142022_9822_final.jpg"
+  },
+  "14": {
+    "name": "Beef Steak",
+    "description": "Steak daging sapi dengan saus spesial",
+    "price": 32000,
+    "rating": 4.4,
+    "reviews": [
+      { "user": "Yvonne", "comment": "Daging empuk", "rating": 4 },
+      { "user": "Zack", "comment": "Steak mantap", "rating": 4 }
+    ],
+    "image": "https://aussieribs.com.au/wp-content/uploads/2020/09/beef-steak.jpg"
+  },
+  "15": {
+    "name": "Solo Package",
+    "description": "Paket hemat untuk satu orang",
+    "price": 15000,
+    "rating": 4.0,
+    "reviews": [
+      { "user": "Amy", "comment": "Cocok untuk satu orang", "rating": 4 },
+      { "user": "Brian", "comment": "Hemat dan lezat", "rating": 4 }
+    ],
+    "image": "https://blogger.googleusercontent.com/img/a/AVvXsEjjvIMx2tbHgiOt9RRflLyRcASYwYyQiDoD9qa5oEqCUeDW0de_hpMsPuZjb28LN6Mo2jQIPWsVjMfudUp26lUuvLTnQMQWAhUb3GGNjgaDhKmUPZExxZo3aZPN5R3L3_6D0f-AyjiHtA-GoA6nmaElz7C-lGmiOZnRiC5b8ynpY-7HzEaxxj7IyxiQ=s16000"
+  },
+  "16": {
+    "name": "Iced Coffee",
+    "description": "Kopi dingin dengan es batu",
+    "price": 12000,
+    "rating": 4.2,
+    "reviews": [
+      { "user": "Carlos", "comment": "Kopinya mantap", "rating": 4 },
+      { "user": "Diana", "comment": "Iced coffee favoritku", "rating": 4 }
+    ],
+    "image": "https://www.allrecipes.com/thmb/Hqro0FNdnDEwDjrEoxhMfKdWfOY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/21667-easy-iced-coffee-ddmfs-4x3-0093-7becf3932bd64ed7b594d46c02d0889f.jpg"
+  },
+  "17": {
+    "name": "Cheese Sticks",
+    "description": "Stick keju goreng yang gurih",
+    "price": 16000,
+    "rating": 4.1,
+    "reviews": [
+      { "user": "Erick", "comment": "Kejunya melt", "rating": 4 },
+      { "user": "Fiona", "comment": "Enak banget!", "rating": 5 }
+    ],
+    "image": "https://natashaskitchen.com/wp-content/uploads/2023/05/Cheese-Sticks-SQ.jpg"
+  },
+  "18": {
+    "name": "Red Velvet Cake",
+    "description": "Kue red velvet yang lezat",
+    "price": 26000,
+    "rating": 4.7,
+    "reviews": [
+      { "user": "George", "comment": "Rasa dan warna bagus", "rating": 5 },
+      { "user": "Hannah", "comment": "Kue spesial", "rating": 5 }
+    ],
+    "image": "https://sugargeekshow.com/wp-content/uploads/2020/11/doctored_red_velvet_featured.jpg"
+  },
+  "19": {
+    "name": "Shrimp Alfredo",
+    "description": "Fettuccine dengan saus Alfredo dan udang",
+    "price": 30000,
+    "rating": 4.5,
+    "reviews": [
+      { "user": "Ian", "comment": "Udangnya fresh", "rating": 5 },
+      { "user": "Jasmine", "comment": "Sausnya creamy", "rating": 4 }
+    ],
+    "image": "https://www.savoryexperiments.com/wp-content/uploads/2023/09/Cajun-Shrimp-Alfredo-High-Res-23.jpg"
+  },
+  "20": {
+    "name": "Group Celebration",
+    "description": "Paket hemat untuk acara kelompok",
+    "price": 120000,
+    "rating": 4.8,
+    "reviews": [
+      { "user": "Kevin", "comment": "Paket lengkap", "rating": 5 },
+      { "user": "Lily", "comment": "Cocok untuk acara kelompok", "rating": 5 }
+    ],
+    "image": "https://www.southernliving.com/thmb/VCjhadYbmsjrZnTO9eU1qzGhVkM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/2651701_OESwe_14-2000-194d56e14c3e4889b9e10f552374a481.jpg"
+  },
+
+  "21": {
+    "name": "Caprese Salad",
+    "description": "Salad dengan tomat, mozzarella, dan daun basil",
+    "price": 19000,
+    "rating": 4.4,
+    "reviews": [
+      { "user": "Mia", "comment": "Salad seger", "rating": 4 },
+      { "user": "Nathan", "comment": "Mozzarella lembut", "rating": 4 }
+    ],
+    "image": "https://www.modernhoney.com/wp-content/uploads/2021/07/Caprese-Salad-1-scaled.jpg"
+  },
+  "22": {
+    "name": "Tiramisu",
+    "description": "Kue Tiramisu lembut dengan serbuk kakao",
+    "price": 24000,
+    "rating": 4.5,
+    "reviews": [
+      { "user": "Olivia", "comment": "Kue klasik yang enak", "rating": 5 },
+      { "user": "Paul", "comment": "Tiramisu favoritku", "rating": 5 }
+    ],
+    "image": "https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/ras/Assets/6BE1C69C-69FB-4957-96EA-D76159076661/Derivates/BA406212-38AE-4EA0-B4D5-591514C21C2D.jpg"
+  },
+  "23": {
+    "name": "Chicken Caesar Salad",
+    "description": "Salad dengan potongan ayam panggang dan saus Caesar",
+    "price": 22000,
+    "rating": 4.2,
+    "reviews": [
+      { "user": "Quentin", "comment": "Ayam panggangnya mantap", "rating": 4 },
+      { "user": "Riley", "comment": "Saus Caesar enak", "rating": 4 }
+    ],
+    "image": "https://www.eatingbirdfood.com/wp-content/uploads/2023/06/grilled-chicken-caesar-salad-hero.jpg"
+  },
+  "24": {
+    "name": "Fried Banana",
+    "description": "Pisang goreng dengan taburan gula",
+    "price": 12000,
+    "rating": 4.3,
+    "reviews": [
+      { "user": "Samantha", "comment": "Pisang goreng renyah", "rating": 4 },
+      { "user": "Tim", "comment": "Enak dimakan hangat", "rating": 4 }
+    ],
+    "image": "https://sweetsimplevegan.com/wp-content/uploads/2021/03/filipino-Banana-Cue-sweet-simple-vegan.jpg"
+  },
+  "25": {
+    "name": "Blueberry Pancake",
+    "description": "Pancake dengan saus blueberry",
+    "price": 18000,
+    "rating": 4.6,
+    "reviews": [
+      { "user": "Ulysses", "comment": "Pancake lembut", "rating": 5 },
+      { "user": "Violet", "comment": "Saus blueberry nikmat", "rating": 5 }
+    ],
+    "image": "https://pinchofyum.com/wp-content/uploads/Blueberry-Pancakes-Feature-1.jpg"
+  },
+  "26": {
+    "name": "Creme Brulee",
+    "description": "Kue creme brulee dengan lapisan karamel",
+    "price": 25000,
+    "rating": 4.8,
+    "reviews": [
+      { "user": "Will", "comment": "Creme brulee lezat", "rating": 5 },
+      { "user": "Xander", "comment": "Karamelnya pas", "rating": 5 }
+    ],
+    "image": "https://www.onceuponachef.com/images/2023/02/Creme-brulee-1-1200x814.jpg"
+  },
+  "27": {
+    "name": "Mango Sorbet",
+    "description": "Sorbet mangga yang segar",
+    "price": 15000,
+    "rating": 4.2,
+    "reviews": [
+      { "user": "Yasmine", "comment": "Sorbet menyegarkan", "rating": 4 },
+      { "user": "Zane", "comment": "Mangga asli", "rating": 4 }
+    ],
+    "image": "https://www.acouplecooks.com/wp-content/uploads/2022/05/Mango-Sorbet-010.jpg"
+  },
+  "28": {
+    "name": "Margherita Pizza",
+    "description": "Pizza dengan saus tomat, mozzarella, dan daun basil",
+    "price": 28000,
+    "rating": 4.4,
+    "reviews": [
+      { "user": "Adam", "comment": "Pizza klasik yang enak", "rating": 4 },
+      { "user": "Bella", "comment": "Mozzarella melt", "rating": 4 }
+    ],
+    "image": "https://cdn.loveandlemons.com/wp-content/uploads/2023/07/margherita-pizza-500x375.jpg"
+  },
+  "29": {
+    "name": "Pumpkin Soup",
+    "description": "Sup labu yang lezat",
+    "price": 20000,
+    "rating": 4.0,
+    "reviews": [
+      { "user": "Caleb", "comment": "Sup hangat", "rating": 4 },
+      { "user": "Daisy", "comment": "Rasa labu pas", "rating": 4 }
+    ],
+    "image": "https://rainbowplantlife.com/wp-content/uploads/2022/11/Thai-pumpkin-soup-flatlays-cover-photo.jpg"
+  },
+  "30": {
+    "name": "Seafood Platter",
+    "description": "Hidangan laut lengkap dengan saus spesial",
+    "price": 35000,
+    "rating": 4.7,
+    "reviews": [
+      { "user": "Elijah", "comment": "Seafood fresh", "rating": 5 },
+      { "user": "Felicity", "comment": "Saus spesial nikmat", "rating": 5 }
+    ],
+    "image": "https://flawlessfood.co.uk/wp-content/uploads/2022/09/Seafood-Platter-Fruits-de-Mer-271-of-381-Flawless.jpg"
+  },
+  "31": {
+    "name": "Peach Iced Tea",
+    "description": "Es teh dengan rasa peach yang menyegarkan",
+    "price": 10000,
+    "rating": 4.2,
+    "reviews": [
+      { "user": "Gavin", "comment": "Iced tea enak", "rating": 4 },
+      { "user": "Hazel", "comment": "Peachnya pas", "rating": 4 }
+    ],
+    "image": "https://static.toiimg.com/photo/84818808.cms"
+  },
+  "32": {
+    "name": "Caesar Wrap",
+    "description": "Wrap dengan potongan ayam panggang dan saus Caesar",
+    "price": 22000,
+    "rating": 4.4,
+    "reviews": [
+      { "user": "Isaac", "comment": "Wrap enak", "rating": 4 },
+      { "user": "Jessica", "comment": "Ayam panggangnya mantap", "rating": 4 }
+    ],
+    "image": "https://tastesbetterfromscratch.com/wp-content/uploads/2020/04/Chicken-Caesar-Wrap-1.jpg"
+  },
+  "33": {
+    "name": "Lemon Sorbet",
+    "description": "Sorbet lemon yang menyegarkan",
+    "price": 15000,
+    "rating": 4.5,
+    "reviews": [
+      { "user": "Kai", "comment": "Sorbet lemon pas", "rating": 5 },
+      { "user": "Luna", "comment": "Segar dan nikmat", "rating": 5 }
+    ],
+    "image": "https://www.mybakingaddiction.com/wp-content/uploads/2009/06/close-up-lemon-sorbet-hero.jpg"
+  },
+  "34": {
+    "name": "Margherita Pasta",
+    "description": "Pasta dengan saus tomat, mozzarella, dan daun basil",
+    "price": 25000,
+    "rating": 4.3,
+    "reviews": [
+      { "user": "Max", "comment": "Pasta lezat", "rating": 4 },
+      { "user": "Nora", "comment": "Saus tomatnya nikmat", "rating": 4 }
+    ],
+    "image": "https://www.littlebroken.com/wp-content/uploads/2021/07/Margherita-Pasta-14.jpg"
+  },
+  "35": {
+    "name": "Berry Smoothie",
+    "description": "Smoothie dengan campuran berbagai buah beri",
+    "price": 12000,
+    "rating": 4.6,
+    "reviews": [
+      { "user": "Omar", "comment": "Smoothie segar", "rating": 5 },
+      { "user": "Pam", "comment": "Enak buat sarapan", "rating": 5 }
+    ],
+    "image": "https://kristineskitchenblog.com/wp-content/uploads/2022/02/best-berry-smoothie-recipe-06.jpg"
+  },
+  "36": {
+    "name": "Vegetarian Pizza",
+    "description": "Pizza dengan berbagai sayuran dan saus tomat",
+    "price": 26000,
+    "rating": 4.1,
+    "reviews": [
+      { "user": "Quinn", "comment": "Pizza vegetarian enak", "rating": 4 },
+      { "user": "Ron", "comment": "Sayurannya fresh", "rating": 4 }
+    ],
+    "image": "https://cdn.loveandlemons.com/wp-content/uploads/2023/02/vegetarian-pizza.jpg"
+  },
+  "37": {
+    "name": "Chicken Noodle Soup",
+    "description": "Sup mie dengan potongan ayam dan sayuran",
+    "price": 18000,
+    "rating": 4.8,
+    "reviews": [
+      { "user": "Sasha", "comment": "Sup hangat", "rating": 5 },
+      { "user": "Troy", "comment": "Ayamnya empuk", "rating": 5 }
+    ],
+    "image": "https://www.averiecooks.com/wp-content/uploads/2015/09/chickennoodlesoup-14.jpg"
+  },
+  "38": {
+    "name": "Mint Chocolate Chip Ice Cream",
+    "description": "Es krim mint dengan potongan cokelat",
+    "price": 13000,
+    "rating": 4.2,
+    "reviews": [
+      { "user": "Uriel", "comment": "Es krim mint favorit", "rating": 4 },
+      { "user": "Vera", "comment": "Cokelat chipnya pas", "rating": 4 }
+    ],
+    "image": "https://www.browneyedbaker.com/wp-content/uploads/2020/06/Mint-chocolate-chip-ice-cream-14-square-500x500.jpg"
+  },
+  "39": {
+    "name": "Spinach and Artichoke Dip",
+    "description": "Dip bayam dan artichoke dengan roti panggang",
+    "price": 16000,
+    "rating": 4.7,
+    "reviews": [
+      { "user": "Wyatt", "comment": "Dip yang lezat", "rating": 5 },
+      { "user": "Ximena", "comment": "Cocok buat share", "rating": 5 }
+    ],
+    "image": "https://www.onceuponachef.com/images/2022/11/spinach-artichoke-dip-1-2.jpg"
+  },
+  "40": {
+    "name": "Chicken Fajitas",
+    "description": "Fajitas ayam dengan saus pedas",
+    "price": 28000,
+    "rating": 4.0,
+    "reviews": [
+      { "user": "Yara", "comment": "Fajitas pedas enak", "rating": 4 },
+      { "user": "Zion", "comment": "Ayamnya juicy", "rating": 4 }
+    ],
+    "image": "https://www.tasteofhome.com/wp-content/uploads/2018/01/Flavorful-Chicken-Fajitas_EXPS_CIW19_12540_B08_30_6b.jpg"
+  },
+  "41": {
+    "name": "Hawaiian Pizza",
+    "description": "Pizza dengan topping ham dan nanas",
+    "price": 25000,
+    "rating": 4.5,
+    "reviews": [
+      { "user": "Aaron", "comment": "Hawaiian pizza favorit", "rating": 5 },
+      { "user": "Bianca", "comment": "Nanasnya segar", "rating": 5 }
+    ],
+    "image": "https://www.jessicagavin.com/wp-content/uploads/2020/07/hawaiian-pizza-16-1200.jpg"
+  },
+  "42": {
+    "name": "Chicken Quesadilla",
+    "description": "Quesadilla ayam dengan keju meleleh",
+    "price": 22000,
+    "rating": 4.2,
+    "reviews": [
+      { "user": "Cody", "comment": "Quesadilla lezat", "rating": 4 },
+      { "user": "Daisy", "comment": "Ayamnya juicy", "rating": 4 }
+    ],
+    "image": "https://www.homemadeinterest.com/wp-content/uploads/2022/08/chicken-quesadilla-recipe-5.jpg"
+  },
+  "43": {
+    "name": "Raspberry Cheesecake",
+    "description": "Cheesecake dengan saus raspberry",
+    "price": 26000,
+    "rating": 4.6,
+    "reviews": [
+      { "user": "Ethan", "comment": "Cheesecake nikmat", "rating": 5 },
+      { "user": "Fiona", "comment": "Raspberry sauce pas", "rating": 5 }
+    ],
+    "image": "https://www.allrecipes.com/thmb/i5P0KLhak30ifECS6vSkCDalvac=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/1x1-GOLDMAN_ALR0123_Faves_Cheesecake_6464-c9f1fa1330d441fc9ce0197f46949d9c.jpg"
+  },
+  "44": {
+    "name": "Tomato Basil Soup",
+    "description": "Sup tomat dengan daun basil",
+    "price": 20000,
+    "rating": 4.3,
+    "reviews": [
+      { "user": "Grace", "comment": "Sup hangat", "rating": 4 },
+      { "user": "Henry", "comment": "Basilnya berasa", "rating": 4 }
+    ],
+    "image": "https://avirtualvegan.com/wp-content/uploads/2022/08/Tomato-Basil-Soup-A-Virtual-Vegan-2.jpg"
+  },
+  "45": {
+    "name": "Shrimp Tacos",
+    "description": "Tacos dengan udang panggang dan saus pedas",
+    "price": 30000,
+    "rating": 4.8,
+    "reviews": [
+      { "user": "Ivy", "comment": "Tacos seafood enak", "rating": 5 },
+      { "user": "Jack", "comment": "Saus pedasnya pas", "rating": 5 }
+    ],
+    "image": "https://www.howsweeteats.com/wp-content/uploads/2022/07/chipotle-lime-shrimp-tacos-19.jpg"
+  },
+  "46": {
+    "name": "Mushroom Risotto",
+    "description": "Risotto dengan jamur dan parmesan",
+    "price": 24000,
+    "rating": 4.5,
+    "reviews": [
+      { "user": "Kylie", "comment": "Risotto creamy", "rating": 5 },
+      { "user": "Liam", "comment": "Jamurnya enak", "rating": 4 }
+    ],
+    "image": "https://www.eatingwell.com/thmb/N_0xtwSPPGe7L1YA7O8Uhxm9LfA=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/MushroomRisotto-Beauty-2825-b89fc407ca374feb997e10db2854a2a7.jpg"
+  },
+  "47": {
+    "name": "Cobb Salad",
+    "description": "Salad dengan potongan daging ayam, alpukat, dan telur",
+    "price": 20000,
+    "rating": 4.2,
+    "reviews": [
+      { "user": "Mila", "comment": "Salad sehat", "rating": 4 },
+      { "user": "Noah", "comment": "Daging ayamnya juicy", "rating": 4 }
+    ],
+    "image": "https://www.herwholesomekitchen.com/wp-content/uploads/2021/02/cobbsaladrecipe-1.jpg"
+  },
+  "48": {
+    "name": "Ginger Garlic Shrimp",
+    "description": "Udang saus jahe dan bawang putih",
+    "price": 32000,
+    "rating": 4.4,
+    "reviews": [
+      { "user": "Olivia", "comment": "Udangnya juicy", "rating": 4 },
+      {
+        "user": "Peter",
+        "comment": "Saus jahe bawang putihnya mantap",
+        "rating": 4
+      }
+    ],
+    "image": "https://www.onceuponachef.com/images/2013/04/Ginger-Garlic-Chili-Shrimp.jpg"
+  },
+  "49": {
+    "name": "Vegetable Lasagna",
+    "description": "Lasagna dengan lapisan sayuran dan saus tomat",
+    "price": 28000,
+    "rating": 4.7,
+    "reviews": [
+      { "user": "Quinn", "comment": "Lasagna vegetarian enak", "rating": 5 },
+      { "user": "Rose", "comment": "Sayurannya fresh", "rating": 5 }
+    ],
+    "image": "https://www.smalltownwoman.com/wp-content/uploads/2022/03/Vegetable-Lasagna-Recipe-Card.jpg"
+  },
+  "50": {
+    "name": "Cherry Garcia Ice Cream",
+    "description": "Es krim dengan potongan ceri dan cokelat",
+    "price": 13000,
+    "rating": 4.3,
+    "reviews": [
+      { "user": "Sam", "comment": "Es krim lezat", "rating": 4 },
+      { "user": "Tina", "comment": "Ceri dan cokelatnya pas", "rating": 4 }
+    ],
+    "image": "https://whitneybond.com/wp-content/uploads/2021/06/Cherry-Garcia-Ice-Cream-13.jpg"
+  }
+}

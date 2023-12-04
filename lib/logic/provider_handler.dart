@@ -49,16 +49,15 @@ class UserDataProvider with ChangeNotifier {
     }
   }
 
-  Future<bool> checkStatus(data) async {
-    dynamic result;
+  Future<bool> checkStatus() async {
     try {
       final response = await dio.get(userGetDataURL,
           options:
               Options(headers: {'Authorization': 'Bearer ${userData[2]}'}));
       if (response.statusCode == 200) {
-        result = response.data;
+        debugPrint(userData[2]);
         notifyListeners();
-        return result['response']['success'];
+        return true;
       } else {
         throw Exception('Failed to load data from API');
       }

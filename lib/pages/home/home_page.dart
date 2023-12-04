@@ -43,19 +43,20 @@ class _HomePageState extends State<HomePage> {
           return Text('Error: ${snapshot.error}');
         } else {
           return Scaffold(
+              appBar: AppBar(toolbarHeight: 5),
               body: SingleChildScrollView(
-            child: Column(
-              children: [
-                showGreeting(widget.changePageIndex),
-                showBanner(),
-                showCat(),
-                showRecommendation(),
-                showFavMenu(),
-                showPromo(),
-                showBestSeller()
-              ],
-            ),
-          ));
+                child: Column(
+                  children: [
+                    showGreeting(widget.changePageIndex),
+                    showBanner(),
+                    showCat(),
+                    showRecommendation(),
+                    showFavMenu(),
+                    showPromo(),
+                    showBestSeller()
+                  ],
+                ),
+              ));
         }
       },
     );
@@ -63,7 +64,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget showGreeting(Function changePageIndex) {
     return Padding(
-      padding: const EdgeInsets.only(top: 26, left: 21, right: 21, bottom: 21),
+      padding: const EdgeInsets.only(left: 21, right: 21, bottom: 21),
       child: Row(
         children: [
           GestureDetector(

@@ -29,7 +29,7 @@ summonDialog(context, {customTitle, customSubtitle}) {
           )));
 }
 
-Widget fieldMaker(title, hint, controller) {
+Widget fieldMaker(title, hint, controller, {prefilled}) {
   return Padding(
     padding: const EdgeInsets.only(bottom: 17),
     child: Column(
@@ -42,6 +42,11 @@ Widget fieldMaker(title, hint, controller) {
         const SizedBox(height: 2),
         TextField(
           controller: controller,
+          onTap: () {
+            if (prefilled != null) {
+              controller.text = prefilled;
+            }
+          },
           decoration: InputDecoration(
               hintText: hint, hintStyle: poppins.copyWith(color: outline)),
         )
@@ -49,7 +54,6 @@ Widget fieldMaker(title, hint, controller) {
     ),
   );
 }
-
 
 // int findIndexOfTrue(List itemList) {
 //   for (int i = 0; i < itemList.length; i++) {
@@ -63,5 +67,5 @@ Widget fieldMaker(title, hint, controller) {
 Future<void> fetchDataFromSharedPreferences() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   userData = prefs.getStringList('userData') ?? [];
-  debugPrint('Data dari SharedPreferences: $userData');
+  // debugPrint('Data dari SharedPreferences: $userData');
 }

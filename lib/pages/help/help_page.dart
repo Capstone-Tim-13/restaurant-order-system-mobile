@@ -12,10 +12,12 @@ class HelpPage extends StatefulWidget {
 }
 
 class _HelpPageState extends State<HelpPage> {
+  TextEditingController userQuestion = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: showAppBar(),
+      appBar: AppBar(toolbarHeight: 0),
       body: helpPage(),
     );
   }
@@ -133,12 +135,13 @@ class _HelpPageState extends State<HelpPage> {
           ),
           padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 17),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               SizedBox(
                 height: 35,
                 width: 318,
                 child: TextField(
-                  // controller: question,
+                  controller: userQuestion,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: moreBright,
@@ -153,11 +156,20 @@ class _HelpPageState extends State<HelpPage> {
                           BorderSide(width: 0, color: Colors.transparent),
                     ),
                     hintText: 'Ketik pesan...',
-                    hintStyle: poppins.copyWith(fontSize: 14, color: outline),
+                    hintStyle: poppins.copyWith(fontSize: 11, color: outline),
                     border: InputBorder.none,
                   ),
                 ),
               ),
+              GestureDetector(
+                onTap: () {
+                  debugPrint('send!');
+                },
+                child: Image.asset(
+                  'assets/images/icons/send.png',
+                  width: 24,
+                ),
+              )
             ],
           ),
         )

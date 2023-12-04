@@ -1,10 +1,23 @@
-import 'package:capstone_restaurant/logic/profil/address_logic.dart';
+import 'package:capstone_restaurant/data.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:capstone_restaurant/widgets.dart';
 import 'package:flutter/material.dart';
 
 class AddAddress extends StatefulWidget {
-  const AddAddress({super.key});
+  final dynamic title;
+  final dynamic tag;
+  final dynamic name;
+  final dynamic phone;
+  final dynamic address;
+  final dynamic note;
+  const AddAddress(
+      {super.key,
+      this.tag,
+      this.name,
+      this.phone,
+      this.address,
+      this.note,
+      this.title});
 
   @override
   State<AddAddress> createState() => _AddAddressState();
@@ -51,7 +64,7 @@ class _AddAddressState extends State<AddAddress> {
           ),
           const SizedBox(width: 8),
           Text(
-            "Alamat Baru",
+            widget.title ?? "Alamat Baru",
             style: poppins.copyWith(
                 fontWeight: FontWeight.w500,
                 fontSize: 18), // Ganti warna teks "Lupa Password"
@@ -66,13 +79,21 @@ class _AddAddressState extends State<AddAddress> {
       padding: const EdgeInsets.only(left: 16, right: 14, top: 32),
       child: Column(
         children: [
+          fieldMaker('Detail Lokasi',
+              widget.address ?? 'Cth. blok, No.rumah, patokan', detailLokasi,
+              prefilled: widget.address),
+          fieldMaker('Nama Lengkap', widget.name ?? 'Masukkan nama lengkap',
+              namaLengkap,
+              prefilled: widget.name),
           fieldMaker(
-              'Detail Lokasi', 'Cth. blok, No.rumah, patokan', detailLokasi),
-          fieldMaker('Nama Lengkap', 'Masukkan nama lengkap', namaLengkap),
-          fieldMaker('No. Handphone', 'Masukan no. Handphone', noHp),
-          fieldMaker(
-              'Tandai lokasi sebagai', 'Cth, rumah, kantor, kampus', tag),
-          fieldMaker('Patokan', 'Cth, warna rumah, warna pager', patokan),
+              'No. Handphone', widget.phone ?? 'Masukan no. Handphone', noHp,
+              prefilled: widget.phone),
+          fieldMaker('Tandai lokasi sebagai',
+              widget.tag ?? 'Cth, rumah, kantor, kampus', tag,
+              prefilled: widget.tag),
+          fieldMaker('Patokan', widget.note ?? 'Cth, warna rumah, warna pager',
+              patokan,
+              prefilled: widget.note),
           const SizedBox(height: 31),
           Row(
             children: [
@@ -90,7 +111,7 @@ class _AddAddressState extends State<AddAddress> {
                   onChanged: (bool value) {
                     setState(() {
                       isMain = !isMain;
-                      print(isMain);
+                      debugPrint(isMain.toString());
                     });
                   })
             ],
@@ -107,8 +128,8 @@ class _AddAddressState extends State<AddAddress> {
               ]);
               if (isMain) {
                 setState(() {
-                  defaultAddress = savedAddress.length-1;
-                  print(defaultAddress);
+                  defaultAddress = savedAddress.length - 1;
+                  debugPrint(defaultAddress.toString());
                 });
               }
 
