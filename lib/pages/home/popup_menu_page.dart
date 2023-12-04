@@ -168,47 +168,52 @@ class _MenuDetailState extends State<MenuDetail> {
                               ),
                               const Divider(),
                               const SizedBox(height: 20),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Detail',
-                                    style: poppins.copyWith(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 20),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Text(
-                                    subtitle,
-                                    // subtitle,
-                                    style: poppins.copyWith(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 16),
-                                  ),
-                                  const SizedBox(height: 10),
-                                ],
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width - 20,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Detail',
+                                      style: poppins.copyWith(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 20),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      subtitle,
+                                      style: poppins.copyWith(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 16),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    const Divider(),
+                                    const SizedBox(height: 20),
+                                    Text(
+                                      'Rating & Review',
+                                      style: poppins.copyWith(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 20),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      subtitle,
+                                      style: poppins.copyWith(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 16),
+                                    ),
+                                    const SizedBox(height: 10),
+                                  ],
+                                ),
                               ),
                               const Divider(),
                               const SizedBox(height: 20),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Rating & Review',
-                                    style: poppins.copyWith(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 20),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Text(
-                                    subtitle,
-                                    style: poppins.copyWith(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 16),
-                                  ),
-                                  const SizedBox(height: 10),
-                                ],
-                              ),
+                              // Column(
+                              //   crossAxisAlignment: CrossAxisAlignment.start,
+                              //   children: [
+
+                              //   ],
+                              // ),
                               const SizedBox(height: 20),
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 50),

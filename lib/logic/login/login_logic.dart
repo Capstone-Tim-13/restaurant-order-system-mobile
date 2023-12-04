@@ -9,7 +9,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 Future<void> login(context) async {
   final userProvider = Provider.of<UserDataProvider>(context, listen: false);
   final prefs = await SharedPreferences.getInstance();
-  await prefs.setBool('isLogin', true);
+  await prefs.setBool('isLogin', await userProvider.checkStatus());
+  // await prefs.setString('access_token', userProvider.getData[2]);
   await prefs.setStringList('userData', userProvider.getData);
   Navigator.pushReplacement(
       context,

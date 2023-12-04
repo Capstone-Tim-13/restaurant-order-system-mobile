@@ -1,3 +1,4 @@
+import 'package:capstone_restaurant/pages/help/help_page.dart';
 import 'package:capstone_restaurant/pages/order/payment_method_page.dart';
 import 'package:capstone_restaurant/pages/profile/app_rating_page.dart';
 import 'package:capstone_restaurant/pages/profile/change_password_page.dart';
@@ -6,9 +7,42 @@ import 'package:capstone_restaurant/pages/profile/faq_page.dart';
 import 'package:capstone_restaurant/pages/profile/my_account_page.dart';
 import 'package:capstone_restaurant/pages/profile/address_page.dart';
 
-
 List defaultPaymentMethod = [];
 List<String> userData = [];
+int defaultAddress = 0;
+
+List searchHistory = [];
+
+List savedAddress = [
+  [
+    'My home',
+    'Balbalee',
+    '0839874456984',
+    'Jl. in aja dulu III, Blok mana lagi 1 E, No. 666, Tanah kusir, Depok, Jawa Barat, 08395, Indoensia',
+    'Pager pelangi sebelah pager item ya pak'
+  ],
+  [
+    'Office',
+    'Oryngon',
+    '08458697543',
+    'Jl. besar raya 5, kecamatan sukarela, Cakung, Jakarta Timur, 127846, Indonesia',
+    'Di taro di pos satpam aja ya pak'
+  ],
+  [
+    'Kampus',
+    'Balbalee',
+    '0839874456984',
+    'Jl. in aja dulu III, Blok mana lagi 1 E, No. 666, Tanah kusir, Depok, Jawa Barat, 08395, Indoensia',
+    'Seberang Alfadidi'
+  ],
+  [
+    'Kost',
+    'Balbalee',
+    '0839874456984',
+    'Jl. in aja dulu III, Blok mana lagi 1 E, No. 666, Tanah kusir, Depok, Jawa Barat, 08395, Indoensia',
+    'No 42 sebelah no 43 ya pak'
+  ],
+];
 
 List catData = [
   ['Appetizer', 'assets/images/home/homePage/category/appetizer.png'],
@@ -58,7 +92,7 @@ List accMenu = [
     'Customer Service',
     'Hubungi kami jika ada masalah',
     'assets/images/icons/accPage/cs.png',
-    const AccPage()
+    const HelpPage(route: false)
   ],
   [
     'Favorit',
@@ -101,6 +135,7 @@ List paymentBank = [
   ['assets/images/icons/payment/btn.png', 'Bank BTN'],
 ];
 
+// ----------------------------
 
 Map<String, dynamic> menuData = {
   'Appetizer': [
@@ -438,6 +473,7 @@ Map<String, dynamic> faqData = {
 };
 
 // -------------------------------
+// rachel
 class DataMenu {
   List recMenu = [
     {

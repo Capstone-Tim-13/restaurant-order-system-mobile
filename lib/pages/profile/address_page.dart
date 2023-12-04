@@ -1,4 +1,4 @@
-import 'package:capstone_restaurant/logic/profil/address_logic.dart';
+import 'package:capstone_restaurant/data.dart';
 import 'package:capstone_restaurant/pages/profile/add_address_page.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/material.dart';
@@ -75,7 +75,7 @@ class _AddressPageState extends State<AddressPage> {
                         context,
                         PageTransition(
                             child: const AddAddress(),
-                            type: PageTransitionType.rightToLeft));
+                            type: PageTransitionType.fade));
                     if (result != null) {
                       setState(() {
                         currentAddressList = result;
@@ -109,14 +109,25 @@ class _AddressPageState extends State<AddressPage> {
   }
 
   Widget showAddressList(index, data) {
-    String title = data[0];
+    String tag = data[0];
     String name = data[1];
     String phone = data[2];
     String address = data[3];
     String note = data[4];
     return GestureDetector(
       onTap: () {
-        debugPrint('address $title tertekan');
+        Navigator.push(
+            context,
+            PageTransition(
+                child: AddAddress(
+                    title: 'Edit Address',
+                    tag: tag,
+                    name: name,
+                    phone: phone,
+                    address: address,
+                    note: note),
+                type: PageTransitionType.fade));
+        debugPrint('address $tag tertekan');
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 24),
@@ -136,7 +147,7 @@ class _AddressPageState extends State<AddressPage> {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      title,
+                      tag,
                       style: poppins.copyWith(
                           fontSize: 15, fontWeight: FontWeight.w500),
                     ),
@@ -171,23 +182,23 @@ class _AddressPageState extends State<AddressPage> {
 
   Widget threeDots(idx) {
     return PopupMenuButton(
-      surfaceTintColor: primary4,
+      surfaceTintColor: Colors.white,
       iconSize: 20,
       itemBuilder: (context) => [
         PopupMenuItem(
           value: 1,
           child: Text(
-            'Select address',
+            'Set default address',
             style: poppins.copyWith(fontSize: 13),
           ),
         ),
-        PopupMenuItem(
-          value: 2,
-          child: Text(
-            'Edit address',
-            style: poppins.copyWith(fontSize: 13),
-          ),
-        ),
+        // PopupMenuItem(
+        //   value: 2,
+        //   child: Text(
+        //     'Edit address',
+        //     style: poppins.copyWith(fontSize: 13),
+        //   ),
+        // ),
       ],
       onSelected: (value) async {
         switch (value) {
@@ -198,7 +209,6 @@ class _AddressPageState extends State<AddressPage> {
             widget.isRebuild ? Navigator.pop(context, idx) : null;
             debugPrint('address ${currentAddressList[idx]}');
             debugPrint('address $idx');
-            debugPrint(findAddressIndex('www').toString());
         }
       },
     );
