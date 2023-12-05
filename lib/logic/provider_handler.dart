@@ -1,6 +1,7 @@
 import 'package:capstone_restaurant/logic/url_collection.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final dio = Dio();
 
@@ -64,6 +65,76 @@ class UserDataProvider with ChangeNotifier {
     } catch (error) {
       return false;
       // throw Exception('Failed to load data from API: $error');
+    }
+  }
+}
+
+class MenuDataProvider with ChangeNotifier {
+  Future<List> getMenuAll(token) async {
+    try {
+      final response = await dio.get(menuFindAll,
+          options: Options(headers: {'Authorization': 'Bearer $token'}));
+      if (response.statusCode == 200) {
+        return response.data['results'];
+      } else {
+        throw Exception('Failed to load data from API');
+      }
+    } catch (error) {
+      return [];
+      // throw Exception('Failed to load data from API: $error');
+    }
+  }
+
+  Future<List> getMenuById(id, token) async {
+    dynamic result;
+    try {
+      final response = await dio.get('$menuFindAll$id',
+          options: Options(headers: {'Authorization': 'Bearer $token'}));
+      if (response.statusCode == 200) {
+        result = response.data['results'];
+        debugPrint(result);
+        notifyListeners();
+        return result;
+      } else {
+        throw Exception('Failed to load data from API');
+      }
+    } catch (error) {
+      return [];
+      // throw Exception('Failed to load data from API: $error');
+    }
+  }
+
+  Future<List> getMenuByName(name, token) async {
+    dynamic result;
+    try {
+      final response = await dio.get('$menuFindAll$name',
+          options: Options(headers: {'Authorization': 'Bearer $token'}));
+      if (response.statusCode == 200) {
+        result = response.data['results'];
+        debugPrint(result);
+        notifyListeners();
+        return result;
+      } else {
+        throw Exception('Failed to load data from API');
+      }
+    } catch (error) {
+      return [];
+      // throw Exception('Failed to load data from API: $error');
+    }
+  }
+
+  Future<List> getMenuByCat(category, token) async {
+    try {
+      final response = await dio.get('$menuFindCategory/$category',
+          options: Options(headers: {'Authorization': 'Bearer $token'}));
+      if (response.statusCode == 200) {
+        return response.data['results'];
+      } else {
+        throw Exception('Failed to load data from API');
+      }
+    } catch (error) {
+      // return [];
+      throw Exception('Failed to load data from API: $error');
     }
   }
 }

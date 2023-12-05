@@ -1,6 +1,7 @@
 //  ali
 
 import 'package:capstone_restaurant/data.dart';
+import 'package:capstone_restaurant/logic/home/home_page_logic.dart';
 import 'package:capstone_restaurant/pages/home/favorite_page.dart';
 import 'package:capstone_restaurant/pages/home/popup_menu_page.dart';
 import 'package:capstone_restaurant/pages/home/search_page.dart';
@@ -24,59 +25,6 @@ class _MenubyCatState extends State<MenubyCat> {
   void initState() {
     super.initState();
     selectedCategory = widget.selectedCat;
-  }
-
-  dynamic getAllData(data, type) {
-    dynamic totalLength = 0;
-    dynamic allData = [];
-
-    data.forEach((category, items) {
-      totalLength += items.length;
-    });
-
-    menuData.forEach((category, items) {
-      allData.addAll(items);
-    });
-
-    if (type == 'length') {
-      return totalLength;
-    } else {
-      return allData;
-    }
-  }
-
-  int getListLen() {
-    switch (selectedCategory) {
-      case 'Appetizer':
-        return menuData['Appetizer'].length;
-      case 'Dessert':
-        return menuData['Dessert'].length;
-      case 'Ala Carte':
-        return menuData['Ala Carte'].length;
-      case 'Paket Hemat':
-        return menuData['Paket Hemat'].length;
-      case 'Minum':
-        return menuData['Minum'].length;
-      default:
-        return getAllData(menuData, 'length');
-    }
-  }
-
-  showMenu(index) {
-    switch (selectedCategory) {
-      case 'Appetizer':
-        return itemBuilder(menuData['Appetizer'][index]);
-      case 'Dessert':
-        return itemBuilder(menuData['Dessert'][index]);
-      case 'Ala Carte':
-        return itemBuilder(menuData['Ala Carte'][index]);
-      case 'Paket Hemat':
-        return itemBuilder(menuData['Paket Hemat'][index]);
-      case 'Minum':
-        return itemBuilder(menuData['Minum'][index]);
-      default:
-        return itemBuilder(getAllData(menuData, 'menu')[index]);
-    }
   }
 
   @override
@@ -139,6 +87,7 @@ class _MenubyCatState extends State<MenubyCat> {
   }
 
   Widget menubyCatPage() {
+    (context);
     return SingleChildScrollView(
       child: Stack(
         children: [
@@ -284,120 +233,139 @@ class _MenubyCatState extends State<MenubyCat> {
               ],
             ),
           ),
-          // menu by category
+
           Container(
-              margin: const EdgeInsets.only(top: 520),
-              child: ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.zero,
-                itemCount: getListLen(),
-                itemBuilder: (context, index) {
-                  return showMenu(index);
-                },
-              ))
+            margin: const EdgeInsets.only(top: 520),
+            child: FutureBuilder<dynamic>(
+              future: getListLen(context, selectedCategory),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                      child: CircularProgressIndicator(
+                    color: primary4,
+                    // value: progressController.value,
+                    strokeWidth: 6,
+                  ));
+                } else if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    padding: EdgeInsets.zero,
+                    itemCount: snapshot.data.length ?? 0,
+                    itemBuilder: (context, index) {
+                      return itemBuilder(context, snapshot.data[index]);
+                    },
+                  );
+                }
+              },
+            ),
+          )
         ],
       ),
     );
   }
+}
 
-  Widget itemBuilder(data) {
-    String title = data[0];
-    String subtitle = data[1];
-    String price = data[2];
-    String img = data[3];
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-            context,
-            PageTransition(
-                child: MenuDetail(
-                  data: data,
-                ),
-                type: PageTransitionType.fade));
-        debugPrint('menu ${data[0]} tertekan');
-      },
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 41, left: 21, right: 35),
-        child: Row(
-          children: [
-            SizedBox(
-              width: 110,
-              child: Image.asset(img),
-            ),
-            const SizedBox(width: 18),
-            Expanded(
-                child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      title,
-                      style: poppins.copyWith(
-                        fontSize: 16,
-                      ),
+Widget itemBuilder(context, data) {
+  String title = data['name'];
+  String subtitle = data['description'];
+  String price = data['price'].toString();
+  String img = data['image'];
+  return GestureDetector(
+    onTap: () {
+      Navigator.push(
+          context,
+          PageTransition(
+              child: PopUpMenuDetail(
+                data: data,
+              ),
+              type: PageTransitionType.fade));
+      debugPrint('menu ${data[0]} tertekan');
+    },
+    child: Container(
+      margin: const EdgeInsets.only(bottom: 41, left: 21, right: 35),
+      child: Row(
+        children: [
+          SizedBox(
+            width: 110,
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.network(img, fit: BoxFit.fill)),
+          ),
+          const SizedBox(width: 18),
+          Expanded(
+              child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    title,
+                    style: poppins.copyWith(
+                      fontSize: 16,
                     ),
-                    const Spacer(),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Image.asset(
-                        'assets/images/icons/favW.png',
-                        color: bright,
-                      ),
-                    )
-                  ],
-                ),
-                const SizedBox(height: 6),
-                SizedBox(
-                  height: 48,
-                  child: Text(
-                    subtitle,
-                    style: poppins.copyWith(fontSize: 14, color: outline),
                   ),
-                ),
-                // const SizedBox(height: 7),
-                Row(
-                  children: [
-                    Text(
-                      'Rp $price',
-                      style: poppins.copyWith(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 16,
-                          color: primary4),
+                  const Spacer(),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Image.asset(
+                      'assets/images/icons/favW.png',
+                      color: bright,
                     ),
-                    const Spacer(),
-                    GestureDetector(
-                      onTap: () {
-                        debugPrint('add ${data[0]} tertekan');
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: primary4,
-                          borderRadius: BorderRadius.circular(37),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 8, horizontal: 16),
-                          child: Center(
-                            child: Text(
-                              '+ Add',
-                              style: poppins.copyWith(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14,
-                                  color: primary2),
-                            ),
+                  )
+                ],
+              ),
+              const SizedBox(height: 6),
+              SizedBox(
+                height: 48,
+                child: Text(
+                  subtitle,
+                  style: poppins.copyWith(fontSize: 14, color: outline),
+                ),
+              ),
+              // const SizedBox(height: 7),
+              Row(
+                children: [
+                  Text(
+                    'Rp $price',
+                    style: poppins.copyWith(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
+                        color: primary4),
+                  ),
+                  const Spacer(),
+                  GestureDetector(
+                    onTap: () {
+                      debugPrint('add ${data[0]} tertekan');
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: primary4,
+                        borderRadius: BorderRadius.circular(37),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 16),
+                        child: Center(
+                          child: Text(
+                            '+ Add',
+                            style: poppins.copyWith(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14,
+                                color: primary2),
                           ),
                         ),
                       ),
-                    )
-                  ],
-                )
-              ],
-            ))
-          ],
-        ),
+                    ),
+                  )
+                ],
+              )
+            ],
+          ))
+        ],
       ),
-    );
-  }
+    ),
+  );
 }

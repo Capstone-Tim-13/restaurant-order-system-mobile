@@ -4,15 +4,15 @@ import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
-class MenuDetail extends StatefulWidget {
+class PopUpMenuDetail extends StatefulWidget {
   final dynamic data;
-  const MenuDetail({super.key, required this.data});
+  const PopUpMenuDetail({super.key, required this.data});
 
   @override
-  State<MenuDetail> createState() => _MenuDetailState();
+  State<PopUpMenuDetail> createState() => _PopUpMenuDetailState();
 }
 
-class _MenuDetailState extends State<MenuDetail> {
+class _PopUpMenuDetailState extends State<PopUpMenuDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,12 +55,12 @@ class _MenuDetailState extends State<MenuDetail> {
   }
 
   Widget menubyCatPage() {
-    String title = widget.data[0];
-    String subtitle = widget.data[1];
-    String price = widget.data[2];
-    String img = widget.data[3];
-    int averageRating = widget.data[4];
-    String totalRating = widget.data[5];
+    String title = widget.data['name'];
+    String subtitle = widget.data['description'];
+    String price = widget.data['price'].toString();
+    String img = widget.data['image'];
+    int averageRating = 4;
+    String totalRating = '5122';
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -68,7 +68,7 @@ class _MenuDetailState extends State<MenuDetail> {
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage(img),
+                    image: NetworkImage(img),
                     fit: BoxFit.contain,
                     alignment: Alignment.topCenter)),
             child: Column(
@@ -141,12 +141,12 @@ class _MenuDetailState extends State<MenuDetail> {
                                   Text(
                                     'Camilan',
                                     style: poppins.copyWith(
-                                        color: outline, fontSize: 10),
+                                        color: outline, fontSize: 11),
                                   ),
                                   const SizedBox(width: 15),
                                   Image.asset(
                                     'assets/images/icons/like.png',
-                                    width: 10,
+                                    width: 12,
                                   ),
                                   const SizedBox(width: 5),
                                   Text(
@@ -154,7 +154,7 @@ class _MenuDetailState extends State<MenuDetail> {
                                     style: poppins.copyWith(
                                         fontWeight: FontWeight.w400,
                                         color: outline,
-                                        fontSize: 10),
+                                        fontSize: 11),
                                   ),
                                   const Spacer(),
                                   Text(

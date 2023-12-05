@@ -19,6 +19,7 @@ void main() async {
 
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => UserDataProvider()),
+    ChangeNotifierProvider(create: (_) => MenuDataProvider()),
     // ChangeNotifierProvider(create: (_) => PaymentDataProvider()),
   ], child: MyApp(isLogin: isLogin)));
 }

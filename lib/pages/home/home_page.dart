@@ -37,7 +37,12 @@ class _HomePageState extends State<HomePage> {
       future: fetchData,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
+          return Center(
+              child: CircularProgressIndicator(
+            color: primary4,
+            // value: progressController.value,
+            strokeWidth: 6,
+          ));
         } else if (snapshot.hasError) {
           // Handle errors
           return Text('Error: ${snapshot.error}');

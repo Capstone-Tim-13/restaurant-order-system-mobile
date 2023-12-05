@@ -10,7 +10,6 @@ import 'package:capstone_restaurant/pages/profile/address_page.dart';
 List defaultPaymentMethod = [];
 List<String> userData = [];
 int defaultAddress = 0;
-
 List searchHistory = [];
 
 List savedAddress = [
