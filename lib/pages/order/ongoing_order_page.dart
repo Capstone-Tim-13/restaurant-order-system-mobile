@@ -3,7 +3,8 @@ import 'package:capstone_restaurant/pages/order/order_status.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/material.dart';
 
-Widget ongoingOrder(context) {
+Widget ongoingOrder(context, data) {
+  print(data);
   return Container(
       margin: const EdgeInsets.only(bottom: 13, left: 16, right: 16),
       decoration: BoxDecoration(
@@ -52,7 +53,7 @@ Widget ongoingOrder(context) {
                       children: [
                         SizedBox(
                           width: 165,
-                          child: Text('Kentang Goreng',
+                          child: Text(data['name'],
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
                               style: poppins.copyWith(
@@ -70,7 +71,7 @@ Widget ongoingOrder(context) {
                   children: [
                     Row(
                       children: [
-                        Text('3 item | 4 km',
+                        Text('${data['jumlah']} item | ${data['jarak']} km',
                             style: poppins.copyWith(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 15,

@@ -2,7 +2,7 @@ import 'package:capstone_restaurant/pages/order/order_page.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/material.dart';
 
-Widget cancelOrder(context) {
+Widget cancelOrder(context, data) {
   return Column(
     children: [
       Padding(
@@ -108,7 +108,8 @@ Widget cancelOrder(context) {
                                   fontSize: 13,
                                   color: outline)),
                         ),
-                        orderButtonMaker(context, 'Dibatalkan', outline, color: bright)
+                        orderButtonMaker(context, 'Dibatalkan', outline,
+                            color: bright)
                       ],
                     ),
                   ],
