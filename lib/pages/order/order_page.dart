@@ -1,4 +1,5 @@
 import 'package:capstone_restaurant/data.dart';
+import 'package:capstone_restaurant/logic/provider_handler.dart';
 import 'package:capstone_restaurant/pages/order/cancel_order_page.dart';
 import 'package:capstone_restaurant/pages/order/history_order_page.dart';
 import 'package:capstone_restaurant/pages/order/ongoing_order_page.dart';
@@ -17,6 +18,61 @@ class _OrderPageState extends State<OrderPage> {
   bool isBerlangsungSelected = true;
   bool isRiwayatSelected = false;
   bool isDibatalkanSelected = false;
+  final List<Map<String, dynamic>> dataBerlangsung = [];
+  final List<Map<String, dynamic>> dataRiwayat = [];
+  final List<Map<String, dynamic>> dataDibatalkan = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    try {
+      final response = await dio.get(
+          'https://656ede2c6529ec1c6236d00a.mockapi.io/api/pesanan/pesanan');
+
+      if (response.statusCode == 200) {
+        final List<dynamic> dataList = response.data;
+        final List<Map<String, dynamic>> data =
+            List<Map<String, dynamic>>.from(dataList);
+
+        // Clear existing data
+        dataBerlangsung.clear();
+        dataRiwayat.clear();
+        dataDibatalkan.clear();
+
+        // Group data by statusPesanan
+        for (final Map<String, dynamic> item in data) {
+          final String statusPesanan = item['statusPesanan'];
+
+          if (statusPesanan == 'berlangsung') {
+            setState(() {
+              dataBerlangsung.add(item);
+              print(dataBerlangsung);
+            });
+          } else if (statusPesanan == 'riwayat') {
+            setState(() {
+              dataRiwayat.add(item);
+              print(dataRiwayat);
+            });
+          } else if (statusPesanan == 'dibatalkan') {
+            setState(() {
+              dataDibatalkan.add(item);
+              print(dataDibatalkan);
+            });
+          }
+        }
+      } else {
+        // Handle other status codes if needed
+        throw Exception('Failed to load data');
+      }
+    } catch (error) {
+      // Handle Dio errors
+      throw Exception('Failed to load data: $error');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,28 +133,34 @@ class _OrderPageState extends State<OrderPage> {
               SizedBox(
                   child: ListView.builder(
                 padding: EdgeInsets.zero,
-                itemCount:
-                    isBerlangsungSelected ? 5 : (isRiwayatSelected ? 4 : 8),
+                itemCount: dataBerlangsung.length,
+                // itemCount: isBerlangsungSelected
+                //     ? dataBerlangsung.length
+                //     : (isRiwayatSelected
+                //         ? dataRiwayat.length
+                //         : dataDibatalkan.length),
                 itemBuilder: ((BuildContext context, index) {
-                  return ongoingOrder(context);
+                  return ongoingOrder(context, dataBerlangsung[index]);
                 }),
               )),
               SizedBox(
                   child: ListView.builder(
                 padding: EdgeInsets.zero,
-                itemCount:
-                    isBerlangsungSelected ? 5 : (isRiwayatSelected ? 4 : 8),
+                itemCount: dataRiwayat.length,
+                // itemCount:
+                //     isBerlangsungSelected ? 5 : (isRiwayatSelected ? 4 : 8),
                 itemBuilder: ((BuildContext context, index) {
-                  return historyOrder(context, orderHistory);
+                  return historyOrder(context, dataRiwayat[index]);
                 }),
               )),
               SizedBox(
                   child: ListView.builder(
                 padding: EdgeInsets.zero,
-                itemCount:
-                    isBerlangsungSelected ? 5 : (isRiwayatSelected ? 4 : 8),
+                itemCount: dataDibatalkan.length,
+                // itemCount:
+                //     isBerlangsungSelected ? 5 : (isRiwayatSelected ? 4 : 8),
                 itemBuilder: ((BuildContext context, index) {
-                  return cancelOrder(context);
+                  return cancelOrder(context, dataDibatalkan[index]);
                 }),
               )),
             ]),
@@ -111,9 +173,8 @@ Widget orderButtonMaker(context, title, titleColor, {color, route}) {
   return GestureDetector(
     onTap: () {
       if (route != null && title != 'Dibatalkan') {
-        Navigator.push(context, PageTransition(
-                child: route,
-                type: PageTransitionType.fade));
+        Navigator.push(context,
+            PageTransition(child: route, type: PageTransitionType.fade));
       }
       debugPrint('$title tertekan');
     },
