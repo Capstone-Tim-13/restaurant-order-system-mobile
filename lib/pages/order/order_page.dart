@@ -45,7 +45,7 @@ class _OrderPageState extends State<OrderPage> {
 
         // Group data by statusPesanan
         for (final Map<String, dynamic> item in data) {
-          final String statusPesanan = item['statusPesanan'];
+          final String statusPesanan = item['orderStatus'];
 
           if (statusPesanan == 'berlangsung') {
             setState(() {
@@ -115,7 +115,7 @@ class _OrderPageState extends State<OrderPage> {
               text: 'Riwayat',
             ),
             Tab(
-              text: 'Dibatalakn',
+              text: 'Dibatalkan',
             ),
           ]),
     );

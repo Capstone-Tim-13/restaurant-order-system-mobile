@@ -61,7 +61,7 @@ Widget ongoingOrder(context, data) {
                         ),
                       ],
                     ),
-                    Text('Rp 25.000',
+                    Text('Rp ${data['price']}',
                         style: poppins.copyWith(
                             fontWeight: FontWeight.w500, fontSize: 16))
                   ],
@@ -71,7 +71,7 @@ Widget ongoingOrder(context, data) {
                   children: [
                     Row(
                       children: [
-                        Text('${data['jumlah']} item | ${data['jarak']} km',
+                        Text('${data['qty']} item | ${data['distance']} km',
                             style: poppins.copyWith(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 15,
