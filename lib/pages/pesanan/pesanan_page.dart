@@ -4,7 +4,7 @@ import "package:capstone_restaurant/pages/pesanan/dibatalkan_widget.dart";
 import "package:capstone_restaurant/pages/pesanan/ongoing_widget.dart";
 import "package:capstone_restaurant/pages/pesanan/riwayat_widget.dart";
 import "package:flutter/material.dart";
-import "package:google_fonts/google_fonts.dart";
+
 
 
 class OrderPage extends StatefulWidget {
