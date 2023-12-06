@@ -14,7 +14,7 @@ Widget historyOrder(context, data) {
         child: Align(
           alignment: AlignmentDirectional.centerStart,
           child: Text(
-            data[3],
+            data['createdAt'],
             style: poppins.copyWith(fontSize: 15, color: outline),
           ),
         ),
@@ -47,7 +47,7 @@ Widget historyOrder(context, data) {
                         left: 15,
                         bottom: 9,
                         child: Text(
-                          '30 Min',
+                        '30 Min',
                           style:
                               poppins.copyWith(fontSize: 16, color: primary2),
                         )),
@@ -79,7 +79,7 @@ Widget historyOrder(context, data) {
                             children: [
                               SizedBox(
                                 width: 165,
-                                child: Text(data[1],
+                                child: Text(data['name'],
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 1,
                                     style: poppins.copyWith(
@@ -89,7 +89,7 @@ Widget historyOrder(context, data) {
                               const SizedBox(width: 10),
                             ],
                           ),
-                          Text(data[2],
+                          Text('Rp ${data['price']}',
                               style: poppins.copyWith(
                                   fontWeight: FontWeight.w500, fontSize: 16))
                         ],
@@ -98,14 +98,14 @@ Widget historyOrder(context, data) {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Row(
-                            children: [
-                              Text(data[5],
-                                  style: poppins.copyWith(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 15,
-                                      color: outline)),
-                              const SizedBox(width: 10),
-                            ],
+                           children: [
+                        Text('${data['qty']} item | ${data['distance']} km',
+                            style: poppins.copyWith(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 15,
+                                color: outline)),
+                        const SizedBox(width: 10),
+                      ],
                           ),
                           Text('Dikirim ke alamat',
                               style: poppins.copyWith(

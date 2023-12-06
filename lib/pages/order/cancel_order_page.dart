@@ -10,7 +10,7 @@ Widget cancelOrder(context, data) {
         child: Align(
           alignment: AlignmentDirectional.centerStart,
           child: Text(
-            '12 September 2023',
+            data['createdAt'],
             style: poppins.copyWith(fontSize: 15, color: outline),
           ),
         ),
@@ -71,13 +71,13 @@ Widget cancelOrder(context, data) {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                      'Tuna Grill, Tofu Salmon pedas dan nikmat',
+                                      data['name'],
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 1,
                                       style: poppins.copyWith(
                                           fontWeight: FontWeight.w500,
                                           fontSize: 16)),
-                                  Text('7 item | 4 km',
+                                  Text('${data['qty']} item | ${data['distance']} km',
                                       style: poppins.copyWith(
                                           fontWeight: FontWeight.w400,
                                           fontSize: 15,
@@ -88,7 +88,7 @@ Widget cancelOrder(context, data) {
                             )
                           ],
                         ),
-                        Text('Rp 40.000',
+                        Text('Rp ${data['price']}',
                             style: poppins.copyWith(
                                 fontWeight: FontWeight.w500, fontSize: 16)),
                       ],
@@ -100,7 +100,7 @@ Widget cancelOrder(context, data) {
                         SizedBox(
                           width: 165,
                           child: Text(
-                              'Dibatalkan: mau order yang lain, salah order bla bla bla',
+                              data['reason'],
                               overflow: TextOverflow.ellipsis,
                               maxLines: 2,
                               style: poppins.copyWith(
