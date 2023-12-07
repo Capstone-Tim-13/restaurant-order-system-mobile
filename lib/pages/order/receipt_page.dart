@@ -2,7 +2,7 @@ import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/material.dart';
 
 class ReceiptPage extends StatefulWidget {
-  final List data;
+  final Map data;
   const ReceiptPage({super.key, required this.data});
 
   @override
@@ -59,7 +59,7 @@ class _ReceiptPageState extends State<ReceiptPage> {
                         fontWeight: FontWeight.w500, fontSize: 16),
                   ),
                   Text(
-                    widget.data[3],
+                    ' widget.data[3]',
                     style: poppins.copyWith(fontSize: 14, color: outline),
                   )
                 ],
@@ -75,7 +75,7 @@ class _ReceiptPageState extends State<ReceiptPage> {
                         width: 19,
                       ),
                       Text(
-                        widget.data[6],
+                        'widget.data[6]',
                         style: poppins.copyWith(
                             fontSize: 15,
                             fontWeight: FontWeight.w500,
@@ -84,7 +84,7 @@ class _ReceiptPageState extends State<ReceiptPage> {
                     ],
                   ),
                   Text(
-                    'Pesanan ke-${widget.data[7]}',
+                    'Pesanan ke-{widget.data[7]}',
                     style: poppins.copyWith(fontSize: 14, color: outline),
                   )
                 ],
@@ -200,14 +200,14 @@ class _ReceiptPageState extends State<ReceiptPage> {
                     SizedBox(
                       width: 205,
                       child: Text(
-                        data[1],
+                        'data[1]',
                         style: poppins.copyWith(fontSize: 16),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     Text(
-                      data[2],
+                      ' data[2]',
                       style: poppins.copyWith(
                           fontSize: 16, fontWeight: FontWeight.w500),
                     ),
@@ -227,7 +227,7 @@ class _ReceiptPageState extends State<ReceiptPage> {
                               color: outline),
                         ),
                         TextSpan(
-                          text: data[8],
+                          text: 'data[8]',
                           style: poppins.copyWith(color: outline),
                         ),
                       ])),
