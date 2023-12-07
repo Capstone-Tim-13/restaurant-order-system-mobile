@@ -1,8 +1,9 @@
 import 'package:capstone_restaurant/pages/order/order_page.dart';
 import 'package:capstone_restaurant/style.dart';
+import 'package:capstone_restaurant/widgets.dart';
 import 'package:flutter/material.dart';
 
-Widget cancelOrder(context) {
+Widget cancelOrder(context, data) {
   return Column(
     children: [
       Padding(
@@ -10,7 +11,7 @@ Widget cancelOrder(context) {
         child: Align(
           alignment: AlignmentDirectional.centerStart,
           child: Text(
-            '12 September 2023',
+            formatDate(data['createdAt']),
             style: poppins.copyWith(fontSize: 15, color: outline),
           ),
         ),
@@ -70,14 +71,14 @@ Widget cancelOrder(context) {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                      'Tuna Grill, Tofu Salmon pedas dan nikmat',
+                                  Text(data['name'],
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 1,
                                       style: poppins.copyWith(
                                           fontWeight: FontWeight.w500,
                                           fontSize: 16)),
-                                  Text('7 item | 4 km',
+                                  Text(
+                                      '${data['qty']} item | ${data['distance']} km',
                                       style: poppins.copyWith(
                                           fontWeight: FontWeight.w400,
                                           fontSize: 15,
@@ -88,7 +89,7 @@ Widget cancelOrder(context) {
                             )
                           ],
                         ),
-                        Text('Rp 40.000',
+                        Text('Rp ${data['price']}',
                             style: poppins.copyWith(
                                 fontWeight: FontWeight.w500, fontSize: 16)),
                       ],
@@ -98,17 +99,24 @@ Widget cancelOrder(context) {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         SizedBox(
-                          width: 165,
-                          child: Text(
-                              'Dibatalkan: mau order yang lain, salah order bla bla bla',
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              style: poppins.copyWith(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 13,
-                                  color: outline)),
-                        ),
-                        orderButtonMaker(context, 'Dibatalkan', outline, color: bright)
+                            width: 165,
+                            child: RichText(
+                                text: TextSpan(
+                                    text: 'Dibatalkan: ',
+                                    style: poppins.copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 13,
+                                        color: outline),
+                                    children: <TextSpan>[
+                                  TextSpan(
+                                      text: data['reason'],
+                                      style: poppins.copyWith(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 13,
+                                          color: outline)),
+                                ]))),
+                        orderButtonMaker(context, 'Dibatalkan', outline,
+                            color: bright)
                       ],
                     ),
                   ],

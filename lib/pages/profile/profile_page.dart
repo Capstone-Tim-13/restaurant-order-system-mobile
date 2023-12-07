@@ -67,7 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         children: [
                           Row(
                             children: [
-                              Text(userData[0],
+                              Text(localUserData[0],
                                   style: poppins.copyWith(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 20)),

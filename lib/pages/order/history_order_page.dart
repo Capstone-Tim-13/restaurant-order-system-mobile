@@ -3,6 +3,7 @@ import 'package:capstone_restaurant/pages/order/input_rating_page.dart';
 import 'package:capstone_restaurant/pages/order/order_page.dart';
 import 'package:capstone_restaurant/pages/order/receipt_page.dart';
 import 'package:capstone_restaurant/style.dart';
+import 'package:capstone_restaurant/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -14,7 +15,7 @@ Widget historyOrder(context, data) {
         child: Align(
           alignment: AlignmentDirectional.centerStart,
           child: Text(
-            data[3],
+            formatDate(data['createdAt']),
             style: poppins.copyWith(fontSize: 15, color: outline),
           ),
         ),
@@ -79,7 +80,7 @@ Widget historyOrder(context, data) {
                             children: [
                               SizedBox(
                                 width: 165,
-                                child: Text(data[1],
+                                child: Text(data['name'],
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 1,
                                     style: poppins.copyWith(
@@ -89,7 +90,7 @@ Widget historyOrder(context, data) {
                               const SizedBox(width: 10),
                             ],
                           ),
-                          Text(data[2],
+                          Text('Rp ${data['price']}',
                               style: poppins.copyWith(
                                   fontWeight: FontWeight.w500, fontSize: 16))
                         ],
@@ -99,7 +100,8 @@ Widget historyOrder(context, data) {
                         children: [
                           Row(
                             children: [
-                              Text(data[5],
+                              Text(
+                                  '${data['qty']} item | ${data['distance']} km',
                                   style: poppins.copyWith(
                                       fontWeight: FontWeight.w400,
                                       fontSize: 15,

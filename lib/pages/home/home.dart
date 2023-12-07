@@ -1,11 +1,14 @@
 // rachel
 
+import 'package:capstone_restaurant/logic/data_api_handler.dart';
 import 'package:capstone_restaurant/pages/help/help_page.dart';
 import 'package:capstone_restaurant/pages/home/home_page.dart';
 import 'package:capstone_restaurant/pages/order/order_page.dart';
 import 'package:capstone_restaurant/pages/profile/profile_page.dart';
 import 'package:capstone_restaurant/style.dart';
+import 'package:capstone_restaurant/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   final int setIdx;
@@ -17,13 +20,28 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int currentPageIndex = 0;
+  bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
+    fetchDataAndMenu();
     int setIdx = widget.setIdx;
     setState(() {
       currentPageIndex = setIdx;
+    });
+  }
+
+  Future<void> fetchDataAndMenu() async {
+    setState(() {
+      isLoading = true;
+    });
+    final menuProvider = Provider.of<MenuDataProvider>(context, listen: false);
+    fetchDataFromSharedPreferences();
+    await menuProvider.getMenuAll();
+
+    setState(() {
+      isLoading = false;
     });
   }
 
@@ -35,16 +53,22 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // extendBody: true,
-      body: <Widget>[
-        HomePage(changePageIndex: changePageIndex),
-        const OrderPage(),
-        const HelpPage(route: true),
-        const ProfilePage()
-      ][currentPageIndex],
-      bottomNavigationBar: currentPageIndex == 2 ? null : botNav(),
-    );
+    return isLoading
+        ? Center(
+            child: CircularProgressIndicator(
+            color: primary4,
+            strokeWidth: 6,
+          ))
+        : Scaffold(
+            // extendBody: true,
+            body: <Widget>[
+              HomePage(changePageIndex: changePageIndex),
+              const OrderPage(),
+              const HelpPage(route: true),
+              const ProfilePage()
+            ][currentPageIndex],
+            bottomNavigationBar: currentPageIndex == 2 ? null : botNav(),
+          );
   }
 
   Widget botNav() {

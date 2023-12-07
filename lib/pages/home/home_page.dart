@@ -1,15 +1,18 @@
 // Rachel
 
 import 'package:capstone_restaurant/data.dart';
+import 'package:capstone_restaurant/logic/data_api_handler.dart';
 import 'package:capstone_restaurant/pages/home/favorite_page.dart';
 import 'package:capstone_restaurant/pages/home/menu_by_cat_page.dart';
 import 'package:capstone_restaurant/pages/home/notification_page.dart';
+import 'package:capstone_restaurant/pages/home/popup_menu_page.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:capstone_restaurant/widgets.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   final Function changePageIndex;
@@ -24,47 +27,51 @@ class _HomePageState extends State<HomePage> {
   int currentCarouselIndex = 0;
   int addToBasket = 0;
   late Future<void> fetchData;
+  bool isLoading = false;
 
   @override
   void initState() {
+    // final menuProvider = Provider.of<MenuDataProvider>(context, listen: false);
     super.initState();
-    fetchData = fetchDataFromSharedPreferences();
+    fetchDataAndMenu();
+  }
+
+  Future<void> fetchDataAndMenu() async {
+    setState(() {
+      isLoading = true;
+    });
+    final menuProvider = Provider.of<MenuDataProvider>(context, listen: false);
+    fetchDataFromSharedPreferences();
+    await menuProvider.getMenuAll();
+
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: fetchData,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
-              child: CircularProgressIndicator(
+    return isLoading
+        ? Center(
+            child: CircularProgressIndicator(
             color: primary4,
-            // value: progressController.value,
             strokeWidth: 6,
-          ));
-        } else if (snapshot.hasError) {
-          // Handle errors
-          return Text('Error: ${snapshot.error}');
-        } else {
-          return Scaffold(
-              appBar: AppBar(toolbarHeight: 5),
-              body: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    showGreeting(widget.changePageIndex),
-                    showBanner(),
-                    showCat(),
-                    showRecommendation(),
-                    showFavMenu(),
-                    showPromo(),
-                    showBestSeller()
-                  ],
-                ),
-              ));
-        }
-      },
-    );
+          ))
+        : Scaffold(
+            appBar: AppBar(toolbarHeight: 5),
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  showGreeting(widget.changePageIndex),
+                  showBanner(),
+                  showCat(),
+                  showRecommendation(),
+                  showFavMenu(),
+                  showPromo(),
+                  showBestSeller()
+                ],
+              ),
+            ));
   }
 
   Widget showGreeting(Function changePageIndex) {
@@ -87,7 +94,7 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Hello ${userData[0]}!',
+                'Hello ${localUserData[0]}!',
                 // 'Hello !',
                 style: poppins.copyWith(fontSize: 15),
               ),
@@ -262,6 +269,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget showRecommendation() {
+    final menuProvider = Provider.of<MenuDataProvider>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.only(bottom: 41),
       child: Column(
@@ -292,9 +300,9 @@ class _HomePageState extends State<HomePage> {
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.only(bottom: 25),
                 shrinkWrap: true,
-                itemCount: catData.length,
+                itemCount: menuProvider.getMenu.length,
                 itemBuilder: (BuildContext context, index) {
-                  return recommendationMenuMaker();
+                  return recommendationMenuMaker(menuProvider.getMenu[index]);
                 }),
           ),
         ],
@@ -385,6 +393,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget showBestSeller() {
+    final menuProvider = Provider.of<MenuDataProvider>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.only(left: 12, right: 12),
       child: Column(
@@ -407,9 +416,9 @@ class _HomePageState extends State<HomePage> {
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.only(bottom: 12),
                 shrinkWrap: true,
-                itemCount: catData.length,
+                itemCount: menuProvider.getMenu.length,
                 itemBuilder: (BuildContext context, index) {
-                  return bestSellerMenuMaker();
+                  return bestSellerMenuMaker(menuProvider.getMenu[index]);
                 }),
           ),
         ],
@@ -417,108 +426,126 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // ----------------------------------------------------------------
+  // ------------ Widget Builder ---------------------------
 
-  Widget recommendationMenuMaker() {
-    return Padding(
-      padding: const EdgeInsets.only(right: 5, left: 5, top: 5),
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(
-          minWidth: 200,
-        ),
-        child: Container(
-          width: 230,
-          decoration: homePageMenu,
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(children: [
-              Image.asset(
-                  'assets/images/home/homePage/recommendation/recomMenu.png'),
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        addToFav = !addToFav;
-                      });
-                    },
-                    child: Image.asset(
-                      'assets/images/icons/favW.png',
-                      color: addToFav ? primary3 : bright,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              SizedBox(
-                width: double.infinity,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+  Widget recommendationMenuMaker(data) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            PageTransition(
+                child: PopUpMenuDetail(data: data),
+                type: PageTransitionType.fade));
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(right: 5, left: 5, top: 5),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            minWidth: 200,
+          ),
+          child: Container(
+            width: 230,
+            decoration: homePageMenu,
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(children: [
+                SizedBox(
+                    width: 209,
+                    height: 149,
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: Image.network(
+                          data['image'],
+                          fit: BoxFit.cover,
+                        ))),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Text('Tuna With Lemon',
-                        style: poppins.copyWith(
-                            fontWeight: FontWeight.w500, fontSize: 16)),
-                    Text('Rp 15.000',
-                        style: poppins.copyWith(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
-                            color: secondary3)),
-                    Text('Tuna bumbu kuning dengan perasan lemon yang segar',
-                        style: poppins.copyWith(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 10,
-                            color: outline)),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 10),
-              SizedBox(
-                width: double.infinity,
-                child: Row(
-                  children: [
-                    Container(
-                      width: 37,
-                      height: 18,
-                      decoration: BoxDecoration(
-                          color: yellow,
-                          borderRadius: BorderRadius.circular(12)),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 2),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              'assets/images/icons/star.png',
-                              width: 9,
-                            ),
-                            Text('4.5',
-                                style: poppins.copyWith(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 10,
-                                    color: primary2)),
-                          ],
-                        ),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          addToFav = !addToFav;
+                        });
+                      },
+                      child: Image.asset(
+                        'assets/images/icons/favW.png',
+                        color: addToFav ? primary3 : bright,
                       ),
                     ),
-                    const SizedBox(width: 8),
-                    Text('30 Min',
-                        style: poppins.copyWith(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 10,
-                            color: outline)),
-                    const SizedBox(width: 8),
-                    Text('• Best Menu',
-                        style: poppins.copyWith(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 10,
-                            color: outline)),
                   ],
                 ),
-              ),
-            ]),
+                const SizedBox(height: 12),
+                SizedBox(
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(data['name'],
+                          style: poppins.copyWith(
+                              fontWeight: FontWeight.w500, fontSize: 16)),
+                      Text('Rp ${data['price'].toString()}',
+                          style: poppins.copyWith(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
+                              color: secondary3)),
+                      Text(data['description'],
+                          style: poppins.copyWith(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 10,
+                              color: outline)),
+                    ],
+                  ),
+                ),
+                const Spacer(),
+                Container(
+                  margin: const EdgeInsets.only(bottom: 5),
+                  width: double.infinity,
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 37,
+                        height: 18,
+                        decoration: BoxDecoration(
+                            color: yellow,
+                            borderRadius: BorderRadius.circular(12)),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 2),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/images/icons/star.png',
+                                width: 9,
+                                color: Colors.white,
+                              ),
+                              Text('4.5',
+                                  style: poppins.copyWith(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 10,
+                                      color: primary2)),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Text('30 Min',
+                          style: poppins.copyWith(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 10,
+                              color: outline)),
+                      const SizedBox(width: 8),
+                      Text('• Best Menu',
+                          style: poppins.copyWith(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 10,
+                              color: outline)),
+                    ],
+                  ),
+                ),
+              ]),
+            ),
           ),
         ),
       ),
@@ -586,12 +613,13 @@ class _HomePageState extends State<HomePage> {
                                     borderRadius: BorderRadius.circular(12)),
                                 child: Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
+                                      MainAxisAlignment.spaceEvenly,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Image.asset(
                                       'assets/images/icons/star.png',
                                       width: 9,
+                                      color: Colors.white,
                                     ),
                                     Text('4.5',
                                         style: poppins.copyWith(
@@ -697,59 +725,83 @@ class _HomePageState extends State<HomePage> {
             )));
   }
 
-  Widget bestSellerMenuMaker() {
-    return Padding(
-      padding: const EdgeInsets.only(right: 5, left: 5, top: 5),
-      child: Container(
-        width: 163,
-        decoration: homePageMenu,
-        child: Column(children: [
-          Image.asset('assets/images/home/homePage/bestSeller/bestSeller.png'),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 9),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Napoli Fussili',
-                      style: poppins.copyWith(
-                          fontWeight: FontWeight.w500, fontSize: 15),
-                    ),
-                    Container(
-                      width: 37,
-                      height: 18,
-                      decoration: BoxDecoration(
-                          color: yellow,
-                          borderRadius: BorderRadius.circular(12)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            'assets/images/icons/star.png',
-                            width: 9,
-                          ),
-                          Text('4.8',
-                              style: poppins.copyWith(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 10,
-                                  color: primary2)),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  'Fussili yang lezat dengan bumbu napoli yang segar',
-                  style: poppins.copyWith(fontSize: 10, color: outline),
-                )
-              ],
+  Widget bestSellerMenuMaker(data) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            PageTransition(
+                child: PopUpMenuDetail(data: data),
+                type: PageTransitionType.fade));
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(right: 5, left: 5, top: 5),
+        child: Container(
+          width: 175,
+          decoration: homePageMenu,
+          child: Column(children: [
+            ClipRRect(
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(12)),
+              child: Image.network(
+                data['image'],
+                height: 163,
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-        ]),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 9),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: 100,
+                        child: Text(
+                          data['name'],
+                          style: poppins.copyWith(
+                              fontWeight: FontWeight.w500, fontSize: 15),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      Container(
+                        width: 37,
+                        height: 18,
+                        decoration: BoxDecoration(
+                            color: yellow,
+                            borderRadius: BorderRadius.circular(12)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              'assets/images/icons/star.png',
+                              width: 9,
+                              color: Colors.white,
+                            ),
+                            Text('4.8',
+                                style: poppins.copyWith(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 10,
+                                    color: primary2)),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    data['description'],
+                    style: poppins.copyWith(fontSize: 10, color: outline),
+                  )
+                ],
+              ),
+            ),
+          ]),
+        ),
       ),
     );
   }

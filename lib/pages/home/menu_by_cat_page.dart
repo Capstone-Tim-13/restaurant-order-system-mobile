@@ -1,7 +1,7 @@
 //  ali
 
 import 'package:capstone_restaurant/data.dart';
-import 'package:capstone_restaurant/logic/home/home_page_logic.dart';
+import 'package:capstone_restaurant/logic/home/menu_by_cat_logic.dart';
 import 'package:capstone_restaurant/pages/home/favorite_page.dart';
 import 'package:capstone_restaurant/pages/home/popup_menu_page.dart';
 import 'package:capstone_restaurant/pages/home/search_page.dart';
@@ -87,7 +87,6 @@ class _MenubyCatState extends State<MenubyCat> {
   }
 
   Widget menubyCatPage() {
-    (context);
     return SingleChildScrollView(
       child: Stack(
         children: [
@@ -270,7 +269,7 @@ class _MenubyCatState extends State<MenubyCat> {
 
 Widget itemBuilder(context, data) {
   String title = data['name'];
-  String subtitle = data['description'];
+  String desc = data['description'];
   String price = data['price'].toString();
   String img = data['image'];
   return GestureDetector(
@@ -282,7 +281,7 @@ Widget itemBuilder(context, data) {
                 data: data,
               ),
               type: PageTransitionType.fade));
-      debugPrint('menu ${data[0]} tertekan');
+      debugPrint('menu $title tertekan');
     },
     child: Container(
       margin: const EdgeInsets.only(bottom: 41, left: 21, right: 35),
@@ -290,9 +289,10 @@ Widget itemBuilder(context, data) {
         children: [
           SizedBox(
             width: 110,
+            height: 110,
             child: ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                child: Image.network(img, fit: BoxFit.fill)),
+                child: Image.network(img, fit: BoxFit.cover)),
           ),
           const SizedBox(width: 18),
           Expanded(
@@ -301,10 +301,15 @@ Widget itemBuilder(context, data) {
             children: [
               Row(
                 children: [
-                  Text(
-                    title,
-                    style: poppins.copyWith(
-                      fontSize: 16,
+                  SizedBox(
+                    width: 135,
+                    child: Text(
+                      title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: poppins.copyWith(
+                        fontSize: 16,
+                      ),
                     ),
                   ),
                   const Spacer(),
@@ -320,9 +325,12 @@ Widget itemBuilder(context, data) {
               const SizedBox(height: 6),
               SizedBox(
                 height: 48,
+                width: 135,
                 child: Text(
-                  subtitle,
+                  desc,
                   style: poppins.copyWith(fontSize: 14, color: outline),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
                 ),
               ),
               // const SizedBox(height: 7),

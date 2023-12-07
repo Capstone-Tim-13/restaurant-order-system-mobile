@@ -80,7 +80,7 @@ class _AccPageState extends State<AccPage> {
             padding: const EdgeInsets.only(left: 25, right: 40),
             child: Column(
               children: [
-                fieldMaker('Nama*', userData[0], nama),
+                fieldMaker('Nama*', localUserData[0], nama),
                 fieldMaker('Email*', 'Balbalee@gmail.com', email),
                 fieldMaker('Nomor Hp*', '+62666666666', noHP),
                 fieldMaker('Tanggal lahir*', 'xxxxxxxx', dob)

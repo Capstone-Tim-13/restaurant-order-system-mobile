@@ -97,7 +97,7 @@ class _NotificationPageState extends State<NotificationPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${userData[0]}, Pesananmu sudah sampai!',
+                        '${localUserData[0]}, Pesananmu sudah sampai!',
                         style: poppins.copyWith(
                             fontWeight: FontWeight.w500, fontSize: 16),
                       ),

@@ -8,7 +8,7 @@ import 'package:capstone_restaurant/pages/profile/my_account_page.dart';
 import 'package:capstone_restaurant/pages/profile/address_page.dart';
 
 List defaultPaymentMethod = [];
-List<String> userData = [];
+List<String> localUserData = [];
 int defaultAddress = 0;
 List searchHistory = [];
 

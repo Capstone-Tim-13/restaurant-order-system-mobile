@@ -1,3 +1,4 @@
+import 'package:capstone_restaurant/logic/home/menu_by_cat_logic.dart';
 import 'package:capstone_restaurant/pages/home/favorite_page.dart';
 import 'package:capstone_restaurant/pages/order/cart_page.dart';
 import 'package:capstone_restaurant/style.dart';
@@ -13,6 +14,23 @@ class PopUpMenuDetail extends StatefulWidget {
 }
 
 class _PopUpMenuDetailState extends State<PopUpMenuDetail> {
+  String category = '';
+
+  @override
+  void initState() {
+    super.initState();
+    loadCat(context, widget.data['name']);
+  }
+
+  Future<void> loadCat(context, name) async {
+    await getCategory(context, name).then((value) {
+      setState(() {
+        category = value;
+      });
+    });
+    // print(category);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +74,7 @@ class _PopUpMenuDetailState extends State<PopUpMenuDetail> {
 
   Widget menubyCatPage() {
     String title = widget.data['name'];
-    String subtitle = widget.data['description'];
+    String desc = widget.data['description'];
     String price = widget.data['price'].toString();
     String img = widget.data['image'];
     int averageRating = 4;
@@ -68,12 +86,13 @@ class _PopUpMenuDetailState extends State<PopUpMenuDetail> {
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: NetworkImage(img),
-                    fit: BoxFit.contain,
-                    alignment: Alignment.topCenter)),
+              image: NetworkImage(img),
+              alignment: Alignment.topCenter,
+              fit: BoxFit.contain,
+            )),
             child: Column(
               children: [
-                const SizedBox(height: 330),
+                const SizedBox(height: 300),
                 Container(
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
@@ -139,14 +158,14 @@ class _PopUpMenuDetailState extends State<PopUpMenuDetail> {
                               Row(
                                 children: [
                                   Text(
-                                    'Camilan',
+                                    '• $category',
                                     style: poppins.copyWith(
-                                        color: outline, fontSize: 11),
+                                        color: outline, fontSize: 10),
                                   ),
-                                  const SizedBox(width: 15),
+                                  const SizedBox(width: 10),
                                   Image.asset(
                                     'assets/images/icons/like.png',
-                                    width: 12,
+                                    width: 11,
                                   ),
                                   const SizedBox(width: 5),
                                   Text(
@@ -154,7 +173,7 @@ class _PopUpMenuDetailState extends State<PopUpMenuDetail> {
                                     style: poppins.copyWith(
                                         fontWeight: FontWeight.w400,
                                         color: outline,
-                                        fontSize: 11),
+                                        fontSize: 10),
                                   ),
                                   const Spacer(),
                                   Text(
@@ -181,7 +200,7 @@ class _PopUpMenuDetailState extends State<PopUpMenuDetail> {
                                     ),
                                     const SizedBox(height: 10),
                                     Text(
-                                      subtitle,
+                                      desc,
                                       style: poppins.copyWith(
                                           fontWeight: FontWeight.w400,
                                           fontSize: 16),
@@ -197,7 +216,7 @@ class _PopUpMenuDetailState extends State<PopUpMenuDetail> {
                                     ),
                                     const SizedBox(height: 10),
                                     Text(
-                                      subtitle,
+                                      desc,
                                       style: poppins.copyWith(
                                           fontWeight: FontWeight.w400,
                                           fontSize: 16),

@@ -1,5 +1,6 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:capstone_restaurant/pages/home/home.dart';
+import 'package:capstone_restaurant/pages/home/menu_by_cat_page.dart';
 import 'package:capstone_restaurant/pages/home/search_page.dart';
 import 'package:capstone_restaurant/pages/login/onboarding_page.dart';
 import 'package:capstone_restaurant/pages/order/cart_page.dart';
@@ -24,7 +25,7 @@ class Splash extends StatelessWidget {
       splashIconSize: double.infinity,
       backgroundColor: primary3,
       nextScreen: isLogin ? const Home(setIdx: 0) : const OnboardingPage(),
-      // nextScreen: FAQPage(),
+      // nextScreen: MenubyCat(selectedCat: 'Appetizer',),
       pageTransitionType: PageTransitionType.fade,
       splashTransition: SplashTransition.fadeTransition,
       duration: 2000,

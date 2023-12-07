@@ -1,7 +1,10 @@
+import 'package:capstone_restaurant/logic/data_api_handler.dart';
+import 'package:capstone_restaurant/logic/help/help_logic.dart';
 import 'package:capstone_restaurant/pages/home/home.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 class HelpPage extends StatefulWidget {
   final bool route;
@@ -15,10 +18,27 @@ class _HelpPageState extends State<HelpPage> {
   TextEditingController userQuestion = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    final menuProvider = Provider.of<MenuDataProvider>(context, listen: false);
+    menuProvider.getMenuAll();
+    // print('menu: ${menuProvider.getMenu}');
+  }
+
+  @override
+  void dispose() {
+    userQuestion.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(toolbarHeight: 0),
-      body: helpPage(),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: AppBar(toolbarHeight: 0),
+        body: helpPage(),
+      ),
     );
   }
 
@@ -37,6 +57,7 @@ class _HelpPageState extends State<HelpPage> {
   }
 
   Widget helpPage() {
+    final chatbot = Provider.of<ChatbotHandler>(context, listen: false);
     return Column(
       children: [
         Container(
@@ -102,25 +123,7 @@ class _HelpPageState extends State<HelpPage> {
             ],
           ),
         ),
-        Expanded(
-          child: SingleChildScrollView(
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage(
-                          'assets/images/home/helpPage/background.png'),
-                      fit: BoxFit.fill)),
-              padding: const EdgeInsets.only(left: 16, right: 16, top: 15),
-              child: const Column(
-                children: [
-                  Text('aaa'),
-                ],
-              ),
-            ),
-          ),
-        ),
+        qnaWindow(context),
         Container(
           decoration: BoxDecoration(
             color: primary2,
@@ -137,33 +140,39 @@ class _HelpPageState extends State<HelpPage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              SizedBox(
-                height: 35,
-                width: 318,
-                child: TextField(
-                  controller: userQuestion,
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: moreBright,
-                    enabledBorder: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(42)),
-                      borderSide:
-                          BorderSide(width: 0, color: Colors.transparent),
+              Expanded(
+                child: Center(
+                  child: TextField(
+                    style: poppins.copyWith(fontSize: 13),
+                    controller: userQuestion,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: moreBright,
+                      enabledBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(42)),
+                        borderSide:
+                            BorderSide(width: 0, color: Colors.transparent),
+                      ),
+                      focusedBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(42)),
+                        borderSide:
+                            BorderSide(width: 0, color: Colors.transparent),
+                      ),
+                      hintText: 'Ketik pesan...',
+                      hintStyle: poppins.copyWith(fontSize: 13, color: outline),
+                      border: InputBorder.none,
                     ),
-                    focusedBorder: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(42)),
-                      borderSide:
-                          BorderSide(width: 0, color: Colors.transparent),
-                    ),
-                    hintText: 'Ketik pesan...',
-                    hintStyle: poppins.copyWith(fontSize: 11, color: outline),
-                    border: InputBorder.none,
                   ),
                 ),
               ),
+              const SizedBox(width: 15),
               GestureDetector(
                 onTap: () {
                   debugPrint('send!');
+                  if (userQuestion.text.isNotEmpty) {
+                    chatbot.askGPT(context, userQuestion.text);
+                    userQuestion.clear();
+                  }
                 },
                 child: Image.asset(
                   'assets/images/icons/send.png',

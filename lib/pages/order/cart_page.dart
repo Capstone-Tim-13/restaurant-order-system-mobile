@@ -110,8 +110,7 @@ class _CartPageState extends State<CartPage> {
                             width: 17,
                           ),
                           const SizedBox(width: 8),
-                          SizedBox(
-                            width: 290,
+                          Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -122,7 +121,7 @@ class _CartPageState extends State<CartPage> {
                                 const SizedBox(height: 8),
                                 Text(
                                   savedAddress[defaultAddress][3],
-                                  maxLines: 3,
+                                  maxLines: 4,
                                   overflow: TextOverflow.ellipsis,
                                   style: poppins.copyWith(
                                       fontSize: 13, color: outline),
@@ -313,7 +312,6 @@ class _CartPageState extends State<CartPage> {
                       borderRadius: BorderRadius.circular(14)),
                   child: Padding(
                     padding: const EdgeInsets.all(23),
-
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -344,7 +342,6 @@ class _CartPageState extends State<CartPage> {
                 alignment: AlignmentDirectional.centerStart,
                 child: Text(
                   'Optional',
-
                   style: poppins.copyWith(
                       fontWeight: FontWeight.w500,
                       fontSize: 16,
@@ -424,7 +421,6 @@ class _CartPageState extends State<CartPage> {
             )
           ],
         ),
-
       ),
     );
   }
@@ -512,37 +508,48 @@ class _CartPageState extends State<CartPage> {
                     ),
                   ),
                   const Spacer(),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        detailOrder.items[index] -= 1;
-                      });
-                      debugPrint('decrement tertekan');
-                    },
-                    child: Image.asset(
-                      'assets/images/icons/decrement.png',
-                      width: 24,
+                  SizedBox(
+                    width: 90,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            if (detailOrder.items[index] > 1) {
+                              setState(() {
+                                detailOrder.items[index] -= 1;
+                              });
+                            }
+
+                            debugPrint('decrement tertekan');
+                          },
+                          child: Image.asset(
+                            'assets/images/icons/decrement.png',
+                            width: 24,
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Text(
+                          detailOrder.items[index].toString(),
+                          style: poppins.copyWith(
+                              fontWeight: FontWeight.w500, fontSize: 16),
+                        ),
+                        const SizedBox(width: 16),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              detailOrder.items[index] += 1;
+                            });
+                            debugPrint('increment tertekan');
+                          },
+                          child: Image.asset(
+                            'assets/images/icons/increment.png',
+                            width: 24,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  const SizedBox(width: 16),
-                  Text(
-                    detailOrder.items[index].toString(),
-                    style: poppins.copyWith(
-                        fontWeight: FontWeight.w500, fontSize: 16),
-                  ),
-                  const SizedBox(width: 16),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        detailOrder.items[index] += 1;
-                      });
-                      debugPrint('increment tertekan');
-                    },
-                    child: Image.asset(
-                      'assets/images/icons/increment.png',
-                      width: 24,
-                    ),
-                  ),
+                  )
                 ],
               ),
             ],

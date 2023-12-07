@@ -1,4 +1,4 @@
-import 'package:capstone_restaurant/logic/provider_handler.dart';
+import 'package:capstone_restaurant/logic/data_api_handler.dart';
 import 'package:capstone_restaurant/pages/home/home.dart';
 import 'package:capstone_restaurant/widgets.dart';
 import 'package:flutter/material.dart';
@@ -9,13 +9,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 Future<void> login(context) async {
   final userProvider = Provider.of<UserDataProvider>(context, listen: false);
   final prefs = await SharedPreferences.getInstance();
+  print('data: ${userProvider.getData}');
   await prefs.setBool('isLogin', await userProvider.checkStatus());
-  // await prefs.setString('access_token', userProvider.getData[2]);
   await prefs.setStringList('userData', userProvider.getData);
-  Navigator.pushReplacement(
+  Navigator.pushAndRemoveUntil(
       context,
       PageTransition(
-          child: const Home(setIdx: 0), type: PageTransitionType.fade));
+          child: const Home(setIdx: 0), type: PageTransitionType.fade),
+      (route) => false);
 }
 
 userInputCheck(context, email, password) async {

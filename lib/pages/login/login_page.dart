@@ -185,6 +185,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget userInput(controller) {
     return TextField(
+      keyboardType: TextInputType.emailAddress,
       controller: controller,
       style: poppins.copyWith(fontSize: 16),
     );
