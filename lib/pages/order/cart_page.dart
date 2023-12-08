@@ -22,23 +22,23 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   bool checkBoxVal = false;
   TextEditingController inputUserNote = TextEditingController();
-  List paymentData = [];
+  // List paymentData = [];
   List notes = List.filled(5, '');
   var detailOrder = DetailOrder();
 
-  void updatePaymentData(List newPaymentData) {
-    setState(() {
-      paymentData = newPaymentData;
-    });
-  }
+  // void updatePaymentData(List newPaymentData) {
+  //   setState(() {
+  //     paymentData = newPaymentData;
+  //   });
+  // }
 
-  @override
-  void initState() {
-    super.initState();
-    setState(() {
-      paymentData = defaultPaymentMethod;
-    });
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   setState(() {
+  //     paymentData = defaultPaymentMethod;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -291,51 +291,52 @@ class _CartPageState extends State<CartPage> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 24, left: 16, right: 16),
-              child: GestureDetector(
-                onTap: () async {
-                  final result = await Navigator.push(
-                      context,
-                      PageTransition(
-                          child: const PaymentMethod(),
-                          type: PageTransitionType.fade));
-                  if (result != null) {
-                    setState(() {
-                      paymentData = result;
-                    });
-                  }
-                  debugPrint('Metode pembayaran tertekan');
-                },
-                child: Container(
-                  decoration: homePageMenu.copyWith(
-                      borderRadius: BorderRadius.circular(14)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(23),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          paymentData.isEmpty
-                              ? 'Metode Pembayaran'
-                              : paymentData[1],
-                          style: poppins.copyWith(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16,
-                              color: paymentData.isEmpty
-                                  ? Colors.black
-                                  : primary4),
-                        ),
-                        Image.asset(
-                          'assets/images/icons/arrow.png',
-                          width: 20,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(top: 24, left: 16, right: 16),
+            //   child: GestureDetector(
+            //     onTap: () async {
+            //       final result = await Navigator.push(
+            //           context,
+            //           PageTransition(
+            //               child: const PaymentMethod(),
+            //               type: PageTransitionType.fade));
+            //       if (result != null) {
+            //         setState(() {
+            //           paymentData = result;
+            //         });
+            //       }
+            //       debugPrint('Metode pembayaran tertekan');
+            //     },
+            //     child: Container(
+            //       decoration: homePageMenu.copyWith(
+            //           borderRadius: BorderRadius.circular(14)),
+            //       child: Padding(
+            //         padding: const EdgeInsets.all(23),
+            //         child: Row(
+            //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //           children: [
+            //             Text(
+            //               paymentData.isEmpty
+            //                   ? 'Metode Pembayaran'
+            //                   : paymentData[1],
+            //               style: poppins.copyWith(
+            //                   fontWeight: FontWeight.w500,
+            //                   fontSize: 16,
+            //                   color: paymentData.isEmpty
+            //                       ? Colors.black
+            //                       : primary4),
+            //             ),
+            //             Image.asset(
+            //               'assets/images/icons/arrow.png',
+            //               width: 20,
+            //             ),
+            //           ],
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
+
             Padding(
               padding: const EdgeInsets.only(top: 24, left: 23),
               child: Align(
@@ -389,20 +390,26 @@ class _CartPageState extends State<CartPage> {
               padding: const EdgeInsets.symmetric(vertical: 31, horizontal: 31),
               child: GestureDetector(
                 onTap: () {
-                  if (paymentData.isNotEmpty) {
-                    debugPrint(detailOrder.notes.toString());
-                    debugPrint(detailOrder.items.toString());
-                    Navigator.push(
-                        context,
-                        PageTransition(
-                            child: const PaymentPage(),
-                            type: PageTransitionType.fade));
-                  }
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          child: const PaymentPage(),
+                          type: PageTransitionType.fade));
+                  // if (paymentData.isNotEmpty) {
+                  //   debugPrint(detailOrder.notes.toString());
+                  //   debugPrint(detailOrder.items.toString());
+                  //   Navigator.push(
+                  //       context,
+                  //       PageTransition(
+                  //           child: const PaymentPage(),
+                  //           type: PageTransitionType.fade));
+                  // }
                   debugPrint('Pesan Sekarang tertekan');
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                    color: paymentData.isEmpty ? surface : primary4,
+                    // color: paymentData.isEmpty ? surface : primary4,
+                    color: primary4,
                     borderRadius: BorderRadius.circular(37),
                   ),
                   width: 335,
@@ -413,7 +420,8 @@ class _CartPageState extends State<CartPage> {
                       style: poppins.copyWith(
                           fontWeight: FontWeight.w700,
                           fontSize: 16,
-                          color: paymentData.isEmpty ? outline : Colors.white),
+                          // color: paymentData.isEmpty ? outline : Colors.white),
+                          color: Colors.white),
                     ),
                   ),
                 ),

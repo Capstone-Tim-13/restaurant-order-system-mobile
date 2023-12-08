@@ -56,63 +56,68 @@ class _OrderStatusState extends State<OrderStatus> {
       children: [
         section1(),
         section2(),
-        section3(),
       ],
     );
   }
 
   Widget section1() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 37, right: 37, bottom: 37),
-      child: Column(
-        children: [
-          Image.asset('assets/images/order/confirm3.png'),
-          Text(
-            'Estimasi waktu pengiriman : 30 menit',
-            style: poppins.copyWith(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
+    return Column(
+      children: [
+        Container(
+          padding: const EdgeInsets.only(left: 37, right: 37, bottom: 37),
+          child: Column(
+            children: [
+              Image.asset('assets/images/order/confirm3.png'),
+              Text(
+                'Estimasi waktu pengiriman : 30 menit',
+                style: poppins.copyWith(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.only(left: 50, top: 15, right: 30),
+            width: MediaQuery.of(context).size.width,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 8,
+                  spreadRadius: 1,
+                  offset: Offset(0, -5),
+                )
+              ],
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(56),
+              ),
+            ),
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: orderStatusEvents.length,
+              padding: const EdgeInsets.only(bottom: 100),
+              itemBuilder: (BuildContext context, index) {
+                return statusIndicator(orderStatusEvents[index]);
+              },
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
+
+  // Widget section2() {
+  //   return Positioned(
+  //     bottom: 0,
+  //     child:
+  //   );
+  // }
 
   Widget section2() {
-    return Positioned(
-      bottom: 0,
-      child: Container(
-        height: 480,
-        padding: const EdgeInsets.only(left: 50, top: 50, right: 30),
-        width: MediaQuery.of(context).size.width,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black12,
-              blurRadius: 8,
-              spreadRadius: 1,
-              offset: Offset(0, -5),
-            )
-          ],
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(56),
-          ),
-        ),
-        child: ListView.builder(
-          shrinkWrap: true,
-          itemCount: orderStatusEvents.length,
-          padding: const EdgeInsets.only(bottom: 100),
-          itemBuilder: (BuildContext context, index) {
-            return statusIndicator(orderStatusEvents[index]);
-          },
-        ),
-      ),
-    );
-  }
-
-  Widget section3() {
     return SizedBox(
       // child: tes(),
       child: showOrderList(),

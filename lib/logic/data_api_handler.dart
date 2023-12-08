@@ -73,6 +73,7 @@ class UserDataProvider with ChangeNotifier {
 class MenuDataProvider with ChangeNotifier {
   List allMenu = [];
   List get getMenu => allMenu;
+  
   Future<List> getMenuAll() async {
     try {
       final response = await dio.get(menuFindAll,
@@ -85,6 +86,7 @@ class MenuDataProvider with ChangeNotifier {
         throw Exception('Failed to load data from API');
       }
     } catch (error) {
+      debugPrint('Failed to load data from API: $error');
       return [];
       // throw Exception('Failed to load data from API: $error');
     }
@@ -101,8 +103,8 @@ class MenuDataProvider with ChangeNotifier {
         throw Exception('Failed to load data from API');
       }
     } catch (error) {
-      // return [];
-      throw Exception('Failed to load data from API: $error');
+      return [];
+      // throw Exception('Failed to load data from API: $error');
     }
   }
 
@@ -117,8 +119,8 @@ class MenuDataProvider with ChangeNotifier {
         throw Exception('Failed to load data from API');
       }
     } catch (error) {
-      // return [];
-      throw Exception('Failed to load data from API: $error');
+      return [];
+      // throw Exception('Failed to load data from API: $error');
     }
   }
 
@@ -133,8 +135,8 @@ class MenuDataProvider with ChangeNotifier {
         throw Exception('Failed to load data from API');
       }
     } catch (error) {
-      // return [];
-      throw Exception('Failed to load data from API: $error');
+      return [];
+      // throw Exception('Failed to load data from API: $error');
     }
   }
 }

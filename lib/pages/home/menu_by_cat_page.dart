@@ -254,7 +254,7 @@ class _MenubyCatState extends State<MenubyCat> {
                     padding: EdgeInsets.zero,
                     itemCount: snapshot.data.length ?? 0,
                     itemBuilder: (context, index) {
-                      return itemBuilder(context, snapshot.data[index]);
+                      return showMenuByCat(context, snapshot.data[index]);
                     },
                   );
                 }
@@ -267,7 +267,7 @@ class _MenubyCatState extends State<MenubyCat> {
   }
 }
 
-Widget itemBuilder(context, data) {
+Widget showMenuByCat(context, data) {
   String title = data['name'];
   String desc = data['description'];
   String price = data['price'].toString();

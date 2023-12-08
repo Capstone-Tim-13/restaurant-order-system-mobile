@@ -1,7 +1,9 @@
 import 'package:capstone_restaurant/data.dart';
+import 'package:capstone_restaurant/pages/home/search_result_page.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:page_transition/page_transition.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -64,8 +66,15 @@ class _SearchPageState extends State<SearchPage> {
                     ],
                   ),
                   child: TextField(
+                    textInputAction: TextInputAction.search,
                     controller: foodSearchController,
                     onSubmitted: (value) {
+                      Navigator.push(
+                          context,
+                          PageTransition(
+                              child: SearchResult(
+                                  searchedFood: foodSearchController.text),
+                              type: PageTransitionType.fade));
                       setState(() {
                         if (value.isNotEmpty &&
                             !searchHistory.contains(value)) {
@@ -142,6 +151,11 @@ class _SearchPageState extends State<SearchPage> {
   Widget showSearchHistory(data) {
     return GestureDetector(
       onTap: () {
+        Navigator.push(
+            context,
+            PageTransition(
+                child: SearchResult(searchedFood: data),
+                type: PageTransitionType.fade));
         setState(() {
           foodSearchController.text = data;
         });

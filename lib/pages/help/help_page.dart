@@ -141,23 +141,17 @@ class _HelpPageState extends State<HelpPage> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Expanded(
-                child: Center(
+                child: Container(
+                  // margin: const EdgeInsets.only(left: 25),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(
+                    color: moreBright,
+                    borderRadius: BorderRadius.circular(32),
+                  ),
                   child: TextField(
                     style: poppins.copyWith(fontSize: 13),
                     controller: userQuestion,
                     decoration: InputDecoration(
-                      filled: true,
-                      fillColor: moreBright,
-                      enabledBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(42)),
-                        borderSide:
-                            BorderSide(width: 0, color: Colors.transparent),
-                      ),
-                      focusedBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(42)),
-                        borderSide:
-                            BorderSide(width: 0, color: Colors.transparent),
-                      ),
                       hintText: 'Ketik pesan...',
                       hintStyle: poppins.copyWith(fontSize: 13, color: outline),
                       border: InputBorder.none,
@@ -186,10 +180,3 @@ class _HelpPageState extends State<HelpPage> {
     );
   }
 }
-
-// Text(
-//             "Customer Service",
-//             style: poppins.copyWith(
-//                 fontWeight: FontWeight.w500,
-//                 fontSize: 18), // Ganti warna teks "Lupa Password"
-//           ),

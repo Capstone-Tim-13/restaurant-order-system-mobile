@@ -99,8 +99,10 @@ Widget cancelOrder(context, data) {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         SizedBox(
-                            width: 165,
+                            width: 145,
                             child: RichText(
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
                                 text: TextSpan(
                                     text: 'Dibatalkan: ',
                                     style: poppins.copyWith(
@@ -108,13 +110,13 @@ Widget cancelOrder(context, data) {
                                         fontSize: 13,
                                         color: outline),
                                     children: <TextSpan>[
-                                  TextSpan(
-                                      text: data['reason'],
-                                      style: poppins.copyWith(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 13,
-                                          color: outline)),
-                                ]))),
+                                      TextSpan(
+                                          text: data['reason'],
+                                          style: poppins.copyWith(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 13,
+                                              color: outline)),
+                                    ]))),
                         orderButtonMaker(context, 'Dibatalkan', outline,
                             color: bright)
                       ],

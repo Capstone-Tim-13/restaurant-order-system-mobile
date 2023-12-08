@@ -59,7 +59,7 @@ class _OrderPageState extends State<OrderPage> {
           indicatorColor: primary4,
           labelColor: primary4,
           labelStyle:
-              poppins.copyWith(fontSize: 15, fontWeight: FontWeight.w500),
+              poppins.copyWith(fontSize: 14, fontWeight: FontWeight.w500),
           tabs: const [
             Tab(
               text: 'Berlangsung',
@@ -68,7 +68,7 @@ class _OrderPageState extends State<OrderPage> {
               text: 'Riwayat',
             ),
             Tab(
-              text: 'Dibatalakn',
+              text: 'Dibatalkan',
             ),
           ]),
     );

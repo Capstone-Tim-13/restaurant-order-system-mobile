@@ -38,9 +38,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 119),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.25),
                   Image.asset('assets/images/altaLogoW.png'),
-                  const SizedBox(height: 119),
+                  const Spacer(),
                   Text(
                     'Makanan siap disajikan untukmu',
                     style: poppins.copyWith(
@@ -62,6 +62,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       debugPrint('intro tertekan');
                     },
                     child: Container(
+                      margin: const EdgeInsets.only(bottom: 115),
                       decoration: BoxDecoration(
                         color: primary2,
                         borderRadius: BorderRadius.circular(37),

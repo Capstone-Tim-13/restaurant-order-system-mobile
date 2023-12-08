@@ -11,6 +11,8 @@ List defaultPaymentMethod = [];
 List<String> localUserData = [];
 int defaultAddress = 0;
 List searchHistory = [];
+List userCart = [];
+List userMenuFavorites = [];
 
 List savedAddress = [
   [

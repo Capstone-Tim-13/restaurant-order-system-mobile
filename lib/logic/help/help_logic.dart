@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
-const String apiKey = '';
+const String apiKey = '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';
 bool isLoading = false;
 
 Future<void> submit(context, question) async {
@@ -24,7 +24,7 @@ Future<void> submit(context, question) async {
                 {
                   'role': 'system',
                   'content':
-                      'Anda adalah customer service di restoran bernama Alta-Resto. tolong bantu customer yang bertanya. jika user bertanya mengenai menu gunakan ${menuProvider.getMenu} sebagai sumber data.'
+                      'Anda adalah customer service di restoran bernama Alta-Resto. tolong bantu customer yang bertanya. jika user bertanya mengenai menu gunakan ${menuProvider.getMenu} sebagai sumber data. Jangan berikan rekomendasi menu selain dari data ${menuProvider.getMenu}.'
                 },
                 {'role': 'user', 'content': chatbot.input},
               ],

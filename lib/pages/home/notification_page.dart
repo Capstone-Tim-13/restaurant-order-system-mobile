@@ -55,21 +55,28 @@ class _NotificationPageState extends State<NotificationPage> {
           ),
         ),
         const SizedBox(height: 16),
-        showNotification()
+        Expanded(
+            child: ListView.builder(
+          padding: EdgeInsets.zero,
+          itemCount: isUnread.length,
+          itemBuilder: ((BuildContext context, index) {
+            return notificationMaker(isUnread[index]);
+          }),
+        ))
       ],
     );
   }
 
-  Widget showNotification() {
-    return Expanded(
-        child: ListView.builder(
-      padding: EdgeInsets.zero,
-      itemCount: isUnread.length,
-      itemBuilder: ((BuildContext context, index) {
-        return notificationMaker(isUnread[index]);
-      }),
-    ));
-  }
+  // Widget showNotification() {
+  //   return Expanded(
+  //       child: ListView.builder(
+  //     padding: EdgeInsets.zero,
+  //     itemCount: isUnread.length,
+  //     itemBuilder: ((BuildContext context, index) {
+  //       return notificationMaker(isUnread[index]);
+  //     }),
+  //   ));
+  // }
 
   Widget notificationMaker(unread) {
     return Container(
@@ -91,38 +98,49 @@ class _NotificationPageState extends State<NotificationPage> {
                     width: 33,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 13, top: 17),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '${localUserData[0]}, Pesananmu sudah sampai!',
-                        style: poppins.copyWith(
-                            fontWeight: FontWeight.w500, fontSize: 16),
-                      ),
-                      Text('Selamat menikmati makanannya ya!',
-                          style: poppins.copyWith(fontSize: 14)),
-                      const SizedBox(height: 3),
-                      Text('Hari ini pukul 14.13 WIB ',
-                          style:
-                              poppins.copyWith(fontSize: 12, color: outline)),
-                    ],
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 13, top: 17),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '${localUserData[0]}, Pesananmu sudah sampai!',
+                          style: poppins.copyWith(
+                              fontWeight: FontWeight.w500, fontSize: 16),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        Text(
+                          'Selamat menikmati makanannya ya!',
+                          style: poppins.copyWith(fontSize: 14),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        const SizedBox(height: 3),
+                        Text(
+                          'Hari ini pukul 14.13 WIB ',
+                          style: poppins.copyWith(fontSize: 12, color: outline),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 18, top: 7),
+                  child: Align(
+                    alignment: Alignment.topRight,
+                    child: Image.asset(
+                        unread
+                            ? 'assets/images/icons/dots.png'
+                            : 'assets/images/icons/dotsT.png',
+                        width: 17),
+                  ),
+                )
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(right: 18, top: 7),
-              child: Align(
-                alignment: Alignment.topRight,
-                child: Image.asset(
-                    unread
-                        ? 'assets/images/icons/dots.png'
-                        : 'assets/images/icons/dotsT.png',
-                    width: 17),
-              ),
-            )
           ],
         ));
   }
