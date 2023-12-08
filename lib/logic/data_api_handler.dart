@@ -73,7 +73,7 @@ class UserDataProvider with ChangeNotifier {
 class MenuDataProvider with ChangeNotifier {
   List allMenu = [];
   List get getMenu => allMenu;
-  
+
   Future<List> getMenuAll() async {
     try {
       final response = await dio.get(menuFindAll,
@@ -109,12 +109,14 @@ class MenuDataProvider with ChangeNotifier {
   }
 
   Future getMenuByName(name) async {
+    List data = [];
     try {
       final response = await dio.get('$menuFindName/$name',
           options: Options(
               headers: {'Authorization': 'Bearer ${localUserData[2]}'}));
       if (response.statusCode == 200) {
-        return response.data['results'];
+        data.add(response.data['results']);
+        return data;
       } else {
         throw Exception('Failed to load data from API');
       }

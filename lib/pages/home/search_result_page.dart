@@ -1,6 +1,8 @@
+import 'package:capstone_restaurant/logic/data_api_handler.dart';
 import 'package:capstone_restaurant/pages/home/menu_by_cat_page.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SearchResult extends StatefulWidget {
   final String searchedFood;
@@ -42,26 +44,45 @@ class _SearchResultState extends State<SearchResult> {
   }
 
   Widget showSearchResults() {
-    List data = [
-      {
-        'name': 'Pizza Margherita',
-        'description':
-            'Pizza dengan keju mozzarella, saus tomat, dan daun basil segar.',
-        'price': 55000,
-        'image':
-            'https://images.prismic.io/eataly-us/ed3fcec7-7994-426d-a5e4-a24be5a95afd_pizza-recipe-main.jpg?auto=compress,format',
-      }
-    ];
+    final menuProvider = Provider.of<MenuDataProvider>(context, listen: false);
 
-    return SizedBox(
-        child: ListView.builder(
-      shrinkWrap: true,
-      // physics: const NeverScrollableScrollPhysics(),
-      padding: EdgeInsets.zero,
-      itemCount: 15,
-      itemBuilder: (context, index) {
-        return showMenuByCat(context, data[0]);
+    return FutureBuilder<dynamic>(
+      future: menuProvider.getMenuByName(widget.searchedFood),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+              child: CircularProgressIndicator(
+            color: primary4,
+            // value: progressController.value,
+            strokeWidth: 6,
+          ));
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          return SizedBox(
+            child: ListView.builder(
+              shrinkWrap: true,
+              // physics: const NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.zero,
+              itemCount: 1,
+              itemBuilder: (context, index) {
+                if (snapshot.data == null || snapshot.data.isEmpty) {
+                  // Jika kosong, return teks sebagai gantinya
+                  return Center(
+                    child: Text(
+                      'Tidak ada hasil untuk "${widget.searchedFood}"',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  );
+                } else {
+                  // Jika tidak kosong, return widget yang menampilkan hasil pencarian
+                  return showMenuByCat(context, snapshot.data[0]);
+                }
+              },
+            ),
+          );
+        }
       },
-    ));
+    );
   }
 }
