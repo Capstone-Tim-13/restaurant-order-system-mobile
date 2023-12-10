@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
-const String apiKey = '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';
+const String apiKey = '';
 bool isLoading = false;
 
 Future<void> submit(context, question) async {
