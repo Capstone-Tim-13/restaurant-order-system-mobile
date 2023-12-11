@@ -1,11 +1,14 @@
 import 'package:capstone_restaurant/data.dart';
 import 'package:capstone_restaurant/pages/home/menu_by_cat_page.dart';
 import 'package:capstone_restaurant/pages/profile/address_page.dart';
-import 'package:capstone_restaurant/pages/order/payment_method_page.dart';
 import 'package:capstone_restaurant/pages/order/payment_page.dart';
 import 'package:capstone_restaurant/style.dart';
+import 'package:capstone_restaurant/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
+
+import '../../logic/data_api_handler.dart';
 
 class DetailOrder {
   List notes = List.filled(5, '');
@@ -22,23 +25,23 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   bool checkBoxVal = false;
   TextEditingController inputUserNote = TextEditingController();
-  // List paymentData = [];
+  List paymentData = [];
   List notes = List.filled(5, '');
   var detailOrder = DetailOrder();
 
-  // void updatePaymentData(List newPaymentData) {
-  //   setState(() {
-  //     paymentData = newPaymentData;
-  //   });
-  // }
+  void updatePaymentData(List newPaymentData) {
+    setState(() {
+      paymentData = newPaymentData;
+    });
+  }
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   setState(() {
-  //     paymentData = defaultPaymentMethod;
-  //   });
-  // }
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      paymentData = defaultPaymentMethod;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +99,7 @@ class _CartPageState extends State<CartPage> {
                   debugPrint('alamat tertekan');
                 },
                 child: Container(
-                  decoration: homePageMenu.copyWith(
+                  decoration: homePageMenuBuilder.copyWith(
                     borderRadius: BorderRadius.circular(10),
                   ),
                   width: MediaQuery.of(context).size.width,
@@ -155,7 +158,7 @@ class _CartPageState extends State<CartPage> {
             Padding(
               padding: const EdgeInsets.only(top: 28, left: 16, right: 16),
               child: Container(
-                decoration: homePageMenu.copyWith(
+                decoration: homePageMenuBuilder.copyWith(
                   borderRadius: BorderRadius.circular(28),
                 ),
                 width: MediaQuery.of(context).size.width,
@@ -308,7 +311,7 @@ class _CartPageState extends State<CartPage> {
             //       debugPrint('Metode pembayaran tertekan');
             //     },
             //     child: Container(
-            //       decoration: homePageMenu.copyWith(
+            //       decoration: homePageMenuBuilder.copyWith(
             //           borderRadius: BorderRadius.circular(14)),
             //       child: Padding(
             //         padding: const EdgeInsets.all(23),
@@ -336,7 +339,40 @@ class _CartPageState extends State<CartPage> {
             //     ),
             //   ),
             // ),
-
+            Padding(
+              padding: const EdgeInsets.only(top: 24, left: 16, right: 16),
+              child: GestureDetector(
+                onTap: () async {
+                  final paymentProvider =
+                      Provider.of<PaymentDataProvider>(context, listen: false);
+                  String paymentURL = await paymentProvider.openPaymentPage();
+                  await urlLauncher(paymentURL);
+                },
+                child: Container(
+                  decoration: homePageMenuBuilder.copyWith(
+                      borderRadius: BorderRadius.circular(14)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(23),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Metode Pembayaran',
+                          style: poppins.copyWith(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16,
+                              color: Colors.black),
+                        ),
+                        Image.asset(
+                          'assets/images/icons/arrow.png',
+                          width: 20,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.only(top: 24, left: 23),
               child: Align(
@@ -517,9 +553,9 @@ class _CartPageState extends State<CartPage> {
                   ),
                   const Spacer(),
                   SizedBox(
-                    width: 90,
+                    width: 80,
                     child: Row(
-                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         GestureDetector(
                           onTap: () {
@@ -536,13 +572,13 @@ class _CartPageState extends State<CartPage> {
                             width: 24,
                           ),
                         ),
-                        const SizedBox(width: 16),
+                        // const SizedBox(width: 16),
                         Text(
                           detailOrder.items[index].toString(),
                           style: poppins.copyWith(
                               fontWeight: FontWeight.w500, fontSize: 16),
                         ),
-                        const SizedBox(width: 16),
+                        // const SizedBox(width: 16),
                         GestureDetector(
                           onTap: () {
                             setState(() {

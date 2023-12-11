@@ -10,7 +10,7 @@ class ReviewItem {
 }
 
 class InputRating extends StatefulWidget {
-  final List data;
+  final Map data;
   const InputRating({super.key, required this.data});
 
   @override
@@ -63,7 +63,7 @@ class _InputRatingState extends State<InputRating> {
           height: 350,
           decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage(widget.data[0]),
+                image: AssetImage(widget.data['image']),
                 fit: BoxFit.fill,
                 alignment: Alignment.topCenter),
           ),
@@ -183,7 +183,7 @@ class _InputRatingState extends State<InputRating> {
         children: [
           Center(
             child: Text(
-              data[1],
+              data['name'],
               style:
                   poppins.copyWith(fontSize: 16, fontWeight: FontWeight.w400),
             ),

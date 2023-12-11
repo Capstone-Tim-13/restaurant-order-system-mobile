@@ -1,4 +1,3 @@
-import 'package:capstone_restaurant/data.dart';
 import 'package:capstone_restaurant/pages/order/input_rating_page.dart';
 import 'package:capstone_restaurant/pages/order/order_page.dart';
 import 'package:capstone_restaurant/pages/order/receipt_page.dart';
@@ -32,7 +31,8 @@ Widget historyOrder(context, data) {
                   type: PageTransitionType.fade));
         },
         child: Container(
-            margin: const EdgeInsets.only(bottom: 13, left: 16, right: 16),
+            width: MediaQuery.of(context).size.width - 32,
+            margin: const EdgeInsets.only(bottom: 13),
             decoration: BoxDecoration(
                 color: primary2,
                 borderRadius: BorderRadius.circular(22),
@@ -43,7 +43,14 @@ Widget historyOrder(context, data) {
               children: [
                 Stack(
                   children: [
-                    Image.asset(orderHistory[0]),
+                    SizedBox(
+                        width: MediaQuery.of(context).size.width - 32,
+                        height: 120,
+                        child: ClipRRect(
+                            borderRadius: const BorderRadius.vertical(
+                                top: Radius.circular(22)),
+                            child: Image.network(data['image'],
+                                fit: BoxFit.cover))),
                     Positioned(
                         left: 15,
                         bottom: 9,
@@ -121,8 +128,7 @@ Widget historyOrder(context, data) {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           orderButtonMaker(context, 'kasih Rating', primary2,
-                              color: primary4,
-                              route: InputRating(data: orderHistory)),
+                              color: primary4, route: InputRating(data: data)),
                           orderButtonMaker(context, 'Pesan Lagi', primary4)
                         ],
                       ),

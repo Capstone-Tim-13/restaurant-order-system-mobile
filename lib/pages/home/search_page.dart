@@ -1,9 +1,10 @@
 import 'package:capstone_restaurant/data.dart';
-import 'package:capstone_restaurant/pages/home/search_result_page.dart';
+import 'package:capstone_restaurant/logic/data_api_handler.dart';
+import 'package:capstone_restaurant/pages/home/menu_by_cat_page.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -15,6 +16,7 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   TextEditingController foodSearchController = TextEditingController();
   bool showFilter = false;
+  bool showSearchedFood = false;
   List filterData = ['', ''];
 
   @override
@@ -45,7 +47,13 @@ class _SearchPageState extends State<SearchPage> {
             children: [
               GestureDetector(
                 onTap: () {
-                  Navigator.pop(context);
+                  if (showSearchedFood) {
+                    setState(() {
+                      showSearchedFood = !showSearchedFood;
+                    });
+                  } else {
+                    Navigator.pop(context);
+                  }
                 },
                 child: Image.asset('assets/images/icons/backButton.png'),
               ),
@@ -69,13 +77,8 @@ class _SearchPageState extends State<SearchPage> {
                     textInputAction: TextInputAction.search,
                     controller: foodSearchController,
                     onSubmitted: (value) {
-                      Navigator.push(
-                          context,
-                          PageTransition(
-                              child: SearchResult(
-                                  searchedFood: foodSearchController.text),
-                              type: PageTransitionType.fade));
                       setState(() {
+                        showSearchedFood = true;
                         if (value.isNotEmpty &&
                             !searchHistory.contains(value)) {
                           searchHistory.add(value);
@@ -91,93 +94,152 @@ class _SearchPageState extends State<SearchPage> {
                           width: 12,
                         ),
                         hintText: 'Cari makananmu disini',
-                        suffixIcon: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              showFilter = true;
-                            });
-                            debugPrint('filter tertekan');
-                          },
-                          child: Image.asset(
-                            'assets/images/icons/filter.png',
-                            scale: 3,
-                          ),
-                        )),
+                        suffixIcon: showSearchedFood
+                            ? IconButton(
+                                onPressed: () {
+                                  foodSearchController.clear;
+                                  setState(() {
+                                    showSearchedFood = !showSearchedFood;
+                                  });
+                                },
+                                icon: const Icon(Icons.clear_rounded))
+                            : GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    showFilter = true;
+                                  });
+                                  debugPrint('filter tertekan');
+                                },
+                                child: Image.asset(
+                                  'assets/images/icons/filter.png',
+                                  scale: 3,
+                                ),
+                              )),
                   ),
                 ),
               ),
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 23, right: 18, top: 27),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Pencarian Terbaru',
-                style: poppins.copyWith(color: surface),
-              ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    searchHistory.clear();
-                  });
-                  debugPrint('hapus semua tertekan');
-                },
-                child: Text(
-                  'Hapus Semua',
-                  style: poppins.copyWith(color: surface),
-                ),
-              )
-            ],
-          ),
-        ),
-        Expanded(
-            child: Padding(
-          padding: const EdgeInsets.only(left: 24),
-          child: ListView.builder(
-              padding: EdgeInsets.zero,
-              itemCount: searchHistory.length,
-              shrinkWrap: true,
-              itemBuilder: (BuildContext context, index) {
-                return showSearchHistory(searchHistory[index]);
-              }),
-        ))
+        showSearchedFood ? section2() : section1()
       ],
     );
   }
 
-  Widget showSearchHistory(data) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-            context,
-            PageTransition(
-                child: SearchResult(searchedFood: data),
-                type: PageTransitionType.fade));
-        setState(() {
-          foodSearchController.text = data;
-        });
-        debugPrint('$data tertekan');
-      },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        child: Row(
-          children: [
-            Image.asset(
-              'assets/images/icons/search.png',
-              width: 19,
+  Widget section1() {
+    return Expanded(
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 23, right: 18, top: 27),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Pencarian Terbaru',
+                  style: poppins.copyWith(color: surface),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      searchHistory.clear();
+                    });
+                    debugPrint('hapus semua tertekan');
+                  },
+                  child: Text(
+                    'Hapus Semua',
+                    style: poppins.copyWith(color: surface),
+                  ),
+                )
+              ],
             ),
-            const SizedBox(width: 12),
-            Text(
-              data,
-              style: poppins.copyWith(fontSize: 16, color: outline),
-            ),
-          ],
-        ),
+          ),
+          Expanded(
+              child: Padding(
+            padding: const EdgeInsets.only(left: 24),
+            child: ListView.builder(
+                padding: EdgeInsets.zero,
+                itemCount: searchHistory.length,
+                shrinkWrap: true,
+                itemBuilder: (BuildContext context, index) {
+                  var data = searchHistory[index];
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        showSearchedFood = true;
+                      });
+
+                      setState(() {
+                        foodSearchController.text = data;
+                      });
+                      debugPrint('$data tertekan');
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: Row(
+                        children: [
+                          Image.asset(
+                            'assets/images/icons/search.png',
+                            width: 19,
+                          ),
+                          const SizedBox(width: 12),
+                          Text(
+                            data,
+                            style:
+                                poppins.copyWith(fontSize: 16, color: outline),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
+          ))
+        ],
       ),
     );
+  }
+
+  Widget section2() {
+    final menuProvider = Provider.of<MenuDataProvider>(context, listen: false);
+    return Expanded(
+        child: FutureBuilder<dynamic>(
+      future: menuProvider.getMenuByName(foodSearchController.text),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+              child: CircularProgressIndicator(
+            color: primary4,
+            strokeWidth: 6,
+          ));
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          return Container(
+            margin: const EdgeInsets.only(top: 27),
+            child: ListView.builder(
+              shrinkWrap: true,
+              padding: EdgeInsets.zero,
+              itemCount: 1,
+              itemBuilder: (context, index) {
+                if (snapshot.data == null || snapshot.data.isEmpty) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 30),
+                    child: Text(
+                      'Tidak ada hasil untuk "${foodSearchController.text}"',
+                      style: poppins.copyWith(fontSize: 17),
+                      textAlign: TextAlign.center,
+                    ),
+                  );
+                } else {
+                  // Jika tidak kosong, return widget yang menampilkan hasil pencarian
+                  return showMenuByCat(context, snapshot.data);
+                }
+              },
+            ),
+          );
+        }
+      },
+    ));
   }
 
   Widget showFilterPage() {
@@ -191,7 +253,7 @@ class _SearchPageState extends State<SearchPage> {
               GestureDetector(
                 onTap: () {
                   setState(() {
-                    showFilter = false;
+                    showFilter = !showFilter;
                   });
                 },
                 child: Image.asset('assets/images/icons/backButton.png'),

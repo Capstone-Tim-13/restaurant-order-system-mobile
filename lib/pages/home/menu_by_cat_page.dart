@@ -1,6 +1,7 @@
 //  ali
 
 import 'package:capstone_restaurant/data.dart';
+import 'package:capstone_restaurant/logic/data_api_handler.dart';
 import 'package:capstone_restaurant/logic/home/menu_by_cat_logic.dart';
 import 'package:capstone_restaurant/pages/home/favorite_page.dart';
 import 'package:capstone_restaurant/pages/home/popup_menu_page.dart';
@@ -9,6 +10,7 @@ import 'package:capstone_restaurant/pages/order/cart_page.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 class MenubyCat extends StatefulWidget {
   final String selectedCat;
@@ -113,7 +115,7 @@ class _MenubyCatState extends State<MenubyCat> {
               },
               child: Container(
                 margin: const EdgeInsets.only(top: 300),
-                decoration: homePageMenu,
+                decoration: homePageMenuBuilder,
                 width: MediaQuery.of(context).size.width - 82,
                 height: 44,
                 child: Padding(
@@ -313,13 +315,23 @@ Widget showMenuByCat(context, data) {
                     ),
                   ),
                   const Spacer(),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Image.asset(
-                      'assets/images/icons/favW.png',
-                      color: bright,
-                    ),
-                  )
+                  Consumer<FavoritesMenuHandler>(
+                      builder: (context, favProvider, child) {
+                    return GestureDetector(
+                      onTap: () {
+                        // setState(() {
+                        //   addToFav(data['id']);
+                        // });
+                        favProvider.addToFav(data['id']);
+                      },
+                      child: Image.asset(
+                        'assets/images/icons/favW.png',
+                        color: favProvider.data.contains(data['id'])
+                            ? primary3
+                            : bright,
+                      ),
+                    );
+                  }),
                 ],
               ),
               const SizedBox(height: 6),

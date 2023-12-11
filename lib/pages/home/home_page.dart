@@ -23,7 +23,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool addToFav = false;
   int currentCarouselIndex = 0;
   int addToBasket = 0;
   late Future<void> fetchData;
@@ -31,7 +30,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    // final menuProvider = Provider.of<MenuDataProvider>(context, listen: false);
     super.initState();
     fetchDataAndMenu();
   }
@@ -326,18 +324,33 @@ class _HomePageState extends State<HomePage> {
                 )),
           ),
           const SizedBox(height: 16),
-          SizedBox(
-            width: MediaQuery.of(context).size.width - 21,
-            height: 265,
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.only(bottom: 10),
-                shrinkWrap: true,
-                itemCount: catData.length,
-                itemBuilder: (BuildContext context, index) {
-                  return favMenuMaker();
-                }),
-          ),
+          Consumer<FavoritesMenuHandler>(
+              builder: (context, favProvider, child) {
+            if (favProvider.data.isNotEmpty) {
+              return SizedBox(
+                width: MediaQuery.of(context).size.width - 21,
+                height: 265,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsets.only(bottom: 10),
+                    shrinkWrap: true,
+                    itemCount: favProvider.data.length,
+                    itemBuilder: (BuildContext context, index) {
+                      return favMenuMakers(context, favProvider.data[index]);
+                    }),
+              );
+            } else {
+              return SizedBox(
+                height: 251,
+                child: Center(
+                  child: Text(
+                    'Belum ada menu favorit',
+                    style: poppins.copyWith(fontSize: 17),
+                  ),
+                ),
+              );
+            }
+          }),
           const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -445,7 +458,7 @@ class _HomePageState extends State<HomePage> {
           ),
           child: Container(
             width: 230,
-            decoration: homePageMenu,
+            decoration: homePageMenuBuilder,
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: Column(children: [
@@ -462,17 +475,20 @@ class _HomePageState extends State<HomePage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          addToFav = !addToFav;
-                        });
-                      },
-                      child: Image.asset(
-                        'assets/images/icons/favW.png',
-                        color: addToFav ? primary3 : bright,
-                      ),
-                    ),
+                    Consumer<FavoritesMenuHandler>(
+                        builder: (context, favProvider, child) {
+                      return GestureDetector(
+                        onTap: () {
+                          favProvider.addToFav(data['id']);
+                        },
+                        child: Image.asset(
+                          'assets/images/icons/favW.png',
+                          color: favProvider.data.contains(data['id'])
+                              ? primary3
+                              : bright,
+                        ),
+                      );
+                    })
                   ],
                 ),
                 const SizedBox(height: 12),
@@ -552,179 +568,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget favMenuMaker() {
-    return Padding(
-        padding: const EdgeInsets.only(right: 5, left: 5, top: 5),
-        child: Container(
-            width: 352,
-            decoration: homePageMenu,
-            child: Column(
-              children: [
-                Stack(
-                  children: [
-                    Image.asset(
-                        'assets/images/home/homePage/favorit/favmenu.png'),
-                    Positioned(
-                        left: 15,
-                        bottom: 9,
-                        child: Text(
-                          '15 Min',
-                          style:
-                              poppins.copyWith(fontSize: 16, color: primary2),
-                        )),
-                    Positioned(
-                      right: 25,
-                      bottom: 13,
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            debugPrint('menu fav pressed');
-                          });
-                        },
-                        child: Image.asset(
-                          'assets/images/icons/fav.png',
-                          width: 20,
-                          color: primary3,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                // const SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15, right: 15, top: 9),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Text('Mie Lamian Pedas',
-                                  style: poppins.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16)),
-                              const SizedBox(width: 10),
-                              Container(
-                                width: 37,
-                                height: 18,
-                                decoration: BoxDecoration(
-                                    color: yellow,
-                                    borderRadius: BorderRadius.circular(12)),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      'assets/images/icons/star.png',
-                                      width: 9,
-                                      color: Colors.white,
-                                    ),
-                                    Text('4.5',
-                                        style: poppins.copyWith(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 10,
-                                            color: primary2)),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          Text('Rp 25.000',
-                              style: poppins.copyWith(
-                                  fontWeight: FontWeight.w500, fontSize: 16))
-                        ],
-                      ),
-                      SizedBox(
-                        height: 48,
-                        width: double.infinity,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                                'Mie Lamian yang lembut dengan kuah \nsup pedas',
-                                style: poppins.copyWith(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 10,
-                                    color: outline)),
-                          ],
-                        ),
-                      ),
-                      // const SizedBox(height: 9),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  if (addToBasket > 0) {
-                                    setState(() {
-                                      addToBasket -= 1;
-                                    });
-                                  }
-                                  debugPrint('decrement tertekan');
-                                },
-                                child: Image.asset(
-                                  'assets/images/icons/decrement.png',
-                                  width: 24,
-                                ),
-                              ),
-                              const SizedBox(width: 16),
-                              Text(
-                                addToBasket.toString(),
-                                style: poppins.copyWith(
-                                    fontWeight: FontWeight.w500, fontSize: 16),
-                              ),
-                              const SizedBox(width: 16),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    addToBasket += 1;
-                                  });
-                                  debugPrint('increment tertekan');
-                                },
-                                child: Image.asset(
-                                  'assets/images/icons/increment.png',
-                                  width: 24,
-                                ),
-                              ),
-                            ],
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              debugPrint('add tertekan');
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: primary4,
-                                borderRadius: BorderRadius.circular(37),
-                              ),
-                              child: Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 4, horizontal: 16),
-                                  child: Text(
-                                    '+ Add',
-                                    style: poppins.copyWith(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16,
-                                        color: primary2),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            )));
-  }
-
   Widget bestSellerMenuMaker(data) {
     return GestureDetector(
       onTap: () {
@@ -738,14 +581,15 @@ class _HomePageState extends State<HomePage> {
         padding: const EdgeInsets.only(right: 5, left: 5, top: 5),
         child: Container(
           width: 175,
-          decoration: homePageMenu,
+          decoration: homePageMenuBuilder,
           child: Column(children: [
             ClipRRect(
               borderRadius:
                   const BorderRadius.vertical(top: Radius.circular(12)),
               child: Image.network(
                 data['image'],
-                height: 163,
+                width: 175,
+                height: 162,
                 fit: BoxFit.cover,
               ),
             ),
@@ -805,4 +649,214 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+}
+
+Widget favMenuMakers(context, id) {
+  final menuProvider = Provider.of<MenuDataProvider>(context, listen: false);
+  return FutureBuilder(
+      future: menuProvider.getMenuById(id),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+              child: CircularProgressIndicator(
+            color: primary4,
+            strokeWidth: 6,
+          ));
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          Map foodData = snapshot.data!;
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  PageTransition(
+                      child: PopUpMenuDetail(data: foodData),
+                      type: PageTransitionType.fade));
+            },
+            child: Container(
+              margin: const EdgeInsets.only(bottom: 13, left: 16, right: 16),
+              decoration: BoxDecoration(
+                  color: primary2,
+                  borderRadius: BorderRadius.circular(22),
+                  boxShadow: const [
+                    BoxShadow(color: Colors.black12, blurRadius: 6)
+                  ]),
+              child: Column(
+                children: [
+                  Stack(
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width - 32,
+                        height: 120,
+                        child: ClipRRect(
+                          borderRadius: const BorderRadius.vertical(
+                              top: Radius.circular(16)),
+                          child: Image.network(foodData['image']),
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
+          );
+        }
+      });
+
+  // Padding(
+  //     padding: const EdgeInsets.only(right: 5, left: 5, top: 5),
+  //     child: Container(
+  //         width: 352,
+  //         decoration: homePageMenuBuilder,
+  //         child: Column(
+  //           children: [
+  //             Stack(
+  //               children: [
+  //                 Image.asset(
+  //                     'assets/images/home/homePage/favorit/favmenu.png'),
+  //                 Positioned(
+  //                     left: 15,
+  //                     bottom: 9,
+  //                     child: Text(
+  //                       '15 Min',
+  //                       style: poppins.copyWith(fontSize: 16, color: primary2),
+  //                     )),
+  //                 Positioned(
+  //                   right: 25,
+  //                   bottom: 13,
+  //                   child: GestureDetector(
+  //                     onTap: () {},
+  //                     child: Image.asset(
+  //                       'assets/images/icons/fav.png',
+  //                       width: 20,
+  //                       color: primary3,
+  //                     ),
+  //                   ),
+  //                 )
+  //               ],
+  //             ),
+  //             // const SizedBox(height: 10),
+  //             Padding(
+  //               padding: const EdgeInsets.only(left: 15, right: 15, top: 9),
+  //               child: Column(
+  //                 children: [
+  //                   Row(
+  //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                     children: [
+  //                       Row(
+  //                         children: [
+  //                           Text('Mie Lamian Pedas',
+  //                               style: poppins.copyWith(
+  //                                   fontWeight: FontWeight.w500, fontSize: 16)),
+  //                           const SizedBox(width: 10),
+  //                           Container(
+  //                             width: 37,
+  //                             height: 18,
+  //                             decoration: BoxDecoration(
+  //                                 color: yellow,
+  //                                 borderRadius: BorderRadius.circular(12)),
+  //                             child: Row(
+  //                               mainAxisAlignment:
+  //                                   MainAxisAlignment.spaceEvenly,
+  //                               crossAxisAlignment: CrossAxisAlignment.center,
+  //                               children: [
+  //                                 Image.asset(
+  //                                   'assets/images/icons/star.png',
+  //                                   width: 9,
+  //                                   color: Colors.white,
+  //                                 ),
+  //                                 Text('4.5',
+  //                                     style: poppins.copyWith(
+  //                                         fontWeight: FontWeight.w400,
+  //                                         fontSize: 10,
+  //                                         color: primary2)),
+  //                               ],
+  //                             ),
+  //                           ),
+  //                         ],
+  //                       ),
+  //                       Text('Rp 25.000',
+  //                           style: poppins.copyWith(
+  //                               fontWeight: FontWeight.w500, fontSize: 16))
+  //                     ],
+  //                   ),
+  //                   SizedBox(
+  //                     height: 48,
+  //                     width: double.infinity,
+  //                     child: Column(
+  //                       crossAxisAlignment: CrossAxisAlignment.start,
+  //                       children: [
+  //                         Text('Mie Lamian yang lembut dengan kuah \nsup pedas',
+  //                             style: poppins.copyWith(
+  //                                 fontWeight: FontWeight.w400,
+  //                                 fontSize: 10,
+  //                                 color: outline)),
+  //                       ],
+  //                     ),
+  //                   ),
+  //                   // const SizedBox(height: 9),
+  //                   Row(
+  //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                     children: [
+  //                       Row(
+  //                         children: [
+  //                           GestureDetector(
+  //                             onTap: () {
+  //                               debugPrint('decrement tertekan');
+  //                             },
+  //                             child: Image.asset(
+  //                               'assets/images/icons/decrement.png',
+  //                               width: 24,
+  //                             ),
+  //                           ),
+  //                           const SizedBox(width: 16),
+  //                           Text(
+  //                             '1',
+  //                             style: poppins.copyWith(
+  //                                 fontWeight: FontWeight.w500, fontSize: 16),
+  //                           ),
+  //                           const SizedBox(width: 16),
+  //                           GestureDetector(
+  //                             onTap: () {
+  //                               debugPrint('increment tertekan');
+  //                             },
+  //                             child: Image.asset(
+  //                               'assets/images/icons/increment.png',
+  //                               width: 24,
+  //                             ),
+  //                           ),
+  //                         ],
+  //                       ),
+  //                       GestureDetector(
+  //                         onTap: () {
+  //                           debugPrint('add tertekan');
+  //                         },
+  //                         child: Container(
+  //                           decoration: BoxDecoration(
+  //                             color: primary4,
+  //                             borderRadius: BorderRadius.circular(37),
+  //                           ),
+  //                           child: Center(
+  //                             child: Padding(
+  //                               padding: const EdgeInsets.symmetric(
+  //                                   vertical: 4, horizontal: 16),
+  //                               child: Text(
+  //                                 '+ Add',
+  //                                 style: poppins.copyWith(
+  //                                     fontWeight: FontWeight.w500,
+  //                                     fontSize: 16,
+  //                                     color: primary2),
+  //                               ),
+  //                             ),
+  //                           ),
+  //                         ),
+  //                       ),
+  //                     ],
+  //                   ),
+  //                 ],
+  //               ),
+  //             ),
+  //           ],
+  //         )));
 }

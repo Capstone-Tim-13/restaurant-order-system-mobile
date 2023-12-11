@@ -1,9 +1,11 @@
+import 'package:capstone_restaurant/logic/data_api_handler.dart';
 import 'package:capstone_restaurant/logic/home/menu_by_cat_logic.dart';
 import 'package:capstone_restaurant/pages/home/favorite_page.dart';
 import 'package:capstone_restaurant/pages/order/cart_page.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 class PopUpMenuDetail extends StatefulWidget {
   final dynamic data;
@@ -56,17 +58,20 @@ class _PopUpMenuDetailState extends State<PopUpMenuDetail> {
             },
             child: Image.asset('assets/images/icons/closeW.png'),
           ),
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  PageTransition(
-                      child: const FavoriteMenu(),
-                      type: PageTransitionType.fade));
-              debugPrint('favorit tertekan');
-            },
-            child: Image.asset('assets/images/icons/favW.png'),
-          ),
+          Consumer<FavoritesMenuHandler>(
+              builder: (context, favProvider, child) {
+            return GestureDetector(
+              onTap: () {
+                favProvider.addToFav(widget.data['id']);
+              },
+              child: Image.asset(
+                'assets/images/icons/favW.png',
+                color: favProvider.data.contains(widget.data['id'])
+                    ? primary3
+                    : Colors.white,
+              ),
+            );
+          }),
         ],
       ),
     );
@@ -92,7 +97,7 @@ class _PopUpMenuDetailState extends State<PopUpMenuDetail> {
             )),
             child: Column(
               children: [
-                const SizedBox(height: 300),
+                const SizedBox(height: 320),
                 Container(
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(

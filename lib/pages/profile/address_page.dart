@@ -132,7 +132,7 @@ class _AddressPageState extends State<AddressPage> {
       child: Container(
         margin: const EdgeInsets.only(bottom: 24),
         decoration:
-            homePageMenu.copyWith(borderRadius: BorderRadius.circular(10)),
+            homePageMenuBuilder.copyWith(borderRadius: BorderRadius.circular(10)),
         child: Padding(
             padding: const EdgeInsets.only(left: 16, bottom: 16),
             child: Column(

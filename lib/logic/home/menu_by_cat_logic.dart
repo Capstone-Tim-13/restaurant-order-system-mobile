@@ -1,6 +1,4 @@
-import 'package:capstone_restaurant/data.dart';
 import 'package:capstone_restaurant/logic/data_api_handler.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 Future<dynamic> getListLen(context, request) async {
@@ -36,13 +34,10 @@ Future<String> getCategory(context, name) async {
       return 'Appetizer';
     case 2:
       return 'Dessert';
-
     case 3:
       return 'Ala Carte';
-
     case 4:
       return 'Paket Hemat';
-
     case 5:
       return 'Minum';
   }

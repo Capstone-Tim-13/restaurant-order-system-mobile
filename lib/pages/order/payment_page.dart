@@ -1,4 +1,3 @@
-import 'package:capstone_restaurant/data.dart';
 import 'package:capstone_restaurant/pages/order/confirmation_page.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +49,7 @@ class _PaymentPageState extends State<PaymentPage> {
             padding: const EdgeInsets.only(left: 16, right: 16, bottom: 25),
             child: Container(
               width: MediaQuery.of(context).size.width,
-              decoration: homePageMenu.copyWith(
+              decoration: homePageMenuBuilder.copyWith(
                   borderRadius: BorderRadius.circular(28), color: moreBright),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

@@ -14,6 +14,32 @@ class OrderStatus extends StatefulWidget {
 }
 
 class _OrderStatusState extends State<OrderStatus> {
+
+  @override
+  void initState() {
+    super.initState();
+    orderStatusDemo();
+  }
+
+  Future<void> orderStatusDemo() async {
+    for (int i = 0; i < orderStatusEvents.length; i++) {
+      await Future.delayed(const Duration(seconds: 2));
+      setState(() {
+        orderStatusEvents[i][2] = !orderStatusEvents[i][2];
+      });
+
+      if (i == orderStatusEvents.length - 1) {
+        await Future.delayed(const Duration(seconds: 2));
+        setState(() {
+          for (int j = 0; j < orderStatusEvents.length; j++) {
+            orderStatusEvents[j][2] = false;
+          }
+        });
+        orderStatusDemo();
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,16 +136,8 @@ class _OrderStatusState extends State<OrderStatus> {
     );
   }
 
-  // Widget section2() {
-  //   return Positioned(
-  //     bottom: 0,
-  //     child:
-  //   );
-  // }
-
   Widget section2() {
     return SizedBox(
-      // child: tes(),
       child: showOrderList(),
     );
   }

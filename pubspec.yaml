@@ -45,6 +45,7 @@ dependencies:
   dio: ^5.3.3
   page_transition: ^2.1.0
   intl: ^0.18.1
+  url_launcher: ^6.2.2
 
 dev_dependencies:
   flutter_test:

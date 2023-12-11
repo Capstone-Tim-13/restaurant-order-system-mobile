@@ -73,10 +73,10 @@ class UserDataProvider with ChangeNotifier {
 class MenuDataProvider with ChangeNotifier {
   List allMenu = [];
   List get getMenu => allMenu;
-  
+
   Future<List> getMenuAll() async {
     try {
-      final response = await dio.get(menuFindAll,
+      final response = await dio.get(menuFindAllURL,
           options: Options(
               headers: {'Authorization': 'Bearer ${localUserData[2]}'}));
       if (response.statusCode == 200) {
@@ -92,9 +92,9 @@ class MenuDataProvider with ChangeNotifier {
     }
   }
 
-  Future<List> getMenuById(id) async {
+  Future<Map> getMenuById(id) async {
     try {
-      final response = await dio.get('$menuFindId/$id',
+      final response = await dio.get('$menuFindIdURL/$id',
           options: Options(
               headers: {'Authorization': 'Bearer ${localUserData[2]}'}));
       if (response.statusCode == 200) {
@@ -103,14 +103,14 @@ class MenuDataProvider with ChangeNotifier {
         throw Exception('Failed to load data from API');
       }
     } catch (error) {
-      return [];
+      return {};
       // throw Exception('Failed to load data from API: $error');
     }
   }
 
   Future getMenuByName(name) async {
     try {
-      final response = await dio.get('$menuFindName/$name',
+      final response = await dio.get('$menuFindNameURL/$name',
           options: Options(
               headers: {'Authorization': 'Bearer ${localUserData[2]}'}));
       if (response.statusCode == 200) {
@@ -126,7 +126,7 @@ class MenuDataProvider with ChangeNotifier {
 
   Future<List> getMenuByCat(category) async {
     try {
-      final response = await dio.get('$menuFindCategory/$category',
+      final response = await dio.get('$menuFindCategoryURL/$category',
           options: Options(
               headers: {'Authorization': 'Bearer ${localUserData[2]}'}));
       if (response.statusCode == 200) {
@@ -227,8 +227,37 @@ class OrderDataProvider with ChangeNotifier {
   }
 }
 
-// class PaymentDataProvider with ChangeNotifier {
-//   List defaultPaymentMethod = [];
-//   List get data => defaultPaymentMethod;
+class PaymentDataProvider with ChangeNotifier {
+  Future<String> openPaymentPage() async {
+    try {
+      final response = await dio.post(selectPaymentURL,
+          data: {"order_ID": 2},
+          options: Options(
+              headers: {'Authorization': 'Bearer ${localUserData[2]}'}));
+      if (response.statusCode == 201) {
+        notifyListeners();
+        return response.data['results']['redirect_url'];
+      } else {
+        throw Exception('Failed to load data from API');
+      }
+    } catch (error) {
+      // return false;
+      throw Exception('Failed to load data from API: $error');
+    }
+  }
+}
 
-// }
+class FavoritesMenuHandler with ChangeNotifier {
+  List userFavMenu = [];
+  List get data => userFavMenu;
+
+  void addToFav(data) {
+    if (userFavMenu.contains(data)) {
+      userFavMenu.remove(data);
+    } else {
+      userFavMenu.add(data);
+    }
+    notifyListeners();
+  }
+}
+

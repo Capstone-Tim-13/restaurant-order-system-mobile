@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
-const String apiKey = '';
+const String apiKey = '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';
 bool isLoading = false;
 
 Future<void> submit(context, question) async {
@@ -165,7 +165,7 @@ Widget recommendationMenuMaker(context, data) {
         ),
         child: Container(
           width: 230,
-          decoration: homePageMenu,
+          decoration: homePageMenuBuilder,
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(children: [

@@ -19,13 +19,13 @@ class _OrderPageState extends State<OrderPage> {
   bool isRiwayatSelected = false;
   bool isDibatalkanSelected = false;
 
-  @override
-  void initState() {
-    super.initState();
-    final orderProvider =
-        Provider.of<OrderDataProvider>(context, listen: false);
-    orderProvider.fetchData();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   final orderProvider =
+  //       Provider.of<OrderDataProvider>(context, listen: false);
+  //   orderProvider.fetchData();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -77,59 +77,41 @@ class _OrderPageState extends State<OrderPage> {
   Widget orderPage() {
     final orderProvider =
         Provider.of<OrderDataProvider>(context, listen: false);
-    return FutureBuilder(
-        future: orderProvider.fetchData(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-                child: CircularProgressIndicator(
-              color: primary4,
-              // value: progressController.value,
-              strokeWidth: 6,
-            ));
-          } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else {
-            return DefaultTabController(
-                initialIndex: 0,
-                length: 3,
-                child: Scaffold(
-                  appBar: showAppBar(),
-                  body: Padding(
-                    padding: const EdgeInsets.only(top: 24),
-                    child: TabBarView(children: [
-                      SizedBox(
-                          child: ListView.builder(
-                        padding: EdgeInsets.zero,
-                        itemCount: orderProvider.ongoing.length,
-                        itemBuilder: ((BuildContext context, index) {
-                          return ongoingOrder(
-                              context, orderProvider.ongoing[index]);
-                        }),
-                      )),
-                      SizedBox(
-                          child: ListView.builder(
-                        padding: EdgeInsets.zero,
-                        itemCount: orderProvider.history.length,
-                        itemBuilder: ((BuildContext context, index) {
-                          return historyOrder(
-                              context, orderProvider.history[index]);
-                        }),
-                      )),
-                      SizedBox(
-                          child: ListView.builder(
-                        padding: EdgeInsets.zero,
-                        itemCount: orderProvider.cancel.length,
-                        itemBuilder: ((BuildContext context, index) {
-                          return cancelOrder(
-                              context, orderProvider.cancel[index]);
-                        }),
-                      )),
-                    ]),
-                  ),
-                ));
-          }
-        });
+    return DefaultTabController(
+        initialIndex: 0,
+        length: 3,
+        child: Scaffold(
+          appBar: showAppBar(),
+          body: Padding(
+            padding: const EdgeInsets.only(top: 24),
+            child: TabBarView(children: [
+              SizedBox(
+                  child: ListView.builder(
+                padding: EdgeInsets.zero,
+                itemCount: orderProvider.ongoing.length,
+                itemBuilder: ((BuildContext context, index) {
+                  return ongoingOrder(context, orderProvider.ongoing[index]);
+                }),
+              )),
+              SizedBox(
+                  child: ListView.builder(
+                padding: EdgeInsets.zero,
+                itemCount: orderProvider.history.length,
+                itemBuilder: ((BuildContext context, index) {
+                  return historyOrder(context, orderProvider.history[index]);
+                }),
+              )),
+              SizedBox(
+                  child: ListView.builder(
+                padding: EdgeInsets.zero,
+                itemCount: orderProvider.cancel.length,
+                itemBuilder: ((BuildContext context, index) {
+                  return cancelOrder(context, orderProvider.cancel[index]);
+                }),
+              )),
+            ]),
+          ),
+        ));
   }
 }
 

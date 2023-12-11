@@ -10,25 +10,21 @@ import 'package:capstone_restaurant/pages/profile/profile_page.dart';
 import 'package:capstone_restaurant/pages/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  final prefs = await SharedPreferences.getInstance();
-  final isLogin = prefs.getBool('isLogin') ?? false;
-
+void main() {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => UserDataProvider()),
     ChangeNotifierProvider(create: (_) => MenuDataProvider()),
     ChangeNotifierProvider(create: (_) => ChatbotHandler()),
     ChangeNotifierProvider(create: (_) => OrderDataProvider()),
-    // ChangeNotifierProvider(create: (_) => PaymentDataProvider()),
-  ], child: MyApp(isLogin: isLogin)));
+    ChangeNotifierProvider(create: (_) => PaymentDataProvider()),
+    ChangeNotifierProvider(create: (_) => FavoritesMenuHandler()),
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
-  final bool isLogin;
-  const MyApp({super.key, required this.isLogin});
+  // final bool isLogin;
+  const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
@@ -42,7 +38,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => Splash(isLogin: isLogin),
+        '/': (context) => Splash(),
         '/onboarding': (context) => const OnboardingPage(),
         '/login': (context) => const LoginPage(),
         '/register': (context) => const RegisterPage(),

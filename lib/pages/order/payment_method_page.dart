@@ -84,10 +84,10 @@ class _PaymentMethodState extends State<PaymentMethod> {
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             padding: EdgeInsets.zero,
-            itemCount: paymentEWallet.length,
+            itemCount: 11,
             itemBuilder: ((BuildContext context, index) {
               return paymentCheckboxMaker(
-                  paymentEWallet[index][0], paymentEWallet[index][1]);
+                  'paymentEWallet[index][0]', 'paymentEWallet[index][1]');
             }),
           )),
           Container(
@@ -110,10 +110,10 @@ class _PaymentMethodState extends State<PaymentMethod> {
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             padding: EdgeInsets.zero,
-            itemCount: paymentBank.length,
+            itemCount: 11,
             itemBuilder: ((BuildContext context, index) {
               return paymentCheckboxMaker(
-                  paymentBank[index][0], paymentBank[index][1]);
+                  'paymentBank[index][0]', 'paymentBank[index][1]');
             }),
           )),
           Container(

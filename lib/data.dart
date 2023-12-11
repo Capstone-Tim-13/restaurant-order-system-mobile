@@ -120,212 +120,21 @@ List accExtraMenu = [
 
 // ----------------------------
 
-List paymentEWallet = [
-  ['assets/images/icons/payment/gopay.png', 'Gopay'],
-  ['assets/images/icons/payment/dana.png', 'Dana'],
-  ['assets/images/icons/payment/ovo.png', 'OVO'],
-  ['assets/images/icons/payment/shopeepay.png', 'Shopee Pay'],
-];
+// List paymentEWallet = [
+//   ['assets/images/icons/payment/gopay.png', 'Gopay'],
+//   ['assets/images/icons/payment/dana.png', 'Dana'],
+//   ['assets/images/icons/payment/ovo.png', 'OVO'],
+//   ['assets/images/icons/payment/shopeepay.png', 'Shopee Pay'],
+// ];
 
-List paymentBank = [
-  ['assets/images/icons/payment/bca.png', 'BCA'],
-  ['assets/images/icons/payment/permata.png', 'Permata Bank'],
-  ['assets/images/icons/payment/bri.png', 'BRI'],
-  ['assets/images/icons/payment/mandiri.png', 'Bank Mandiri'],
-  ['assets/images/icons/payment/cimb.png', 'CIMB Niaga'],
-  ['assets/images/icons/payment/btn.png', 'Bank BTN'],
-];
-
-// ----------------------------
-
-Map<String, dynamic> menuData = {
-  'Appetizer': [
-    [
-      'Kentang Goreng',
-      'Kentang goreng asin dengan saus pedas untuk cocolannya',
-      '10.000',
-      'assets/images/home/homePage/menubyCat/appetizer.png',
-      4,
-      '394'
-    ],
-    [
-      'Kentang Goreng',
-      'Kentang goreng asin dengan saus pedas untuk cocolannya',
-      '10.000',
-      'assets/images/home/homePage/menubyCat/appetizer.png',
-      4,
-      '394'
-    ],
-    [
-      'Kentang Goreng',
-      'Kentang goreng asin dengan saus pedas untuk cocolannya',
-      '10.000',
-      'assets/images/home/homePage/menubyCat/appetizer.png',
-      4,
-      '394'
-    ],
-    [
-      'Kentang Goreng',
-      'Kentang goreng asin dengan saus pedas untuk cocolannya',
-      '10.000',
-      'assets/images/home/homePage/menubyCat/appetizer.png',
-      4,
-      '394'
-    ],
-  ],
-  'Dessert': [
-    [
-      'Donat Kentang',
-      'Donat kentang yang dihiasi messes dan cokelat',
-      '15.000',
-      'assets/images/home/homePage/menubyCat/dessert.png',
-      3,
-      '200'
-    ],
-    [
-      'Donat Kentang',
-      'Donat kentang yang dihiasi messes dan cokelat',
-      '15.000',
-      'assets/images/home/homePage/menubyCat/dessert.png',
-      3,
-      '200'
-    ],
-    [
-      'Donat Kentang',
-      'Donat kentang yang dihiasi messes dan cokelat',
-      '15.000',
-      'assets/images/home/homePage/menubyCat/dessert.png',
-      3,
-      '200'
-    ],
-    [
-      'Donat Kentang',
-      'Donat kentang yang dihiasi messes dan cokelat',
-      '15.000',
-      'assets/images/home/homePage/menubyCat/dessert.png',
-      3,
-      '200'
-    ],
-  ],
-  'Ala Carte': [
-    [
-      'Mie Goreng',
-      'Mie goreng bumbu ala alta-resto, pasti kamu suka',
-      '12.000',
-      'assets/images/home/homePage/menubyCat/alacarte.png',
-      3,
-      '125'
-    ],
-    [
-      'Mie Goreng',
-      'Mie goreng bumbu ala alta-resto, pasti kamu suka',
-      '12.000',
-      'assets/images/home/homePage/menubyCat/alacarte.png',
-      3,
-      '125'
-    ],
-    [
-      'Mie Goreng',
-      'Mie goreng bumbu ala alta-resto, pasti kamu suka',
-      '12.000',
-      'assets/images/home/homePage/menubyCat/alacarte.png',
-      3,
-      '125'
-    ],
-    [
-      'Mie Goreng',
-      'Mie goreng bumbu ala alta-resto, pasti kamu suka',
-      '12.000',
-      'assets/images/home/homePage/menubyCat/alacarte.png',
-      3,
-      '125'
-    ],
-    [
-      'Mie Goreng',
-      'Mie goreng bumbu ala alta-resto, pasti kamu suka',
-      '12.000',
-      'assets/images/home/homePage/menubyCat/alacarte.png',
-      3,
-      '125'
-    ],
-    [
-      'Mie Goreng',
-      'Mie goreng bumbu ala alta-resto, pasti kamu suka',
-      '12.000',
-      'assets/images/home/homePage/menubyCat/alacarte.png',
-      3,
-      '125'
-    ],
-  ],
-  'Paket Hemat': [
-    [
-      'PARE (Paket Rame)',
-      'Makan bersama kawanmu rame-rame biar makin seru!',
-      '115.000',
-      'assets/images/home/homePage/menubyCat/paket.png',
-      4,
-      '320'
-    ],
-    [
-      'PARE (Paket Rame)',
-      'Makan bersama kawanmu rame-rame biar makin seru!',
-      '115.000',
-      'assets/images/home/homePage/menubyCat/paket.png',
-      4,
-      '320'
-    ],
-    [
-      'PARE (Paket Rame)',
-      'Makan bersama kawanmu rame-rame biar makin seru!',
-      '115.000',
-      'assets/images/home/homePage/menubyCat/paket.png',
-      4,
-      '320'
-    ],
-  ],
-  'Minum': [
-    [
-      'Soda lemon',
-      'Air soda dengan gula dan lemon',
-      '15.000',
-      'assets/images/home/homePage/menubyCat/minuman.png',
-      5,
-      '1200'
-    ],
-    [
-      'Soda lemon',
-      'Air soda dengan gula dan lemon',
-      '15.000',
-      'assets/images/home/homePage/menubyCat/minuman.png',
-      5,
-      '1200'
-    ],
-    [
-      'Soda lemon',
-      'Air soda dengan gula dan lemon',
-      '15.000',
-      'assets/images/home/homePage/menubyCat/minuman.png',
-      5,
-      '1200'
-    ],
-    [
-      'Soda lemon',
-      'Air soda dengan gula dan lemon',
-      '15.000',
-      'assets/images/home/homePage/menubyCat/minuman.png',
-      5,
-      '1200'
-    ],
-    [
-      'Soda lemon',
-      'Air soda dengan gula dan lemon',
-      '15.000',
-      'assets/images/home/homePage/menubyCat/minuman.png',
-      5,
-      '1200'
-    ],
-  ],
-};
+// List paymentBank = [
+//   ['assets/images/icons/payment/bca.png', 'BCA'],
+//   ['assets/images/icons/payment/permata.png', 'Permata Bank'],
+//   ['assets/images/icons/payment/bri.png', 'BRI'],
+//   ['assets/images/icons/payment/mandiri.png', 'Bank Mandiri'],
+//   ['assets/images/icons/payment/cimb.png', 'CIMB Niaga'],
+//   ['assets/images/icons/payment/btn.png', 'Bank BTN'],
+// ];
 
 // ----------------------------
 
@@ -333,7 +142,7 @@ List orderStatusEvents = [
   [
     true,
     false,
-    true,
+    false,
     'Pesananmu telah masuk',
     'Pesanan masuk tanggal 10-11-23 pukul 11:18 wib',
     'assets/images/order/statusLogo.png'
@@ -341,7 +150,7 @@ List orderStatusEvents = [
   [
     false,
     false,
-    true,
+    false,
     'Pesananmu telah diterima',
     'Pesanan diterima tanggal 10-11-23 pukul 11:20 wib',
     'assets/images/order/statusLogo2.png'
@@ -349,7 +158,7 @@ List orderStatusEvents = [
   [
     false,
     false,
-    true,
+    false,
     'Pesananmu sedang disiapkan',
     'Pesananmu lagi kami masak nih',
     'assets/images/order/statusLogo3.png'
@@ -380,17 +189,17 @@ List orderStatusEvents = [
   ],
 ];
 
-List orderHistory = [
-  'assets/images/home/orderPage/history/historyMenu.png',
-  'Oglio Olio, Nasi Karsjakndaks',
-  'Rp 24.000',
-  '12 Oktober 2023',
-  '30 Min',
-  '2 item | 4 km',
-  'My Home',
-  '052223',
-  'sausnya tambah bangg'
-];
+// List orderHistory = [
+//   'assets/images/home/orderPage/history/historyMenu.png',
+//   'Oglio Olio, Nasi Karsjakndaks',
+//   'Rp 24.000',
+//   '12 Oktober 2023',
+//   '30 Min',
+//   '2 item | 4 km',
+//   'My Home',
+//   '052223',
+//   'sausnya tambah bangg'
+// ];
 
 // ----------------------------
 
