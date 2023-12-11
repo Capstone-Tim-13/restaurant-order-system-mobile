@@ -1,6 +1,7 @@
 // delia
 
 import 'package:capstone_restaurant/logic/data_api_handler.dart';
+import 'package:capstone_restaurant/pages/home/home_page.dart';
 import 'package:capstone_restaurant/pages/home/popup_menu_page.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/material.dart';
@@ -85,6 +86,7 @@ Widget favMenuMaker(context, id) {
       future: menuProvider.getMenuById(id),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
+          print('waiting');
           return Center(
               child: CircularProgressIndicator(
             color: primary4,
@@ -94,7 +96,7 @@ Widget favMenuMaker(context, id) {
           return Text('Error: ${snapshot.error}');
         } else {
           Map foodData = snapshot.data!;
-          print('foodData: $foodData');
+          // print('foodData: $foodData');
           return GestureDetector(
             onTap: () {
               Navigator.push(
@@ -158,142 +160,145 @@ Widget favMenuMaker(context, id) {
                         )
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width - 32,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 10),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    ConstrainedBox(
+                                      constraints:
+                                          const BoxConstraints(maxWidth: 160),
+                                      child: Text(foodData['name'],
+                                          overflow: TextOverflow.ellipsis,
+                                          style: poppins.copyWith(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 16)),
+                                    ),
+                                    Container(
+                                      margin: const EdgeInsets.only(left: 10),
+                                      width: 37,
+                                      height: 18,
+                                      decoration: BoxDecoration(
+                                          color: yellow,
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 2),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Image.asset(
+                                              'assets/images/icons/star.png',
+                                              width: 9,
+                                              color: Colors.white,
+                                            ),
+                                            Text('4.5',
+                                                style: poppins.copyWith(
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 10,
+                                                    color: Colors.white)),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Text('Rp ${foodData['price']}',
+                                    style: poppins.copyWith(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16))
+                              ],
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(top: 5),
+                              height: 48,
+                              width: MediaQuery.of(context).size.width - 32,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  ConstrainedBox(
-                                    constraints:
-                                        const BoxConstraints(maxWidth: 160),
-                                    child: Text(foodData['name'],
-                                        overflow: TextOverflow.ellipsis,
+                                  Text(
+                                    foodData['description'],
+                                    style: poppins.copyWith(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 10,
+                                        color: outline),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 9),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        debugPrint('decrement tertekan');
+                                      },
+                                      child: Image.asset(
+                                        'assets/images/icons/decrement.png',
+                                        width: 24,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 16),
+                                    Text(
+                                      '1',
+                                      style: poppins.copyWith(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 16),
+                                    ),
+                                    const SizedBox(width: 16),
+                                    GestureDetector(
+                                      onTap: () {
+                                        debugPrint('increment tertekan');
+                                      },
+                                      child: Image.asset(
+                                        'assets/images/icons/increment.png',
+                                        width: 24,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    debugPrint('add tertekan');
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: primary4,
+                                      borderRadius: BorderRadius.circular(37),
+                                    ),
+                                    width: 86,
+                                    height: 32,
+                                    child: Center(
+                                      child: Text(
+                                        '+ Add',
                                         style: poppins.copyWith(
                                             fontWeight: FontWeight.w500,
-                                            fontSize: 16)),
-                                  ),
-                                  Container(
-                                    margin: const EdgeInsets.only(left: 10),
-                                    width: 37,
-                                    height: 18,
-                                    decoration: BoxDecoration(
-                                        color: yellow,
-                                        borderRadius:
-                                            BorderRadius.circular(12)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 2),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Image.asset(
-                                            'assets/images/icons/star.png',
-                                            width: 9,
-                                            color: Colors.white,
-                                          ),
-                                          Text('4.5',
-                                              style: poppins.copyWith(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 10,
-                                                  color: Colors.white)),
-                                        ],
+                                            fontSize: 16,
+                                            color: primary2),
                                       ),
                                     ),
                                   ),
-                                ],
-                              ),
-                              Text('Rp ${foodData['price']}',
-                                  style: poppins.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16))
-                            ],
-                          ),
-                          Container(
-                            margin: const EdgeInsets.only(top: 5),
-                            height: 48,
-                            width: double.infinity,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  foodData['description'],
-                                  style: poppins.copyWith(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 10,
-                                      color: outline),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ],
                             ),
-                          ),
-                          const SizedBox(height: 9),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      debugPrint('decrement tertekan');
-                                    },
-                                    child: Image.asset(
-                                      'assets/images/icons/decrement.png',
-                                      width: 24,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 16),
-                                  Text(
-                                    '1',
-                                    style: poppins.copyWith(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16),
-                                  ),
-                                  const SizedBox(width: 16),
-                                  GestureDetector(
-                                    onTap: () {
-                                      debugPrint('increment tertekan');
-                                    },
-                                    child: Image.asset(
-                                      'assets/images/icons/increment.png',
-                                      width: 24,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  debugPrint('add tertekan');
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: primary4,
-                                    borderRadius: BorderRadius.circular(37),
-                                  ),
-                                  width: 86,
-                                  height: 32,
-                                  child: Center(
-                                    child: Text(
-                                      '+ Add',
-                                      style: poppins.copyWith(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 16,
-                                          color: primary2),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ],

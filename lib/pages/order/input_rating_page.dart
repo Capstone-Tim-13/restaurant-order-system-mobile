@@ -63,7 +63,7 @@ class _InputRatingState extends State<InputRating> {
           height: 350,
           decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage(widget.data['image']),
+                image: NetworkImage(widget.data['image']),
                 fit: BoxFit.fill,
                 alignment: Alignment.topCenter),
           ),
@@ -202,7 +202,8 @@ class _InputRatingState extends State<InputRating> {
                             reviewItem.ratings[i] = i <= index;
                           }
                           reviewItem.userRating = index + 1;
-                          debugPrint('rating dari user: ${reviewItem.userRating}');
+                          debugPrint(
+                              'rating dari user: ${reviewItem.userRating}');
                         });
                       },
                       child: Image.asset(

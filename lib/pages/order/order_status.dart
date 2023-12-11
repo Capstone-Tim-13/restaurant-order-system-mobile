@@ -28,15 +28,15 @@ class _OrderStatusState extends State<OrderStatus> {
         orderStatusEvents[i][2] = !orderStatusEvents[i][2];
       });
 
-      if (i == orderStatusEvents.length - 1) {
-        await Future.delayed(const Duration(seconds: 2));
-        setState(() {
-          for (int j = 0; j < orderStatusEvents.length; j++) {
-            orderStatusEvents[j][2] = false;
-          }
-        });
-        orderStatusDemo();
-      }
+      // if (i == orderStatusEvents.length - 1) {
+      //   await Future.delayed(const Duration(seconds: 2));
+      //   setState(() {
+      //     for (int j = 0; j < orderStatusEvents.length; j++) {
+      //       orderStatusEvents[j][2] = false;
+      //     }
+      //   });
+      //   orderStatusDemo();
+      // }
     }
   }
 

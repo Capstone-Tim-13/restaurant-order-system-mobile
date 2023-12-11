@@ -1,5 +1,6 @@
 import 'package:capstone_restaurant/data.dart';
 import 'package:capstone_restaurant/pages/home/menu_by_cat_page.dart';
+import 'package:capstone_restaurant/pages/order/confirmation_page.dart';
 import 'package:capstone_restaurant/pages/profile/address_page.dart';
 import 'package:capstone_restaurant/pages/order/payment_page.dart';
 import 'package:capstone_restaurant/style.dart';
@@ -239,7 +240,7 @@ class _CartPageState extends State<CartPage> {
                                       fontSize: 16),
                                 ),
                                 Text(
-                                  '   xxxxx',
+                                  '   0',
                                   style: poppins.copyWith(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 16),
@@ -256,7 +257,7 @@ class _CartPageState extends State<CartPage> {
                                       fontSize: 16),
                                 ),
                                 Text(
-                                  '   xxxxx',
+                                  '   0',
                                   style: poppins.copyWith(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 16),
@@ -298,17 +299,10 @@ class _CartPageState extends State<CartPage> {
             //   padding: const EdgeInsets.only(top: 24, left: 16, right: 16),
             //   child: GestureDetector(
             //     onTap: () async {
-            //       final result = await Navigator.push(
-            //           context,
-            //           PageTransition(
-            //               child: const PaymentMethod(),
-            //               type: PageTransitionType.fade));
-            //       if (result != null) {
-            //         setState(() {
-            //           paymentData = result;
-            //         });
-            //       }
-            //       debugPrint('Metode pembayaran tertekan');
+            //       final paymentProvider =
+            //           Provider.of<PaymentDataProvider>(context, listen: false);
+            //       String paymentURL = await paymentProvider.openPaymentPage();
+            //       await urlLauncher(paymentURL);
             //     },
             //     child: Container(
             //       decoration: homePageMenuBuilder.copyWith(
@@ -319,15 +313,11 @@ class _CartPageState extends State<CartPage> {
             //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
             //           children: [
             //             Text(
-            //               paymentData.isEmpty
-            //                   ? 'Metode Pembayaran'
-            //                   : paymentData[1],
+            //               'Metode Pembayaran',
             //               style: poppins.copyWith(
             //                   fontWeight: FontWeight.w500,
             //                   fontSize: 16,
-            //                   color: paymentData.isEmpty
-            //                       ? Colors.black
-            //                       : primary4),
+            //                   color: Colors.black),
             //             ),
             //             Image.asset(
             //               'assets/images/icons/arrow.png',
@@ -339,40 +329,6 @@ class _CartPageState extends State<CartPage> {
             //     ),
             //   ),
             // ),
-            Padding(
-              padding: const EdgeInsets.only(top: 24, left: 16, right: 16),
-              child: GestureDetector(
-                onTap: () async {
-                  final paymentProvider =
-                      Provider.of<PaymentDataProvider>(context, listen: false);
-                  String paymentURL = await paymentProvider.openPaymentPage();
-                  await urlLauncher(paymentURL);
-                },
-                child: Container(
-                  decoration: homePageMenuBuilder.copyWith(
-                      borderRadius: BorderRadius.circular(14)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(23),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Metode Pembayaran',
-                          style: poppins.copyWith(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16,
-                              color: Colors.black),
-                        ),
-                        Image.asset(
-                          'assets/images/icons/arrow.png',
-                          width: 20,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
             Padding(
               padding: const EdgeInsets.only(top: 24, left: 23),
               child: Align(
@@ -425,21 +381,15 @@ class _CartPageState extends State<CartPage> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 31, horizontal: 31),
               child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      PageTransition(
-                          child: const PaymentPage(),
-                          type: PageTransitionType.fade));
-                  // if (paymentData.isNotEmpty) {
-                  //   debugPrint(detailOrder.notes.toString());
-                  //   debugPrint(detailOrder.items.toString());
-                  //   Navigator.push(
-                  //       context,
-                  //       PageTransition(
-                  //           child: const PaymentPage(),
-                  //           type: PageTransitionType.fade));
-                  // }
+                onTap: () async {
+                  final paymentProvider =
+                      Provider.of<PaymentDataProvider>(context, listen: false);
+                  String paymentURL = await paymentProvider.openPaymentPage();
+
+                  await urlLauncher(paymentURL);
+                  await Future.delayed(const Duration(seconds: 2));
+                  toNextPage();
+
                   debugPrint('Pesan Sekarang tertekan');
                 },
                 child: Container(
@@ -465,6 +415,16 @@ class _CartPageState extends State<CartPage> {
             )
           ],
         ),
+      ),
+    );
+  }
+
+  toNextPage() {
+    Navigator.push(
+      context,
+      PageTransition(
+        child: const ConfirmationPage(),
+        type: PageTransitionType.fade,
       ),
     );
   }

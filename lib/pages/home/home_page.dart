@@ -7,7 +7,6 @@ import 'package:capstone_restaurant/pages/home/menu_by_cat_page.dart';
 import 'package:capstone_restaurant/pages/home/notification_page.dart';
 import 'package:capstone_restaurant/pages/home/popup_menu_page.dart';
 import 'package:capstone_restaurant/style.dart';
-import 'package:capstone_restaurant/widgets.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
@@ -24,38 +23,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int currentCarouselIndex = 0;
-  int addToBasket = 0;
-  late Future<void> fetchData;
-  bool isLoading = false;
-
-  @override
-  void initState() {
-    super.initState();
-    fetchDataAndMenu();
-  }
-
-  Future<void> fetchDataAndMenu() async {
-    setState(() {
-      isLoading = true;
-    });
-    final menuProvider = Provider.of<MenuDataProvider>(context, listen: false);
-    fetchDataFromSharedPreferences();
-    await menuProvider.getMenuAll();
-
-    setState(() {
-      isLoading = false;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    return isLoading
-        ? Center(
-            child: CircularProgressIndicator(
-            color: primary4,
-            strokeWidth: 6,
-          ))
-        : Scaffold(
+    return Scaffold(
             appBar: AppBar(toolbarHeight: 5),
             body: SingleChildScrollView(
               child: Column(
@@ -309,74 +280,65 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget showFavMenu() {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 4),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 21),
-            child: Align(
-                alignment: Alignment.centerLeft,
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 21, bottom: 12),
+          child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Menu Favoritmu',
+                style:
+                    poppins.copyWith(fontWeight: FontWeight.w600, fontSize: 18),
+              )),
+        ),
+        Consumer<FavoritesMenuHandler>(builder: (context, favProvider, child) {
+          if (favProvider.data.isNotEmpty) {
+            return SizedBox(
+              height: 270,
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  itemCount: favProvider.data.length,
+                  itemBuilder: (BuildContext context, index) {
+                    return favMenuMaker(context, favProvider.data[index]);
+                  }),
+            );
+          } else {
+            return SizedBox(
+              height: 265,
+              child: Center(
                 child: Text(
-                  'Menu Favoritmu',
-                  style: poppins.copyWith(
-                      fontWeight: FontWeight.w600, fontSize: 18),
-                )),
-          ),
-          const SizedBox(height: 16),
-          Consumer<FavoritesMenuHandler>(
-              builder: (context, favProvider, child) {
-            if (favProvider.data.isNotEmpty) {
-              return SizedBox(
-                width: MediaQuery.of(context).size.width - 21,
-                height: 265,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.only(bottom: 10),
-                    shrinkWrap: true,
-                    itemCount: favProvider.data.length,
-                    itemBuilder: (BuildContext context, index) {
-                      return favMenuMakers(context, favProvider.data[index]);
-                    }),
-              );
-            } else {
-              return SizedBox(
-                height: 251,
-                child: Center(
-                  child: Text(
-                    'Belum ada menu favorit',
-                    style: poppins.copyWith(fontSize: 17),
-                  ),
-                ),
-              );
-            }
-          }),
-          const SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      PageTransition(
-                          child: const FavoriteMenu(),
-                          type: PageTransitionType.fade));
-                  debugPrint('Lihat lainnya tertekan');
-                },
-                child: Text(
-                  'Lihat lainnya',
-                  style: poppins.copyWith(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 13,
-                      color: outline),
+                  'Belum ada menu favorit',
+                  style: poppins.copyWith(fontSize: 17),
                 ),
               ),
+            );
+          }
+        }),
+        Padding(
+          padding: const EdgeInsets.only(right: 21),
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        child: const FavoriteMenu(),
+                        type: PageTransitionType.fade));
+                debugPrint('Lihat lainnya tertekan');
+              },
+              child: Text(
+                'Lihat lainnya',
+                style: poppins.copyWith(
+                    fontWeight: FontWeight.w400, fontSize: 13, color: outline),
+              ),
             ),
-          )
-        ],
-      ),
+          ),
+        )
+      ],
     );
   }
 
@@ -651,212 +613,3 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-Widget favMenuMakers(context, id) {
-  final menuProvider = Provider.of<MenuDataProvider>(context, listen: false);
-  return FutureBuilder(
-      future: menuProvider.getMenuById(id),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
-              child: CircularProgressIndicator(
-            color: primary4,
-            strokeWidth: 6,
-          ));
-        } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        } else {
-          Map foodData = snapshot.data!;
-          return GestureDetector(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  PageTransition(
-                      child: PopUpMenuDetail(data: foodData),
-                      type: PageTransitionType.fade));
-            },
-            child: Container(
-              margin: const EdgeInsets.only(bottom: 13, left: 16, right: 16),
-              decoration: BoxDecoration(
-                  color: primary2,
-                  borderRadius: BorderRadius.circular(22),
-                  boxShadow: const [
-                    BoxShadow(color: Colors.black12, blurRadius: 6)
-                  ]),
-              child: Column(
-                children: [
-                  Stack(
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width - 32,
-                        height: 120,
-                        child: ClipRRect(
-                          borderRadius: const BorderRadius.vertical(
-                              top: Radius.circular(16)),
-                          child: Image.network(foodData['image']),
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ),
-          );
-        }
-      });
-
-  // Padding(
-  //     padding: const EdgeInsets.only(right: 5, left: 5, top: 5),
-  //     child: Container(
-  //         width: 352,
-  //         decoration: homePageMenuBuilder,
-  //         child: Column(
-  //           children: [
-  //             Stack(
-  //               children: [
-  //                 Image.asset(
-  //                     'assets/images/home/homePage/favorit/favmenu.png'),
-  //                 Positioned(
-  //                     left: 15,
-  //                     bottom: 9,
-  //                     child: Text(
-  //                       '15 Min',
-  //                       style: poppins.copyWith(fontSize: 16, color: primary2),
-  //                     )),
-  //                 Positioned(
-  //                   right: 25,
-  //                   bottom: 13,
-  //                   child: GestureDetector(
-  //                     onTap: () {},
-  //                     child: Image.asset(
-  //                       'assets/images/icons/fav.png',
-  //                       width: 20,
-  //                       color: primary3,
-  //                     ),
-  //                   ),
-  //                 )
-  //               ],
-  //             ),
-  //             // const SizedBox(height: 10),
-  //             Padding(
-  //               padding: const EdgeInsets.only(left: 15, right: 15, top: 9),
-  //               child: Column(
-  //                 children: [
-  //                   Row(
-  //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                     children: [
-  //                       Row(
-  //                         children: [
-  //                           Text('Mie Lamian Pedas',
-  //                               style: poppins.copyWith(
-  //                                   fontWeight: FontWeight.w500, fontSize: 16)),
-  //                           const SizedBox(width: 10),
-  //                           Container(
-  //                             width: 37,
-  //                             height: 18,
-  //                             decoration: BoxDecoration(
-  //                                 color: yellow,
-  //                                 borderRadius: BorderRadius.circular(12)),
-  //                             child: Row(
-  //                               mainAxisAlignment:
-  //                                   MainAxisAlignment.spaceEvenly,
-  //                               crossAxisAlignment: CrossAxisAlignment.center,
-  //                               children: [
-  //                                 Image.asset(
-  //                                   'assets/images/icons/star.png',
-  //                                   width: 9,
-  //                                   color: Colors.white,
-  //                                 ),
-  //                                 Text('4.5',
-  //                                     style: poppins.copyWith(
-  //                                         fontWeight: FontWeight.w400,
-  //                                         fontSize: 10,
-  //                                         color: primary2)),
-  //                               ],
-  //                             ),
-  //                           ),
-  //                         ],
-  //                       ),
-  //                       Text('Rp 25.000',
-  //                           style: poppins.copyWith(
-  //                               fontWeight: FontWeight.w500, fontSize: 16))
-  //                     ],
-  //                   ),
-  //                   SizedBox(
-  //                     height: 48,
-  //                     width: double.infinity,
-  //                     child: Column(
-  //                       crossAxisAlignment: CrossAxisAlignment.start,
-  //                       children: [
-  //                         Text('Mie Lamian yang lembut dengan kuah \nsup pedas',
-  //                             style: poppins.copyWith(
-  //                                 fontWeight: FontWeight.w400,
-  //                                 fontSize: 10,
-  //                                 color: outline)),
-  //                       ],
-  //                     ),
-  //                   ),
-  //                   // const SizedBox(height: 9),
-  //                   Row(
-  //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                     children: [
-  //                       Row(
-  //                         children: [
-  //                           GestureDetector(
-  //                             onTap: () {
-  //                               debugPrint('decrement tertekan');
-  //                             },
-  //                             child: Image.asset(
-  //                               'assets/images/icons/decrement.png',
-  //                               width: 24,
-  //                             ),
-  //                           ),
-  //                           const SizedBox(width: 16),
-  //                           Text(
-  //                             '1',
-  //                             style: poppins.copyWith(
-  //                                 fontWeight: FontWeight.w500, fontSize: 16),
-  //                           ),
-  //                           const SizedBox(width: 16),
-  //                           GestureDetector(
-  //                             onTap: () {
-  //                               debugPrint('increment tertekan');
-  //                             },
-  //                             child: Image.asset(
-  //                               'assets/images/icons/increment.png',
-  //                               width: 24,
-  //                             ),
-  //                           ),
-  //                         ],
-  //                       ),
-  //                       GestureDetector(
-  //                         onTap: () {
-  //                           debugPrint('add tertekan');
-  //                         },
-  //                         child: Container(
-  //                           decoration: BoxDecoration(
-  //                             color: primary4,
-  //                             borderRadius: BorderRadius.circular(37),
-  //                           ),
-  //                           child: Center(
-  //                             child: Padding(
-  //                               padding: const EdgeInsets.symmetric(
-  //                                   vertical: 4, horizontal: 16),
-  //                               child: Text(
-  //                                 '+ Add',
-  //                                 style: poppins.copyWith(
-  //                                     fontWeight: FontWeight.w500,
-  //                                     fontSize: 16,
-  //                                     color: primary2),
-  //                               ),
-  //                             ),
-  //                           ),
-  //                         ),
-  //                       ),
-  //                     ],
-  //                   ),
-  //                 ],
-  //               ),
-  //             ),
-  //           ],
-  //         )));
-}

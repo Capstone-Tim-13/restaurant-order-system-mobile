@@ -57,10 +57,19 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return isLoading
-        ? Center(
-            child: CircularProgressIndicator(
-            color: primary4,
-            strokeWidth: 6,
+        ? Expanded(
+            child: Container(
+            color: primary3,
+            child: Center(
+              child: SizedBox(
+                  width: 50,
+                  height: 50,
+                  child: CircularProgressIndicator(
+                    color: primary4,
+                    // value: progressController.value,
+                    strokeWidth: 10,
+                  )),
+            ),
           ))
         : Scaffold(
             // extendBody: true,

@@ -202,65 +202,69 @@ class _SearchPageState extends State<SearchPage> {
   Widget section2() {
     final menuProvider = Provider.of<MenuDataProvider>(context, listen: false);
     return Expanded(
-      child: FutureBuilder<dynamic>(
-        future: menuProvider.getMenuByName(foodSearchController.text),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+        child: FutureBuilder<dynamic>(
+      future: menuProvider.getMenuByName(foodSearchController.text),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
               child: CircularProgressIndicator(
-                color: primary4,
-                strokeWidth: 6,
-              ),
-            );
-          } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else if (snapshot.data == null || snapshot.data.isEmpty) {
-            return Padding(
-              padding: const EdgeInsets.only(left: 20.0, top: 30),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: 110,
-                    height: 110,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage(
-                            'assets/images/home/homePage/kosong.png'),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+            color: primary4,
+            strokeWidth: 6,
+          ));
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          return Container(
+            margin: const EdgeInsets.only(top: 27),
+            child: ListView.builder(
+              shrinkWrap: true,
+              padding: EdgeInsets.zero,
+              itemCount: 1,
+              itemBuilder: (context, index) {
+                if (snapshot.data == null || snapshot.data.isEmpty) {
+                  return Column(
                     children: [
-                      Text('Waah, menu gak ketemu',
-                          style: poppins.copyWith(
-                              fontSize: 16, color: Colors.black)),
-                      const SizedBox(height: 5),
-                      RichText(
-                        text: const TextSpan(
-                          style: TextStyle(fontSize: 14, color: Colors.grey),
-                          children: [
-                            TextSpan(text: 'Sepertinya menu yang kamu\n'),
-                            TextSpan(text: 'cari gak ada, coba cari yang\n'),
-                            TextSpan(text: 'lain yuk!'),
-                          ],
-                        ),
-                      )
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Image.asset(
+                            'assets/images/home/homePage/kosong.png',
+                            width: 110,
+                          ),
+                          const SizedBox(width: 10),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Waah, menu gak ketemu',
+                                  style: poppins.copyWith(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500)),
+                              const SizedBox(height: 5),
+                              Text(
+                                'Sepertinya menu yang kamu\ncari gak ada, coba cari yang\nlain yuk!',
+                                style: poppins,
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 30),
+                      SizedBox(
+                          width: MediaQuery.of(context).size.width - 60,
+                          child: const Divider())
                     ],
-                  ),
-                ],
-              ),
-            );
-          } else {
-            return showMenuByCat(context, snapshot.data);
-          }
-        },
-      ),
-    );
+                  );
+                } else {
+                  // Jika tidak kosong, return widget yang menampilkan hasil pencarian
+                  return showMenuByCat(context, snapshot.data);
+                }
+              },
+            ),
+          );
+        }
+      },
+    ));
   }
 
   Widget showFilterPage() {
