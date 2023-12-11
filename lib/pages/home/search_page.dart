@@ -202,44 +202,65 @@ class _SearchPageState extends State<SearchPage> {
   Widget section2() {
     final menuProvider = Provider.of<MenuDataProvider>(context, listen: false);
     return Expanded(
-        child: FutureBuilder<dynamic>(
-      future: menuProvider.getMenuByName(foodSearchController.text),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
+      child: FutureBuilder<dynamic>(
+        future: menuProvider.getMenuByName(foodSearchController.text),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
               child: CircularProgressIndicator(
-            color: primary4,
-            strokeWidth: 6,
-          ));
-        } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        } else {
-          return Container(
-            margin: const EdgeInsets.only(top: 27),
-            child: ListView.builder(
-              shrinkWrap: true,
-              padding: EdgeInsets.zero,
-              itemCount: 1,
-              itemBuilder: (context, index) {
-                if (snapshot.data == null || snapshot.data.isEmpty) {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 30),
-                    child: Text(
-                      'Tidak ada hasil untuk "${foodSearchController.text}"',
-                      style: poppins.copyWith(fontSize: 17),
-                      textAlign: TextAlign.center,
+                color: primary4,
+                strokeWidth: 6,
+              ),
+            );
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else if (snapshot.data == null || snapshot.data.isEmpty) {
+            return Padding(
+              padding: const EdgeInsets.only(left: 20.0, top: 30),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 110,
+                    height: 110,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(
+                            'assets/images/home/homePage/kosong.png'),
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  );
-                } else {
-                  // Jika tidak kosong, return widget yang menampilkan hasil pencarian
-                  return showMenuByCat(context, snapshot.data);
-                }
-              },
-            ),
-          );
-        }
-      },
-    ));
+                  ),
+                  const SizedBox(width: 10),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Waah, menu gak ketemu',
+                          style: poppins.copyWith(
+                              fontSize: 16, color: Colors.black)),
+                      const SizedBox(height: 5),
+                      RichText(
+                        text: const TextSpan(
+                          style: TextStyle(fontSize: 14, color: Colors.grey),
+                          children: [
+                            TextSpan(text: 'Sepertinya menu yang kamu\n'),
+                            TextSpan(text: 'cari gak ada, coba cari yang\n'),
+                            TextSpan(text: 'lain yuk!'),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            );
+          } else {
+            return showMenuByCat(context, snapshot.data);
+          }
+        },
+      ),
+    );
   }
 
   Widget showFilterPage() {
