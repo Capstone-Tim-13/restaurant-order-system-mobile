@@ -1,5 +1,4 @@
 import 'package:capstone_restaurant/logic/login/register_logic.dart';
-import 'package:capstone_restaurant/pages/login/login_page.dart';
 import 'package:capstone_restaurant/pages/login/privacy_policy_page.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/gestures.dart';
@@ -16,6 +15,8 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController nameInput = TextEditingController();
   final TextEditingController emailInput = TextEditingController();
+  final TextEditingController phoneInput = TextEditingController();
+  final TextEditingController dobInput = TextEditingController();
   final TextEditingController passwordInput = TextEditingController();
   final TextEditingController retypePasswordInput = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -163,24 +164,24 @@ class _RegisterPageState extends State<RegisterPage> {
                 ],
               ),
             ),
-            const SizedBox(height: 24),
-            SizedBox(
-              child: Column(
-                children: [
-                  Text(
-                    'Atau',
-                    style: poppins.copyWith(fontSize: 16),
-                  ),
-                  const SizedBox(height: 24),
-                  loginWithSocial('assets/images/login/facebook.png',
-                      'Login dengan Facebook', facebookBlue),
-                  const SizedBox(height: 16),
-                  loginWithSocial('assets/images/login/google.png',
-                      'Login dengan Google', googleBlue),
-                  const SizedBox(height: 67),
-                ],
-              ),
-            )
+            // const SizedBox(height: 24),
+            // SizedBox(
+            //   child: Column(
+            //     children: [
+            //       Text(
+            //         'Atau',
+            //         style: poppins.copyWith(fontSize: 16),
+            //       ),
+            //       const SizedBox(height: 24),
+            //       loginWithSocial('assets/images/login/facebook.png',
+            //           'Login dengan Facebook', facebookBlue),
+            //       const SizedBox(height: 16),
+            //       loginWithSocial('assets/images/login/google.png',
+            //           'Login dengan Google', googleBlue),
+            //       const SizedBox(height: 67),
+            //     ],
+            //   ),
+            // )
           ],
         ),
       ),
@@ -220,6 +221,30 @@ class _RegisterPageState extends State<RegisterPage> {
               } else {
                 return 'Email tidak valid';
               }
+            },
+          ),
+          const SizedBox(height: 16),
+          Text('No HP', style: poppins.copyWith(fontSize: 16, color: outline)),
+          TextFormField(
+            controller: phoneInput,
+            style: poppins.copyWith(fontSize: 16),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'No HP harus terisi';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 16),
+          Text('DoB', style: poppins.copyWith(fontSize: 16, color: outline)),
+          TextFormField(
+            controller: phoneInput,
+            style: poppins.copyWith(fontSize: 16),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Dob harus terisi';
+              }
+              return null;
             },
           ),
           const SizedBox(height: 16),

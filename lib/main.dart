@@ -1,4 +1,4 @@
-import 'package:capstone_restaurant/logic/data_api_handler.dart';
+import 'package:capstone_restaurant/logic/provider_handler.dart';
 import 'package:capstone_restaurant/pages/home/favorite_page.dart';
 import 'package:capstone_restaurant/pages/home/home.dart';
 import 'package:capstone_restaurant/pages/home/notification_page.dart';
@@ -19,6 +19,7 @@ void main() {
     ChangeNotifierProvider(create: (_) => OrderDataProvider()),
     ChangeNotifierProvider(create: (_) => PaymentDataProvider()),
     ChangeNotifierProvider(create: (_) => FavoritesMenuHandler()),
+    ChangeNotifierProvider(create: (_) => CartHandler()),
   ], child: const MyApp()));
 }
 

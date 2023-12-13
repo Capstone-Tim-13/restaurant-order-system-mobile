@@ -1,6 +1,6 @@
 // rachel
 
-import 'package:capstone_restaurant/logic/data_api_handler.dart';
+import 'package:capstone_restaurant/logic/provider_handler.dart';
 import 'package:capstone_restaurant/pages/help/help_page.dart';
 import 'package:capstone_restaurant/pages/home/home_page.dart';
 import 'package:capstone_restaurant/pages/order/order_page.dart';
@@ -56,31 +56,30 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return isLoading
-        ? Expanded(
-            child: Container(
+    return Scaffold(
+      body: isLoading?Container(
             color: primary3,
             child: Center(
               child: SizedBox(
-                  width: 50,
-                  height: 50,
-                  child: CircularProgressIndicator(
-                    color: primary4,
-                    // value: progressController.value,
-                    strokeWidth: 10,
-                  )),
+                width: 50,
+                height: 50,
+                child: CircularProgressIndicator(
+                  color: primary4,
+                  strokeWidth: 10,
+                ),
+              ),
             ),
-          ))
-        : Scaffold(
-            // extendBody: true,
-            body: <Widget>[
-              HomePage(changePageIndex: changePageIndex),
-              const OrderPage(),
-              const HelpPage(route: true),
-              const ProfilePage()
-            ][currentPageIndex],
-            bottomNavigationBar: currentPageIndex == 2 ? null : botNav(),
-          );
+          ):Scaffold(
+          // extendBody: true,
+          body: <Widget>[
+            HomePage(changePageIndex: changePageIndex),
+            const OrderPage(),
+            const HelpPage(route: true),
+            const ProfilePage()
+          ][currentPageIndex],
+          bottomNavigationBar: currentPageIndex == 2 ? null : botNav(),
+        )
+    );
   }
 
   Widget botNav() {

@@ -1,6 +1,4 @@
-import 'package:capstone_restaurant/logic/data_api_handler.dart';
-import 'package:capstone_restaurant/pages/order/cancel_order_page.dart';
-import 'package:capstone_restaurant/pages/order/history_order_page.dart';
+import 'package:capstone_restaurant/logic/provider_handler.dart';
 import 'package:capstone_restaurant/pages/order/ongoing_order_page.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/material.dart';
@@ -67,48 +65,75 @@ class _OrderPageState extends State<OrderPage> {
             Tab(
               text: 'Riwayat',
             ),
-            Tab(
-              text: 'Dibatalkan',
-            ),
+            // Tab(
+            //   text: 'Dibatalkan',
+            // ),
           ]),
     );
   }
 
   Widget orderPage() {
-    final orderProvider =
-        Provider.of<OrderDataProvider>(context, listen: false);
     return DefaultTabController(
         initialIndex: 0,
-        length: 3,
+        length: 2,
         child: Scaffold(
           appBar: showAppBar(),
           body: Padding(
             padding: const EdgeInsets.only(top: 24),
             child: TabBarView(children: [
-              SizedBox(
-                  child: ListView.builder(
-                padding: EdgeInsets.zero,
-                itemCount: orderProvider.ongoing.length,
-                itemBuilder: ((BuildContext context, index) {
-                  return ongoingOrder(context, orderProvider.ongoing[index]);
-                }),
-              )),
-              SizedBox(
-                  child: ListView.builder(
-                padding: EdgeInsets.zero,
-                itemCount: orderProvider.history.length,
-                itemBuilder: ((BuildContext context, index) {
-                  return historyOrder(context, orderProvider.history[index]);
-                }),
-              )),
-              SizedBox(
-                  child: ListView.builder(
-                padding: EdgeInsets.zero,
-                itemCount: orderProvider.cancel.length,
-                itemBuilder: ((BuildContext context, index) {
-                  return cancelOrder(context, orderProvider.cancel[index]);
-                }),
-              )),
+              Consumer<OrderDataProvider>(
+                  builder: (context, orderProvider, child) {
+                if (orderProvider.ongoing.isNotEmpty) {
+                  return SizedBox(
+                      child: ListView.builder(
+                    padding: EdgeInsets.zero,
+                    itemCount: orderProvider.ongoing.length,
+                    itemBuilder: ((BuildContext context, index) {
+                      // return Text(orderProvider.ongoing[index].toString());
+
+                      return ongoingOrder(
+                          context, orderProvider.ongoing[index]);
+                    }),
+                  ));
+                } else {
+                  return Center(
+                    child: Text(
+                      'Belum ada pesanan',
+                      style: poppins.copyWith(fontSize: 17),
+                    ),
+                  );
+                }
+              }),
+              Consumer<OrderDataProvider>(
+                  builder: (context, orderProvider, child) {
+                if (orderProvider.history.isNotEmpty) {
+                  return SizedBox(
+                      child: ListView.builder(
+                    padding: EdgeInsets.zero,
+                    itemCount: orderProvider.history.length,
+                    itemBuilder: ((BuildContext context, index) {
+                      return Text(orderProvider.history[index].toString());
+                      // return historyOrder(context, orderProvider.history[index]);
+                    }),
+                  ));
+                } else {
+                  return Center(
+                    child: Text(
+                      'Belum ada riwayat pesanan',
+                      style: poppins.copyWith(fontSize: 17),
+                    ),
+                  );
+                }
+              }),
+
+              // SizedBox(
+              //     child: ListView.builder(
+              //   padding: EdgeInsets.zero,
+              //   itemCount: orderProvider.cancel.length,
+              //   itemBuilder: ((BuildContext context, index) {
+              //     return cancelOrder(context, orderProvider.cancel[index]);
+              //   }),
+              // )),
             ]),
           ),
         ));

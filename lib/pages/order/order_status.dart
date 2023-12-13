@@ -25,7 +25,7 @@ class _OrderStatusState extends State<OrderStatus> {
     for (int i = 0; i < orderStatusEvents.length; i++) {
       await Future.delayed(const Duration(seconds: 2));
       setState(() {
-        orderStatusEvents[i][2] = !orderStatusEvents[i][2];
+        orderStatusEvents[i][2] = true;
       });
 
       // if (i == orderStatusEvents.length - 1) {

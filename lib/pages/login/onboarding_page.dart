@@ -62,7 +62,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       debugPrint('intro tertekan');
                     },
                     child: Container(
-                      margin: const EdgeInsets.only(bottom: 115),
                       decoration: BoxDecoration(
                         color: primary2,
                         borderRadius: BorderRadius.circular(37),
@@ -80,6 +79,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       ),
                     ),
                   ),
+                  const Spacer()
                 ],
               ),
             ),

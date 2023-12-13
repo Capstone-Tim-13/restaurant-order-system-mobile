@@ -1,13 +1,14 @@
 //  ali
 
 import 'package:capstone_restaurant/data.dart';
-import 'package:capstone_restaurant/logic/data_api_handler.dart';
+import 'package:capstone_restaurant/logic/provider_handler.dart';
 import 'package:capstone_restaurant/logic/home/menu_by_cat_logic.dart';
 import 'package:capstone_restaurant/pages/home/favorite_page.dart';
 import 'package:capstone_restaurant/pages/home/popup_menu_page.dart';
 import 'package:capstone_restaurant/pages/home/search_page.dart';
 import 'package:capstone_restaurant/pages/order/cart_page.dart';
 import 'package:capstone_restaurant/style.dart';
+import 'package:capstone_restaurant/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
@@ -270,9 +271,10 @@ class _MenubyCatState extends State<MenubyCat> {
 }
 
 Widget showMenuByCat(context, data) {
+  final cartHandler = Provider.of<CartHandler>(context, listen: false);
   String title = data['name'];
   String desc = data['description'];
-  String price = data['price'].toString();
+  int price = data['price'];
   String img = data['image'];
   return GestureDetector(
     onTap: () {
@@ -349,7 +351,7 @@ Widget showMenuByCat(context, data) {
               Row(
                 children: [
                   Text(
-                    'Rp $price',
+                    formatCurrency(price),
                     style: poppins.copyWith(
                         fontWeight: FontWeight.w700,
                         fontSize: 16,
@@ -358,7 +360,9 @@ Widget showMenuByCat(context, data) {
                   const Spacer(),
                   GestureDetector(
                     onTap: () {
-                      debugPrint('add ${data[0]} tertekan');
+                      cartHandler.addToCart(
+                          context, data['id'], 1, data['price']);
+                      showAddToCartNotification(context, title);
                     },
                     child: Container(
                       decoration: BoxDecoration(

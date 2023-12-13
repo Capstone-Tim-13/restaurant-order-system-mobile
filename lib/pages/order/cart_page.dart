@@ -2,18 +2,17 @@ import 'package:capstone_restaurant/data.dart';
 import 'package:capstone_restaurant/pages/home/menu_by_cat_page.dart';
 import 'package:capstone_restaurant/pages/order/confirmation_page.dart';
 import 'package:capstone_restaurant/pages/profile/address_page.dart';
-import 'package:capstone_restaurant/pages/order/payment_page.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:capstone_restaurant/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
-import '../../logic/data_api_handler.dart';
+import '../../logic/provider_handler.dart';
 
 class DetailOrder {
-  List notes = List.filled(5, '');
-  List items = List.filled(5, 1);
+  List notes = List.filled(userCart.length, '');
+  List items = List.filled(userCart.length, 1);
 }
 
 class CartPage extends StatefulWidget {
@@ -26,23 +25,24 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   bool checkBoxVal = false;
   TextEditingController inputUserNote = TextEditingController();
-  List paymentData = [];
+  // List paymentData = [];
   List notes = List.filled(5, '');
   var detailOrder = DetailOrder();
+  int totalPrice = 0;
 
-  void updatePaymentData(List newPaymentData) {
-    setState(() {
-      paymentData = newPaymentData;
-    });
-  }
+  // void updatePaymentData(List newPaymentData) {
+  //   setState(() {
+  //     paymentData = newPaymentData;
+  //   });
+  // }
 
-  @override
-  void initState() {
-    super.initState();
-    setState(() {
-      paymentData = defaultPaymentMethod;
-    });
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   setState(() {
+  //     paymentData = defaultPaymentMethod;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -163,172 +163,145 @@ class _CartPageState extends State<CartPage> {
                   borderRadius: BorderRadius.circular(28),
                 ),
                 width: MediaQuery.of(context).size.width,
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 20, right: 20, top: 33, bottom: 7),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Pesanan mu',
-                                style: poppins.copyWith(
-                                    fontWeight: FontWeight.w500, fontSize: 15),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.pushReplacement(
-                                      context,
-                                      PageTransition(
-                                          child: const MenubyCat(
-                                              selectedCat: 'Appetizer'),
-                                          type: PageTransitionType.fade));
-                                },
-                                child: Text(
-                                  '+Tambah pesanan',
-                                  style: poppins.copyWith(
-                                      color: primary1, fontSize: 13),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                        child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: 5,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: ((BuildContext context, index) {
-                        return listOrderMaker(index);
-                      }),
-                    )),
-                    Padding(
+                child: Consumer<CartHandler>(
+                    builder: (context, cartHandler, child) {
+                  return Column(
+                    children: [
+                      Padding(
                         padding: const EdgeInsets.only(
-                            left: 20, right: 20, bottom: 11, top: 14),
+                            left: 20, right: 20, top: 33, bottom: 7),
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Subtotal',
+                                  'Pesanan mu',
                                   style: poppins.copyWith(
                                       fontWeight: FontWeight.w500,
-                                      fontSize: 16),
+                                      fontSize: 15),
                                 ),
-                                Text(
-                                  'Rp xxxxx',
-                                  style: poppins.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Ongkir',
-                                  style: poppins.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16),
-                                ),
-                                Text(
-                                  '   0',
-                                  style: poppins.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Biaya lain-lain',
-                                  style: poppins.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16),
-                                ),
-                                Text(
-                                  '   0',
-                                  style: poppins.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushReplacement(
+                                        context,
+                                        PageTransition(
+                                            child: const MenubyCat(
+                                                selectedCat: 'Appetizer'),
+                                            type: PageTransitionType.fade));
+                                  },
+                                  child: Text(
+                                    '+Tambah pesanan',
+                                    style: poppins.copyWith(
+                                        color: primary1, fontSize: 13),
+                                  ),
                                 ),
                               ],
                             ),
                           ],
-                        )),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 13),
-                      child: Divider(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 20, right: 20, bottom: 39, top: 14),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Total Pembayaran',
-                            style: poppins.copyWith(
-                                fontWeight: FontWeight.w500, fontSize: 16),
-                          ),
-                          Text(
-                            'Rp xxxxx',
-                            style: poppins.copyWith(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16,
-                                color: primary4),
-                          ),
-                        ],
+                        ),
                       ),
-                    )
-                  ],
-                ),
+                      SizedBox(
+                          child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: cartHandler.cart.length,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: ((BuildContext context, index) {
+                          return listOrderMaker(cartHandler.cart[index], index);
+                        }),
+                      )),
+                      Padding(
+                          padding: const EdgeInsets.only(
+                              left: 20, right: 20, bottom: 11, top: 14),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Subtotal',
+                                    style: poppins.copyWith(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16),
+                                  ),
+                                  Text(
+                                    cartHandler.getFormattedPrice(),
+                                    style: poppins.copyWith(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Ongkir',
+                                    style: poppins.copyWith(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16),
+                                  ),
+                                  Text(
+                                    '   0',
+                                    style: poppins.copyWith(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Biaya lain-lain',
+                                    style: poppins.copyWith(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16),
+                                  ),
+                                  Text(
+                                    '   0',
+                                    style: poppins.copyWith(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          )),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 13),
+                        child: Divider(),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 20, right: 20, bottom: 39, top: 14),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Total Pembayaran',
+                              style: poppins.copyWith(
+                                  fontWeight: FontWeight.w500, fontSize: 16),
+                            ),
+                            Text(
+                              cartHandler.getFormattedPrice(),
+                              style: poppins.copyWith(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16,
+                                  color: primary4),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  );
+                }),
               ),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.only(top: 24, left: 16, right: 16),
-            //   child: GestureDetector(
-            //     onTap: () async {
-            //       final paymentProvider =
-            //           Provider.of<PaymentDataProvider>(context, listen: false);
-            //       String paymentURL = await paymentProvider.openPaymentPage();
-            //       await urlLauncher(paymentURL);
-            //     },
-            //     child: Container(
-            //       decoration: homePageMenuBuilder.copyWith(
-            //           borderRadius: BorderRadius.circular(14)),
-            //       child: Padding(
-            //         padding: const EdgeInsets.all(23),
-            //         child: Row(
-            //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //           children: [
-            //             Text(
-            //               'Metode Pembayaran',
-            //               style: poppins.copyWith(
-            //                   fontWeight: FontWeight.w500,
-            //                   fontSize: 16,
-            //                   color: Colors.black),
-            //             ),
-            //             Image.asset(
-            //               'assets/images/icons/arrow.png',
-            //               width: 20,
-            //             ),
-            //           ],
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
             Padding(
               padding: const EdgeInsets.only(top: 24, left: 23),
               child: Align(
@@ -382,15 +355,31 @@ class _CartPageState extends State<CartPage> {
               padding: const EdgeInsets.symmetric(vertical: 31, horizontal: 31),
               child: GestureDetector(
                 onTap: () async {
+                  final cartProvider =
+                      Provider.of<CartHandler>(context, listen: false);
+                  final orderProvider =
+                      Provider.of<OrderDataProvider>(context, listen: false);
                   final paymentProvider =
                       Provider.of<PaymentDataProvider>(context, listen: false);
-                  String paymentURL = await paymentProvider.openPaymentPage();
+                  final 
+                  List data =
+                      await orderProvider.placeOrder(cartProvider.cart);
+                  bool success = data[0];
+                  int id = data[1];
+                  if (success) {
+                    String paymentURL = await paymentProvider.openPaymentPage(id);
+                    await urlLauncher(paymentURL);
+                    await Future.delayed(const Duration(seconds: 1));
+                    toNextPage();
+                    print('yessss');
+                  } else {
+                    print('noooooo');
+                  }
 
-                  await urlLauncher(paymentURL);
-                  await Future.delayed(const Duration(seconds: 2));
-                  toNextPage();
+                  
 
                   debugPrint('Pesan Sekarang tertekan');
+                  print(cartProvider.cart);
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -429,145 +418,156 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
-  Widget listOrderMaker(index) {
-    return Column(
-      children: [
-        Padding(
-          padding:
-              const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 18),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Text(
-                    'Kentang Goreng',
-                    style: poppins.copyWith(
-                        fontWeight: FontWeight.w400, fontSize: 16),
-                  ),
-                  const SizedBox(width: 12),
-                  GestureDetector(
-                    onTap: () async {
-                      final result =
-                          await addNote(context, detailOrder.notes[index]);
-                      if (result != null) {
-                        setState(() {
-                          detailOrder.notes[index] = result;
-                        });
-                      }
-                    },
-                    child: Row(
-                      children: [
-                        Image.asset(
-                          'assets/images/icons/edit.png',
-                          width: 8,
-                          color: primary1,
-                        ),
-                        const SizedBox(width: 4),
-                        Text(
-                          'Catatan',
-                          style: poppins.copyWith(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 11,
-                              color: primary1),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const Spacer(),
-                  Text(
-                    'Rp 34.000',
-                    style: poppins.copyWith(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                        color: primary4),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 6),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  SizedBox(
-                    width: 217,
-                    height: 45,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        RichText(
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            text: TextSpan(
-                              children: <TextSpan>[
-                                TextSpan(
-                                    text: 'Catatan: ',
-                                    style: poppins.copyWith(
-                                        fontWeight: FontWeight.w500,
-                                        color: outline)),
-                                TextSpan(
-                                    text: detailOrder.notes[index],
-                                    style: poppins.copyWith(color: outline)),
+  Widget listOrderMaker(data, index) {
+    final menuProvider = Provider.of<MenuDataProvider>(context, listen: false);
+    final cartProvider = Provider.of<CartHandler>(context, listen: false);
+    return FutureBuilder(
+        future: menuProvider.getMenuById(data['menu_id']),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            print('waiting');
+            return Center(
+                child: CircularProgressIndicator(
+              color: primary4,
+              strokeWidth: 6,
+            ));
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            Map foodData = snapshot.data!;
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 20, right: 20, top: 20, bottom: 18),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            foodData['name'],
+                            style: poppins.copyWith(
+                                fontWeight: FontWeight.w400, fontSize: 16),
+                          ),
+                          const SizedBox(width: 12),
+                          GestureDetector(
+                            onTap: () {
+                              addNote(context, index);
+                            },
+                            child: Row(
+                              children: [
+                                Image.asset(
+                                  'assets/images/icons/edit.png',
+                                  width: 8,
+                                  color: primary1,
+                                ),
+                                const SizedBox(width: 4),
+                                Text(
+                                  'Catatan',
+                                  style: poppins.copyWith(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 11,
+                                      color: primary1),
+                                ),
                               ],
-                            ))
-                      ],
-                    ),
+                            ),
+                          ),
+                          const Spacer(),
+                          Text(
+                            formatCurrency(foodData['price']),
+                            style: poppins.copyWith(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                                color: primary4),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 6),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          SizedBox(
+                            width: 217,
+                            height: 45,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                RichText(
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    text: TextSpan(
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                            text: 'Catatan: ',
+                                            style: poppins.copyWith(
+                                                fontWeight: FontWeight.w500,
+                                                color: outline)),
+                                        TextSpan(
+                                            text: cartProvider.notes[index],
+                                            style: poppins.copyWith(
+                                                color: outline)),
+                                      ],
+                                    ))
+                              ],
+                            ),
+                          ),
+                          const Spacer(),
+                          SizedBox(
+                            width: 80,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    cartProvider.decrementItem(foodData['id'],
+                                        index, foodData['price']);
+                                    debugPrint('decrement tertekan');
+                                  },
+                                  child: Image.asset(
+                                    'assets/images/icons/decrement.png',
+                                    width: 24,
+                                  ),
+                                ),
+                                // const SizedBox(width: 16),
+                                Text(
+                                  data['quantity'].toString(),
+                                  style: poppins.copyWith(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16),
+                                ),
+                                // const SizedBox(width: 16),
+                                GestureDetector(
+                                  onTap: () {
+                                    cartProvider.incrementItem(foodData['id'],
+                                        index, foodData['price']);
+                                    debugPrint('increment tertekan');
+                                  },
+                                  child: Image.asset(
+                                    'assets/images/icons/increment.png',
+                                    width: 24,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
                   ),
-                  const Spacer(),
-                  SizedBox(
-                    width: 80,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            if (detailOrder.items[index] > 1) {
-                              setState(() {
-                                detailOrder.items[index] -= 1;
-                              });
-                            }
-
-                            debugPrint('decrement tertekan');
-                          },
-                          child: Image.asset(
-                            'assets/images/icons/decrement.png',
-                            width: 24,
-                          ),
-                        ),
-                        // const SizedBox(width: 16),
-                        Text(
-                          detailOrder.items[index].toString(),
-                          style: poppins.copyWith(
-                              fontWeight: FontWeight.w500, fontSize: 16),
-                        ),
-                        // const SizedBox(width: 16),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              detailOrder.items[index] += 1;
-                            });
-                            debugPrint('increment tertekan');
-                          },
-                          child: Image.asset(
-                            'assets/images/icons/increment.png',
-                            width: 24,
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ],
-          ),
-        ),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 13),
-          child: Divider(),
-        )
-      ],
-    );
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 13),
+                  child: Divider(),
+                )
+              ],
+            );
+          }
+        });
   }
 
-  Future addNote(context, notes) {
+  Future addNote(context, index) {
+    final cartProvider = Provider.of<CartHandler>(context, listen: false);
+
     return showModalBottomSheet(
         context: context,
         backgroundColor: primary2,
@@ -613,7 +613,7 @@ class _CartPageState extends State<CartPage> {
                         controller: inputUserNote,
                         style: poppins,
                         onTap: () {
-                          inputUserNote.text = notes;
+                          inputUserNote.text = cartProvider.notes[index] ?? '';
                         },
                         decoration: userInputNote.copyWith(
                           hintText: 'Contoh: Banyakin porsinya bang, hehe',
@@ -645,7 +645,8 @@ class _CartPageState extends State<CartPage> {
                         padding: const EdgeInsets.only(top: 111),
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.pop(context, inputUserNote.text);
+                            cartProvider.addNote(index, inputUserNote.text);
+                            Navigator.pop(context);
                             debugPrint('Simapn tertekan');
                           },
                           child: Container(

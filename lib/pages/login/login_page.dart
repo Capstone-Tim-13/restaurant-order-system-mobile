@@ -1,5 +1,4 @@
 import 'package:capstone_restaurant/logic/login/login_logic.dart';
-import 'package:capstone_restaurant/pages/login/forget_password_page.dart';
 import 'package:capstone_restaurant/pages/login/register_page.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/material.dart';
@@ -88,21 +87,21 @@ class _LoginPageState extends State<LoginPage> {
                                   fontSize: 16, color: outline)),
                           userPasswordInput(passwordInput),
                           const SizedBox(height: 8),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  PageTransition(
-                                      child: const ResetPassword(),
-                                      type: PageTransitionType.fade));
-                              debugPrint('lupa password tertekan');
-                            },
-                            child: Text(
-                              'Lupa Password?',
-                              style: poppins.copyWith(
-                                  fontSize: 12, color: outline),
-                            ),
-                          )
+                          // GestureDetector(
+                          //   onTap: () {
+                          //     Navigator.push(
+                          //         context,
+                          //         PageTransition(
+                          //             child: const ResetPassword(),
+                          //             type: PageTransitionType.fade));
+                          //     debugPrint('lupa password tertekan');
+                          //   },
+                          //   child: Text(
+                          //     'Lupa Password?',
+                          //     style: poppins.copyWith(
+                          //         fontSize: 12, color: outline),
+                          //   ),
+                          // )
                         ],
                       ),
                     ),
@@ -156,24 +155,24 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 24),
-                  SizedBox(
-                    child: Column(
-                      children: [
-                        Text(
-                          'Atau',
-                          style: poppins.copyWith(fontSize: 16),
-                        ),
-                        const SizedBox(height: 24),
-                        loginWithSocial('assets/images/login/facebook.png',
-                            'Login dengan Facebook', facebookBlue),
-                        const SizedBox(height: 16),
-                        loginWithSocial('assets/images/login/google.png',
-                            'Login dengan Google', googleBlue),
-                        const SizedBox(height: 67),
-                      ],
-                    ),
-                  )
+                  // const SizedBox(height: 24),
+                  // SizedBox(
+                  //   child: Column(
+                  //     children: [
+                  //       Text(
+                  //         'Atau',
+                  //         style: poppins.copyWith(fontSize: 16),
+                  //       ),
+                  //       const SizedBox(height: 24),
+                  //       loginWithSocial('assets/images/login/facebook.png',
+                  //           'Login dengan Facebook', facebookBlue),
+                  //       const SizedBox(height: 16),
+                  //       loginWithSocial('assets/images/login/google.png',
+                  //           'Login dengan Google', googleBlue),
+                  //       const SizedBox(height: 67),
+                  //     ],
+                  //   ),
+                  // )
                 ],
               ),
             )

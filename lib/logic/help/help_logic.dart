@@ -1,5 +1,5 @@
 import 'package:capstone_restaurant/data.dart';
-import 'package:capstone_restaurant/logic/data_api_handler.dart';
+import 'package:capstone_restaurant/logic/provider_handler.dart';
 import 'package:capstone_restaurant/pages/home/popup_menu_page.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:dio/dio.dart';
@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
-const String apiKey = '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';
+const String apiKey = '';
 bool isLoading = false;
 
 Future<void> submit(context, question) async {
@@ -268,7 +268,7 @@ Widget recommendationMenuMaker(context, data) {
   );
 }
 
-// if (index == 0) {
+
 //                   return Padding(
 //                     padding: const EdgeInsets.symmetric(horizontal: 15),
 //                     child: Column(

@@ -1,10 +1,10 @@
-import 'package:capstone_restaurant/logic/data_api_handler.dart';
+import 'dart:math';
+
+import 'package:capstone_restaurant/logic/provider_handler.dart';
 import 'package:capstone_restaurant/logic/home/menu_by_cat_logic.dart';
-import 'package:capstone_restaurant/pages/home/favorite_page.dart';
-import 'package:capstone_restaurant/pages/order/cart_page.dart';
 import 'package:capstone_restaurant/style.dart';
+import 'package:capstone_restaurant/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 class PopUpMenuDetail extends StatefulWidget {
@@ -78,12 +78,15 @@ class _PopUpMenuDetailState extends State<PopUpMenuDetail> {
   }
 
   Widget menubyCatPage() {
+    final cartHandler = Provider.of<CartHandler>(context, listen: false);
     String title = widget.data['name'];
     String desc = widget.data['description'];
-    String price = widget.data['price'].toString();
+    int price = widget.data['price'];
     String img = widget.data['image'];
-    int averageRating = 4;
-    String totalRating = '5122';
+    int randomAvgRating = Random().nextInt(5) + 1;
+    int averageRating = randomAvgRating;
+    int randomRating = Random().nextInt(100) + 1;
+    String totalRating = randomRating.toString();
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -182,7 +185,7 @@ class _PopUpMenuDetailState extends State<PopUpMenuDetail> {
                                   ),
                                   const Spacer(),
                                   Text(
-                                    'Rp $price',
+                                    formatCurrency(price),
                                     style: poppins.copyWith(
                                         fontWeight: FontWeight.w700,
                                         color: primary4,
@@ -243,12 +246,12 @@ class _PopUpMenuDetailState extends State<PopUpMenuDetail> {
                                 padding: const EdgeInsets.only(bottom: 50),
                                 child: GestureDetector(
                                   onTap: () {
-                                    Navigator.push(
+                                    cartHandler.addToCart(
                                         context,
-                                        PageTransition(
-                                            child: const CartPage(),
-                                            type: PageTransitionType.fade));
-                                    debugPrint('tambah pesanan tertekan');
+                                        widget.data['id'],
+                                        1,
+                                        widget.data['price']);
+                                    showAddToCartNotification(context, title);
                                   },
                                   child: Container(
                                     decoration: BoxDecoration(

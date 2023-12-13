@@ -88,7 +88,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             ],
                           ),
                           const SizedBox(height: 7),
-                          Text('Balbalee@gmail.com',
+                          Text(localUserData[1],
                               style: poppins.copyWith(
                                   color: outline, fontSize: 14)),
                           Text('+62666666666',

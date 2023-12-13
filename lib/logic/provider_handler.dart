@@ -1,6 +1,7 @@
 import 'package:capstone_restaurant/data.dart';
 import 'package:capstone_restaurant/logic/help/help_logic.dart';
 import 'package:capstone_restaurant/logic/url_collection.dart';
+import 'package:capstone_restaurant/widgets.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -11,20 +12,20 @@ class UserDataProvider with ChangeNotifier {
   List<String> get getData => userData;
 
   Future<bool> userLogin(data) async {
-    dynamic result;
+    // dynamic result;
     try {
       final response = await dio
           .post(userLoginURL, data: {"email": data[0], "password": data[1]});
       if (response.statusCode == 201) {
-        result = response.data;
+        // result = response.data;
         userData.addAll([
-          result['results']['username'],
-          result['results']['email'],
-          result['results']['access_token']
+          response.data['results']['username'],
+          response.data['results']['email'],
+          response.data['results']['access_token']
         ]);
         localUserData = userData;
         notifyListeners();
-        return result['response']['success'];
+        return response.data['response']['success'];
       } else {
         throw Exception('Failed to load data from API');
       }
@@ -182,56 +183,70 @@ class ChatbotHandler with ChangeNotifier {
 }
 
 class OrderDataProvider with ChangeNotifier {
-  List<Map<String, dynamic>> ongoingData = [];
-  List<Map<String, dynamic>> historyData = [];
-  List<Map<String, dynamic>> cancelData = [];
+  List<dynamic> ongoingData = [];
+  List<dynamic> historyData = [];
+  List<dynamic> get ongoing => ongoingData;
+  List<dynamic> get history => historyData;
 
-  List<Map<String, dynamic>> get ongoing => ongoingData;
-  List<Map<String, dynamic>> get history => historyData;
-  List<Map<String, dynamic>> get cancel => cancelData;
+  Future<List> placeOrder(data) async {
+    try {
+      final response = await dio.post(placeOrderURL,
+          data: {"order_items": data},
+          options: Options(
+              headers: {'Authorization': 'Bearer ${localUserData[2]}'}));
+      if (response.statusCode == 201) {
+        notifyListeners();
+        return [
+          response.data['response']['success'],
+          response.data['results']['id']
+        ];
+      } else {
+        throw Exception('Failed to load data from API');
+      }
+    } catch (error) {
+      return [false];
+      // throw Exception('Failed to load data from API: $error');
+    }
+  }
 
   Future<void> fetchData() async {
+    ongoingData.clear();
+    historyData.clear();
     try {
-      final response = await dio.get(
-          'https://656ede2c6529ec1c6236d00a.mockapi.io/api/pesanan/pesanan');
+      final response = await dio.get(historyOrderURL,
+          options: Options(
+              headers: {'Authorization': 'Bearer ${localUserData[2]}'}));
 
       if (response.statusCode == 200) {
-        final List<dynamic> dataList = response.data;
-        final List<Map<String, dynamic>> data =
-            List<Map<String, dynamic>>.from(dataList);
-
-        ongoingData.clear();
-        historyData.clear();
-        cancelData.clear();
-
-        // Group data by statusPesanan
-        for (final Map<String, dynamic> item in data) {
-          final String orderStatus = item['orderStatus'];
-
-          if (orderStatus == 'berlangsung') {
-            ongoingData.add(item);
-          } else if (orderStatus == 'riwayat') {
-            historyData.add(item);
-          } else if (orderStatus == 'dibatalkan') {
-            cancelData.add(item);
+        List<dynamic> acceptedOrdersData = response.data['results'];
+        for (int i = 0; i < acceptedOrdersData.length; i++) {
+          if (acceptedOrdersData[i]['status'] == 'Accepted') {
+            ongoingData.add(acceptedOrdersData[i]);
           }
         }
+
+        List<dynamic> arrivedOrdersData = response.data['results'];
+        for (int i = 0; i < arrivedOrdersData.length; i++) {
+          if (arrivedOrdersData[i]['status'] == 'Arrived') {
+            ongoingData.add(arrivedOrdersData[i]);
+          }
+        }
+
+        notifyListeners();
       } else {
-        // Handle other status codes if needed
         throw Exception('Failed to load data');
       }
     } catch (error) {
-      // Handle Dio errors
       throw Exception('Failed to load data: $error');
     }
   }
 }
 
 class PaymentDataProvider with ChangeNotifier {
-  Future<String> openPaymentPage() async {
+  Future<String> openPaymentPage(id) async {
     try {
       final response = await dio.post(selectPaymentURL,
-          data: {"order_ID": 2},
+          data: {"order_ID": id},
           options: Options(
               headers: {'Authorization': 'Bearer ${localUserData[2]}'}));
       if (response.statusCode == 201) {
@@ -261,3 +276,70 @@ class FavoritesMenuHandler with ChangeNotifier {
   }
 }
 
+class CartHandler with ChangeNotifier {
+  List<Map<String, dynamic>> userCart = [];
+  List<String?> userNotes = [];
+  int totalPrice = 0;
+
+  List<Map<String, dynamic>> get cart => userCart;
+  List<String?> get notes => userNotes;
+  int get price => totalPrice;
+
+  void addToCart(context, int id, int qty, num price) {
+    int formatPrice = price.toInt();
+    bool isItemExist = false;
+
+    for (int i = 0; i < userCart.length; i++) {
+      if (userCart[i]["menu_id"] == id) {
+        userCart[i]["quantity"] += qty;
+        isItemExist = true;
+        totalPrice += formatPrice * qty;
+        break;
+      }
+    }
+
+    if (!isItemExist) {
+      userCart.add({"menu_id": id, "quantity": qty});
+      userNotes.add(null);
+      totalPrice += formatPrice * qty;
+    }
+    print(cart);
+
+    notifyListeners();
+  }
+
+  void incrementItem(int id, int index, num price) {
+    int formatPrice = price.toInt();
+    for (int i = 0; i < userCart.length; i++) {
+      if (userCart[i]["menu_id"] == id) {
+        userCart[i]["quantity"] += 1;
+        totalPrice += formatPrice;
+        notifyListeners();
+        break;
+      }
+    }
+  }
+
+  void decrementItem(int id, int index, num price) {
+    int formatPrice = price.toInt();
+    for (int i = 0; i < userCart.length; i++) {
+      if (userCart[i]["menu_id"] == id) {
+        if (userCart[i]["quantity"] > 1) {
+          userCart[i]["quantity"] -= 1;
+          totalPrice -= formatPrice;
+          notifyListeners();
+        }
+        break;
+      }
+    }
+  }
+
+  void addNote(int index, String note) {
+    userNotes[index] = note;
+    notifyListeners();
+  }
+
+  String getFormattedPrice() {
+    return formatCurrency(totalPrice);
+  }
+}

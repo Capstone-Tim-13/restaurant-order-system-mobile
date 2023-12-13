@@ -8,3 +8,6 @@ String menuFindNameURL = 'https://altaresto.my.id/user/menu/name';
 String menuFindCategoryURL = 'https://altaresto.my.id/user/menu/category';
 
 String selectPaymentURL = 'https://altaresto.my.id/user/create/payment';
+
+String placeOrderURL = 'https://altaresto.my.id/user/create/order';
+String historyOrderURL = 'https://altaresto.my.id/user/order';

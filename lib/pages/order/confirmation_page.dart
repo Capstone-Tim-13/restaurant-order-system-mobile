@@ -31,7 +31,8 @@ class _ConfirmationPageState extends State<ConfirmationPage>
     return Scaffold(
       backgroundColor: tertiary2,
       appBar: showAppBar(),
-      body: isLoading ? confirmPage() : confirmPage2(),
+      body: confirmPage(),
+      // body: isLoading ? confirmPage() : confirmPage2(),
     );
   }
 
@@ -64,44 +65,105 @@ class _ConfirmationPageState extends State<ConfirmationPage>
     return Column(
       children: [
         Image.asset(
-          'assets/images/order/confirm.png',
+          isLoading
+              ? 'assets/images/order/confirm.png'
+              : 'assets/images/order/confirm2.png',
         ),
-        Expanded(
-          child: Container(
-            padding: const EdgeInsets.only(top: 9),
-            width: MediaQuery.of(context).size.width,
-            decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(56))),
-            child: Column(
-              children: [
-                Image.asset('assets/images/login/handle.png'),
-                const SizedBox(height: 35),
-                Text(
-                  'Sebentar ya, pesanan mu masih\ndalam konfirmasi',
-                  textAlign: TextAlign.center,
-                  style: poppins.copyWith(
-                      fontSize: 18, fontWeight: FontWeight.w500),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 38),
-                  child: Expanded(
-                      child: Align(
-                    alignment: Alignment.topCenter,
-                    child: SizedBox(
+        Visibility(
+          visible: isLoading,
+          child: Expanded(
+            child: Container(
+              padding: const EdgeInsets.only(top: 9),
+              width: MediaQuery.of(context).size.width,
+              decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius:
+                      BorderRadius.vertical(top: Radius.circular(56))),
+              child: Column(
+                children: [
+                  Image.asset('assets/images/login/handle.png'),
+                  const Spacer(),
+                  Text(
+                    'Sebentar ya, pesanan mu masih\ndalam konfirmasi',
+                    textAlign: TextAlign.center,
+                    style: poppins.copyWith(
+                        fontSize: 18, fontWeight: FontWeight.w500),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 38, bottom: 57),
+                    child: Align(
+                      alignment: Alignment.topCenter,
+                      child: SizedBox(
                         width: 144,
                         height: 144,
                         child: CircularProgressIndicator(
                           color: primary4,
-                          // value: progressController.value,
                           strokeWidth: 12,
-                        )),
-                  )),
-                )
-              ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-        )
+        ),
+        Visibility(
+          visible: !isLoading,
+          child: Expanded(
+            child: Container(
+              padding: const EdgeInsets.only(top: 9),
+              width: MediaQuery.of(context).size.width,
+              decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius:
+                      BorderRadius.vertical(top: Radius.circular(56))),
+              child: Column(
+                children: [
+                  Image.asset('assets/images/login/handle.png'),
+                  const Spacer(),
+                  Text(
+                    'Pesananmu sudah di \nkonfirmasi yeay!\nYuk, lihat status pesananmu',
+                    textAlign: TextAlign.center,
+                    style: poppins.copyWith(
+                        fontSize: 18, fontWeight: FontWeight.w500),
+                  ),
+                  const Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 57),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: const OrderStatus(),
+                                type: PageTransitionType.fade));
+                        debugPrint('Lihat Status Pesanan ');
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: primary4,
+                          borderRadius: BorderRadius.circular(37),
+                        ),
+                        width: 335,
+                        height: 48,
+                        child: Center(
+                          child: Text(
+                            'Lihat Status Pesanan',
+                            style: poppins.copyWith(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16,
+                                color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }
