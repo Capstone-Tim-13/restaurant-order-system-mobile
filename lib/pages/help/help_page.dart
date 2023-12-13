@@ -57,7 +57,7 @@ class _HelpPageState extends State<HelpPage> {
   }
 
   Widget helpPage() {
-    final chatbot = Provider.of<ChatbotHandler>(context, listen: false);
+    final chatbot = Provider.of<ChatbotProvider>(context, listen: false);
     return Column(
       children: [
         Container(

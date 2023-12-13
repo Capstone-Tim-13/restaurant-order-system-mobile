@@ -58,7 +58,7 @@ class _PopUpMenuDetailState extends State<PopUpMenuDetail> {
             },
             child: Image.asset('assets/images/icons/closeW.png'),
           ),
-          Consumer<FavoritesMenuHandler>(
+          Consumer<FavoritesMenuProvider>(
               builder: (context, favProvider, child) {
             return GestureDetector(
               onTap: () {

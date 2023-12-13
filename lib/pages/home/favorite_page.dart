@@ -48,7 +48,7 @@ class _FavoriteMenuState extends State<FavoriteMenu> {
   }
 
   Widget favoritePage() {
-    return Consumer<FavoritesMenuHandler>(
+    return Consumer<FavoritesMenuProvider>(
         builder: (context, favProvider, child) {
       if (favProvider.data.isNotEmpty) {
         return Column(

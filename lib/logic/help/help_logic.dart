@@ -12,7 +12,7 @@ bool isLoading = false;
 
 Future<void> submit(context, question) async {
   final menuProvider = Provider.of<MenuDataProvider>(context, listen: false);
-  final chatbot = Provider.of<ChatbotHandler>(context, listen: false);
+  final chatbot = Provider.of<ChatbotProvider>(context, listen: false);
   chatbot.updateLoadingState();
 
   try {
@@ -51,7 +51,7 @@ Future<void> submit(context, question) async {
 }
 
 Widget qnaWindow(context) {
-  final chatbot = Provider.of<ChatbotHandler>(context);
+  final chatbot = Provider.of<ChatbotProvider>(context);
   final data = chatbot.history;
 
   return Expanded(

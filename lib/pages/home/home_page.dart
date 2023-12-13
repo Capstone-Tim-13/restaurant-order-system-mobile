@@ -14,8 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
-int currentCarouselIndex = 0;
-
 class HomePage extends StatefulWidget {
   final Function changePageIndex;
   const HomePage({super.key, required this.changePageIndex});
@@ -36,7 +34,7 @@ class _HomePageState extends State<HomePage> {
               showBanner(context, setState),
               showCat(context),
               showRecommendation(context),
-              showFavMenu(context),
+              showFavMenu(context, setState),
               showPromo(context),
               showBestSeller(context)
             ],
@@ -66,7 +64,6 @@ Widget showGreeting(context, Function changePageIndex) {
           children: [
             Text(
               'Hello ${localUserData[0]}!',
-              // 'Hello !',
               style: poppins.copyWith(fontSize: 15),
             ),
             Text(
@@ -94,10 +91,11 @@ Widget showGreeting(context, Function changePageIndex) {
 }
 
 Widget showBanner(context, setState) {
+  final bannerProvider = Provider.of<BannerProvider>(context, listen: false);
+
   return Padding(
     padding: const EdgeInsets.only(bottom: 24),
     child: SizedBox(
-        // color: Colors.red,
         width: MediaQuery.of(context).size.width - 8,
         child: Stack(
           children: [
@@ -121,26 +119,27 @@ Widget showBanner(context, setState) {
                     autoPlayCurve: Curves.easeOutQuint,
                     autoPlayAnimationDuration: const Duration(seconds: 2),
                     onPageChanged: (index, reason) {
-                      setState(() {
-                        currentCarouselIndex = index;
-                      });
+                      bannerProvider.changeIndex(index);
                     },
                   )),
             ),
-            Positioned(
-                right: 26,
-                bottom: 34,
-                child: DotsIndicator(
-                  dotsCount: bannerImg.length,
-                  position: currentCarouselIndex,
-                  decorator: DotsDecorator(
-                      color: outline,
-                      size: const Size(6, 6),
-                      activeColor: primary2,
-                      activeSize: const Size(26, 5),
-                      activeShape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12))),
-                )),
+            Consumer<BannerProvider>(
+                builder: (context, bannerProvider, child) {
+              return Positioned(
+                  right: 26,
+                  bottom: 34,
+                  child: DotsIndicator(
+                    dotsCount: bannerImg.length,
+                    position: bannerProvider.index,
+                    decorator: DotsDecorator(
+                        color: outline,
+                        size: const Size(6, 6),
+                        activeColor: primary2,
+                        activeSize: const Size(26, 5),
+                        activeShape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12))),
+                  ));
+            })
           ],
         )),
   );
@@ -171,7 +170,7 @@ Widget showCat(context) {
                   child: GridView.builder(
                     shrinkWrap: true,
                     padding: EdgeInsets.zero,
-                    itemCount: catData.length, // Set the number of items
+                    itemCount: catData.length,
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       childAspectRatio: (105 / 109),
@@ -269,7 +268,7 @@ Widget showRecommendation(context) {
   );
 }
 
-Widget showFavMenu(context) {
+Widget showFavMenu(context, setState) {
   return Column(
     children: [
       Padding(
@@ -282,7 +281,7 @@ Widget showFavMenu(context) {
           ),
         ),
       ),
-      Consumer<FavoritesMenuHandler>(
+      Consumer<FavoritesMenuProvider>(
         builder: (context, favProvider, child) {
           return favProvider.data.isNotEmpty
               ? SizedBox(
@@ -431,7 +430,7 @@ Widget recommendationMenuMaker(context, data) {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Consumer<FavoritesMenuHandler>(
+                  Consumer<FavoritesMenuProvider>(
                       builder: (context, favProvider, child) {
                     return GestureDetector(
                       onTap: () {

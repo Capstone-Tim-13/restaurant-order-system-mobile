@@ -317,7 +317,7 @@ Widget showMenuByCat(context, data) {
                     ),
                   ),
                   const Spacer(),
-                  Consumer<FavoritesMenuHandler>(
+                  Consumer<FavoritesMenuProvider>(
                       builder: (context, favProvider, child) {
                     return GestureDetector(
                       onTap: () {

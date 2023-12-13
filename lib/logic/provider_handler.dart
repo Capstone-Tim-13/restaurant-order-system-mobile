@@ -142,7 +142,7 @@ class MenuDataProvider with ChangeNotifier {
   }
 }
 
-class ChatbotHandler with ChangeNotifier {
+class ChatbotProvider with ChangeNotifier {
   String gptOutput = '';
   String userInput = '';
   List<dynamic> chatHistory = [];
@@ -262,7 +262,7 @@ class PaymentDataProvider with ChangeNotifier {
   }
 }
 
-class FavoritesMenuHandler with ChangeNotifier {
+class FavoritesMenuProvider with ChangeNotifier {
   List userFavMenu = [];
   List get data => userFavMenu;
 
@@ -303,7 +303,6 @@ class CartHandler with ChangeNotifier {
       userNotes.add(null);
       totalPrice += formatPrice * qty;
     }
-    print(cart);
 
     notifyListeners();
   }
@@ -341,5 +340,15 @@ class CartHandler with ChangeNotifier {
 
   String getFormattedPrice() {
     return formatCurrency(totalPrice);
+  }
+}
+
+class BannerProvider with ChangeNotifier {
+  int currentIndex = 0;
+  int get index => currentIndex;
+
+  void changeIndex(int newIndex) {
+    currentIndex = newIndex;
+    notifyListeners();
   }
 }

@@ -99,7 +99,7 @@ Widget favMenuMaker(context, id) {
       future: menuProvider.getMenuById(id),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          print('waiting');
+          // print('waiting');
           return Center(
               child: CircularProgressIndicator(
             color: primary4,
@@ -153,7 +153,7 @@ Widget favMenuMaker(context, id) {
                         Positioned(
                           right: 25,
                           bottom: 13,
-                          child: Consumer<FavoritesMenuHandler>(
+                          child: Consumer<FavoritesMenuProvider>(
                               builder: (context, favProvider, child) {
                             return GestureDetector(
                               onTap: () {
@@ -323,7 +323,7 @@ Widget favMenuMaker(context, id) {
 
 void showAddToCartNotification(BuildContext context, String title) {
   ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
+    SnackBar(      
       content: Row(
         children: [
           const Icon(
@@ -332,19 +332,21 @@ void showAddToCartNotification(BuildContext context, String title) {
             color: Colors.white,
           ),
           const SizedBox(width: 10),
-          Text(
-            '$title added to cart.',
-            style: const TextStyle(fontSize: 14),
+          Expanded(
+            child: SizedBox(
+              child: Text(
+                '$title added to cart.',
+                style: const TextStyle(fontSize: 16),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
           ),
         ],
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: primary4,
       behavior: SnackBarBehavior.floating,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(20),
-          bottom: Radius.circular(20),
-        ),
+        borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
     ),
   );

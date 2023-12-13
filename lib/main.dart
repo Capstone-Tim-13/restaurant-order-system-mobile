@@ -15,11 +15,12 @@ void main() {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => UserDataProvider()),
     ChangeNotifierProvider(create: (_) => MenuDataProvider()),
-    ChangeNotifierProvider(create: (_) => ChatbotHandler()),
+    ChangeNotifierProvider(create: (_) => ChatbotProvider()),
     ChangeNotifierProvider(create: (_) => OrderDataProvider()),
     ChangeNotifierProvider(create: (_) => PaymentDataProvider()),
-    ChangeNotifierProvider(create: (_) => FavoritesMenuHandler()),
+    ChangeNotifierProvider(create: (_) => FavoritesMenuProvider()),
     ChangeNotifierProvider(create: (_) => CartHandler()),
+    ChangeNotifierProvider(create: (_) => BannerProvider()),
   ], child: const MyApp()));
 }
 
