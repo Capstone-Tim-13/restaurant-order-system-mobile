@@ -100,6 +100,7 @@ class _SearchPageState extends State<SearchPage> {
                                   foodSearchController.clear;
                                   setState(() {
                                     showSearchedFood = !showSearchedFood;
+                                    foodSearchController.clear();
                                   });
                                 },
                                 icon: const Icon(Icons.clear_rounded))
