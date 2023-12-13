@@ -1,6 +1,8 @@
 //  ali
 
 import 'package:capstone_restaurant/data.dart';
+import 'package:capstone_restaurant/logic/home/logic_menu_category.dart';
+import 'package:capstone_restaurant/logic/provider_handler.dart';
 import 'package:capstone_restaurant/pages/home/favorite_page.dart';
 import 'package:capstone_restaurant/pages/home/popup_menu_page.dart';
 import 'package:capstone_restaurant/pages/home/search_page.dart';
@@ -8,6 +10,7 @@ import 'package:capstone_restaurant/pages/order/cart_page.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 class MenubyCat extends StatefulWidget {
   final String selectedCat;
@@ -45,36 +48,61 @@ class _MenubyCatState extends State<MenubyCat> {
     }
   }
 
-  int getListLen() {
+  Future<int> getListLen() async {
+    UserDataProvider userDataProvider =
+        Provider.of<UserDataProvider>(context, listen: true);
+
+    final String token = userDataProvider.getData[2];
     switch (selectedCategory) {
       case 'Appetizer':
+        return (await MenuLogic.getMenuByCategory(1, token)).length;
         return menuData['Appetizer'].length;
       case 'Dessert':
+        return (await MenuLogic.getMenuByCategory(2, token)).length;
         return menuData['Dessert'].length;
       case 'Ala Carte':
+        return (await MenuLogic.getMenuByCategory(3, token)).length;
         return menuData['Ala Carte'].length;
       case 'Paket Hemat':
+        return (await MenuLogic.getMenuByCategory(4, token)).length;
         return menuData['Paket Hemat'].length;
       case 'Minum':
+        return (await MenuLogic.getMenuByCategory(5, token)).length;
         return menuData['Minum'].length;
       default:
+        return (await MenuLogic.getAllMenu(token)).length;
         return getAllData(menuData, 'length');
     }
   }
 
-  showMenu(index) {
+  Future<dynamic> showMenu(index) async {
+    UserDataProvider userDataProvider =
+        Provider.of<UserDataProvider>(context, listen: true);
+
+    final String token = userDataProvider.getData[2];
     switch (selectedCategory) {
       case 'Appetizer':
+        return itemBuilder(
+            (await MenuLogic.getMenuByCategory(1, token))[index]);
         return itemBuilder(menuData['Appetizer'][index]);
       case 'Dessert':
+        return itemBuilder(
+            (await MenuLogic.getMenuByCategory(2, token))[index]);
         return itemBuilder(menuData['Dessert'][index]);
       case 'Ala Carte':
+        return itemBuilder(
+            (await MenuLogic.getMenuByCategory(3, token))[index]);
         return itemBuilder(menuData['Ala Carte'][index]);
       case 'Paket Hemat':
+        return itemBuilder(
+            (await MenuLogic.getMenuByCategory(4, token))[index]);
         return itemBuilder(menuData['Paket Hemat'][index]);
       case 'Minum':
+        return itemBuilder(
+            (await MenuLogic.getMenuByCategory(5, token))[index]);
         return itemBuilder(menuData['Minum'][index]);
       default:
+        return itemBuilder((await MenuLogic.getAllMenu(token))[index]);
         return itemBuilder(getAllData(menuData, 'menu')[index]);
     }
   }
@@ -84,7 +112,17 @@ class _MenubyCatState extends State<MenubyCat> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: showAppBar(),
-      body: menubyCatPage(),
+      body: FutureBuilder(
+        future: menubyCatPage(),
+        builder: (BuildContext context, AsyncSnapshot<Widget> widget) {
+          if (!widget.hasData) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return widget.data!;
+        },
+      ),
     );
   }
 
@@ -138,7 +176,7 @@ class _MenubyCatState extends State<MenubyCat> {
     );
   }
 
-  Widget menubyCatPage() {
+  Future<Widget> menubyCatPage() async {
     return SingleChildScrollView(
       child: Stack(
         children: [
@@ -286,26 +324,39 @@ class _MenubyCatState extends State<MenubyCat> {
           ),
           // menu by category
           Container(
-              margin: const EdgeInsets.only(top: 520),
-              child: ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.zero,
-                itemCount: getListLen(),
-                itemBuilder: (context, index) {
-                  return showMenu(index);
-                },
-              ))
+            margin: const EdgeInsets.only(top: 520),
+            child: ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.zero,
+              itemCount: await getListLen(),
+              itemBuilder: (context, index) {
+                return FutureBuilder(
+                  future: showMenu(index),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else {
+                      return snapshot.data as Widget;
+                    }
+                  },
+                );
+              },
+            ),
+          )
         ],
       ),
     );
   }
 
-  Widget itemBuilder(data) {
-    String title = data[0];
-    String subtitle = data[1];
-    String price = data[2];
-    String img = data[3];
+  Widget itemBuilder(Menu data) {
+    String title = data.name;
+    String subtitle = data.description;
+    String price = data.price.toString();
+    String img = data.image;
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -315,7 +366,7 @@ class _MenubyCatState extends State<MenubyCat> {
                   data: data,
                 ),
                 type: PageTransitionType.fade));
-        debugPrint('menu ${data[0]} tertekan');
+        debugPrint('menu ${data.name} tertekan');
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 41, left: 21, right: 35),
@@ -323,7 +374,7 @@ class _MenubyCatState extends State<MenubyCat> {
           children: [
             SizedBox(
               width: 110,
-              child: Image.asset(img),
+              child: Image.network(img),
             ),
             const SizedBox(width: 18),
             Expanded(
@@ -369,7 +420,7 @@ class _MenubyCatState extends State<MenubyCat> {
                     const Spacer(),
                     GestureDetector(
                       onTap: () {
-                        debugPrint('add ${data[0]} tertekan');
+                        debugPrint('add ${data.name} tertekan');
                       },
                       child: Container(
                         decoration: BoxDecoration(
