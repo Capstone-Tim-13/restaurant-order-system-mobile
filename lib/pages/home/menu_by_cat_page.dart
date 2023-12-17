@@ -235,7 +235,6 @@ class _MenubyCatState extends State<MenubyCat> {
               ],
             ),
           ),
-
           Container(
             margin: const EdgeInsets.only(top: 520),
             child: FutureBuilder<dynamic>(
@@ -251,15 +250,20 @@ class _MenubyCatState extends State<MenubyCat> {
                 } else if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
                 } else {
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    padding: EdgeInsets.zero,
-                    itemCount: snapshot.data.length ?? 0,
-                    itemBuilder: (context, index) {
-                      return showMenuByCat(context, snapshot.data[index]);
-                    },
-                  );
+                  if (snapshot.data.isEmpty) {
+                    return noDataPopUp(
+                        context, 'Belum ada menu $selectedCategory', 100);
+                  } else {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: EdgeInsets.zero,
+                      itemCount: snapshot.data.length ?? 0,
+                      itemBuilder: (context, index) {
+                        return showMenuByCat(context, snapshot.data[index]);
+                      },
+                    );
+                  }
                 }
               },
             ),
@@ -361,8 +365,8 @@ Widget showMenuByCat(context, data) {
                   GestureDetector(
                     onTap: () {
                       cartHandler.addToCart(
-                          context, data['id'], 1, data['price']);
-                      showAddToCartNotification(context, title);
+                           data['id'], 1, data['price']);
+                      showSnackBar(context, '$title added to cart.');
                     },
                     child: Container(
                       decoration: BoxDecoration(

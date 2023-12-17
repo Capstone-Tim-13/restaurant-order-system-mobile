@@ -8,6 +8,7 @@ import 'package:capstone_restaurant/pages/login/login_page.dart';
 import 'package:capstone_restaurant/pages/login/onboarding_page.dart';
 import 'package:capstone_restaurant/pages/profile/profile_page.dart';
 import 'package:capstone_restaurant/pages/splash.dart';
+import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,6 +22,8 @@ void main() {
     ChangeNotifierProvider(create: (_) => FavoritesMenuProvider()),
     ChangeNotifierProvider(create: (_) => CartHandler()),
     ChangeNotifierProvider(create: (_) => BannerProvider()),
+    ChangeNotifierProvider(create: (_) => AddressProvider()),
+    ChangeNotifierProvider(create: (_) => OrderStatusDemoProvider()),
   ], child: const MyApp()));
 }
 
@@ -35,12 +38,12 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: primary4),
         useMaterial3: true,
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => Splash(),
+        '/': (context) => const Splash(),
         '/onboarding': (context) => const OnboardingPage(),
         '/login': (context) => const LoginPage(),
         '/register': (context) => const RegisterPage(),

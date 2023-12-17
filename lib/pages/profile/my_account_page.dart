@@ -15,6 +15,23 @@ class _AccPageState extends State<AccPage> {
   TextEditingController email = TextEditingController();
   TextEditingController noHP = TextEditingController();
   TextEditingController dob = TextEditingController();
+  final FocusNode namaFocusNode = FocusNode();
+  final FocusNode emailFocusNode = FocusNode();
+  final FocusNode noHPFocusNode = FocusNode();
+  final FocusNode dobFocusNode = FocusNode();
+
+  @override
+  void dispose() {
+    nama.dispose();
+    email.dispose();
+    noHP.dispose();
+    dob.dispose();
+    namaFocusNode.dispose();
+    emailFocusNode.dispose();
+    noHPFocusNode.dispose();
+    dobFocusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,11 +97,18 @@ class _AccPageState extends State<AccPage> {
             padding: const EdgeInsets.only(left: 25, right: 40),
             child: Column(
               children: [
-                fieldMaker('Nama*', localUserData[0], nama,
+                fieldMaker(context, 'Nama*', localUserData[0], nama,
+                    focusNode: namaFocusNode,
+                    textInputAction: TextInputAction.next,
                     prefilled: localUserData[0]),
-                fieldMaker('Email*', localUserData[1], email, active: false),
-                fieldMaker('Nomor Hp*', '+62666666666', noHP),
-                fieldMaker('Tanggal lahir*', 'day/month/year', dob)
+                fieldMaker(context, 'Email*', localUserData[1], email,
+                    active: false),
+                fieldMaker(context, 'Nomor Hp*', '+62666666666', noHP,
+                    focusNode: noHPFocusNode,
+                    textInputAction: TextInputAction.next),
+                fieldMaker(context, 'Tanggal lahir*', 'day/month/year', dob,
+                    focusNode: dobFocusNode,
+                    textInputAction: TextInputAction.go)
               ],
             ),
           ),

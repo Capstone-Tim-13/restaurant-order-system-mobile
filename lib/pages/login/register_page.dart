@@ -15,10 +15,11 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController nameInput = TextEditingController();
   final TextEditingController emailInput = TextEditingController();
-  final TextEditingController phoneInput = TextEditingController();
-  final TextEditingController dobInput = TextEditingController();
   final TextEditingController passwordInput = TextEditingController();
   final TextEditingController retypePasswordInput = TextEditingController();
+  final FocusNode emailFocusNode = FocusNode();
+  final FocusNode passFocusNode = FocusNode();
+  final FocusNode pass2FocusNode = FocusNode();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool passwordVisible = true;
   bool retypePasswordVisible = true;
@@ -29,6 +30,9 @@ class _RegisterPageState extends State<RegisterPage> {
     emailInput.dispose();
     passwordInput.dispose();
     retypePasswordInput.dispose();
+    emailFocusNode.dispose();
+    passFocusNode.dispose();
+    pass2FocusNode.dispose();
     super.dispose();
   }
 
@@ -164,24 +168,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 ],
               ),
             ),
-            // const SizedBox(height: 24),
-            // SizedBox(
-            //   child: Column(
-            //     children: [
-            //       Text(
-            //         'Atau',
-            //         style: poppins.copyWith(fontSize: 16),
-            //       ),
-            //       const SizedBox(height: 24),
-            //       loginWithSocial('assets/images/login/facebook.png',
-            //           'Login dengan Facebook', facebookBlue),
-            //       const SizedBox(height: 16),
-            //       loginWithSocial('assets/images/login/google.png',
-            //           'Login dengan Google', googleBlue),
-            //       const SizedBox(height: 67),
-            //     ],
-            //   ),
-            // )
           ],
         ),
       ),
@@ -197,6 +183,10 @@ class _RegisterPageState extends State<RegisterPage> {
           Text('Nama', style: poppins.copyWith(fontSize: 16, color: outline)),
           TextFormField(
             controller: nameInput,
+            onEditingComplete: () {
+              FocusScope.of(context).requestFocus(emailFocusNode);
+            },
+            textInputAction: TextInputAction.next,
             style: poppins.copyWith(fontSize: 16),
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -209,6 +199,11 @@ class _RegisterPageState extends State<RegisterPage> {
           Text('Email', style: poppins.copyWith(fontSize: 16, color: outline)),
           TextFormField(
             controller: emailInput,
+            focusNode: emailFocusNode,
+            onEditingComplete: () {
+              FocusScope.of(context).requestFocus(passFocusNode);
+            },
+            textInputAction: TextInputAction.next,
             style: poppins.copyWith(fontSize: 16),
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -224,33 +219,14 @@ class _RegisterPageState extends State<RegisterPage> {
             },
           ),
           const SizedBox(height: 16),
-          Text('No HP', style: poppins.copyWith(fontSize: 16, color: outline)),
-          TextFormField(
-            controller: phoneInput,
-            style: poppins.copyWith(fontSize: 16),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'No HP harus terisi';
-              }
-              return null;
-            },
-          ),
-          const SizedBox(height: 16),
-          Text('DoB', style: poppins.copyWith(fontSize: 16, color: outline)),
-          TextFormField(
-            controller: phoneInput,
-            style: poppins.copyWith(fontSize: 16),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Dob harus terisi';
-              }
-              return null;
-            },
-          ),
-          const SizedBox(height: 16),
           Text('Password',
               style: poppins.copyWith(fontSize: 16, color: outline)),
           TextFormField(
+            focusNode: passFocusNode,
+            onEditingComplete: () {
+              FocusScope.of(context).requestFocus(pass2FocusNode);
+            },
+            textInputAction: TextInputAction.next,
             controller: passwordInput,
             obscureText: passwordVisible, // Perubahan di sini
             style: poppins.copyWith(fontSize: 16),
@@ -272,7 +248,13 @@ class _RegisterPageState extends State<RegisterPage> {
                 return 'Password harus terisi';
               }
               if (value.length < 8) {
-                return 'Password harus memiliki panjang minimal 8 karakter';
+                return 'Password harus mengandung panjang minimal 8 karakter';
+              }
+              RegExp regex =
+                  RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
+
+              if (!regex.hasMatch(value)) {
+                return 'Password harus mengandung:\n1 huruf besar\n1 huruf kecil\n1 digit angka';
               }
               return null;
             },
@@ -281,6 +263,14 @@ class _RegisterPageState extends State<RegisterPage> {
           Text('Konfirmasi Password',
               style: poppins.copyWith(fontSize: 16, color: outline)),
           TextFormField(
+            focusNode: pass2FocusNode,
+            onEditingComplete: () {
+              if (formKey.currentState?.validate() == true) {
+                passwordCheck(context, nameInput.text, emailInput.text,
+                    passwordInput.text, retypePasswordInput.text);
+              }
+            },
+            textInputAction: TextInputAction.send,
             controller: retypePasswordInput,
             obscureText: retypePasswordVisible, // Perubahan di sini
             style: poppins.copyWith(fontSize: 16),
@@ -303,7 +293,13 @@ class _RegisterPageState extends State<RegisterPage> {
                 return 'Password harus terisi';
               }
               if (value.length < 8) {
-                return 'Password harus memiliki panjang minimal 8 karakter';
+                return 'Password harus mengandung panjang minimal 8 karakter';
+              }
+              RegExp regex =
+                  RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
+
+              if (!regex.hasMatch(value)) {
+                return 'Password harus mengandung:\n1 huruf besar\n1 huruf kecil\n1 digit angka';
               }
               return null;
             },

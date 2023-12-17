@@ -1,4 +1,3 @@
-import 'package:capstone_restaurant/data.dart';
 import 'package:capstone_restaurant/pages/home/menu_by_cat_page.dart';
 import 'package:capstone_restaurant/pages/order/confirmation_page.dart';
 import 'package:capstone_restaurant/pages/profile/address_page.dart';
@@ -10,10 +9,10 @@ import 'package:provider/provider.dart';
 
 import '../../logic/provider_handler.dart';
 
-class DetailOrder {
-  List notes = List.filled(userCart.length, '');
-  List items = List.filled(userCart.length, 1);
-}
+// class DetailOrder {
+//   List notes = List.filled(userCart.length, '');
+//   List items = List.filled(userCart.length, 1);
+// }
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -25,24 +24,7 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   bool checkBoxVal = false;
   TextEditingController inputUserNote = TextEditingController();
-  // List paymentData = [];
-  List notes = List.filled(5, '');
-  var detailOrder = DetailOrder();
   int totalPrice = 0;
-
-  // void updatePaymentData(List newPaymentData) {
-  //   setState(() {
-  //     paymentData = newPaymentData;
-  //   });
-  // }
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   setState(() {
-  //     paymentData = defaultPaymentMethod;
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -82,62 +64,78 @@ class _CartPageState extends State<CartPage> {
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: 20, bottom: 32, left: 16, right: 16),
-              child: GestureDetector(
-                onTap: () async {
-                  final result = await Navigator.push(
-                      context,
-                      PageTransition(
-                          child: const AddressPage(isRebuild: true),
-                          type: PageTransitionType.fade));
-                  if (result != null) {
-                    setState(() {
-                      defaultAddress = result;
-                    });
-                  }
-                  debugPrint('alamat tertekan');
-                },
-                child: Container(
-                  decoration: homePageMenuBuilder.copyWith(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  width: MediaQuery.of(context).size.width,
-                  child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Image.asset(
-                            'assets/images/icons/home2.png',
-                            width: 17,
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  savedAddress[defaultAddress][0],
-                                  style: poppins.copyWith(fontSize: 15),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  savedAddress[defaultAddress][3],
-                                  maxLines: 4,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: poppins.copyWith(
-                                      fontSize: 13, color: outline),
-                                ),
-                              ],
+            Consumer<AddressProvider>(
+                builder: (context, addressprovider, child) {
+              return Padding(
+                padding: const EdgeInsets.only(
+                    top: 20, bottom: 32, left: 16, right: 16),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        PageTransition(
+                            child: const AddressPage(isRebuild: true),
+                            type: PageTransitionType.fade));
+
+                    debugPrint('alamat tertekan');
+                  },
+                  child: Container(
+                    decoration: homePageMenuBuilder.copyWith(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    width: MediaQuery.of(context).size.width,
+                    child: addressprovider.data.isEmpty
+                        ? SizedBox(
+                            height: 140,
+                            child: Center(
+                              child: Text(
+                                'Belum ada alamat tersimpan.',
+                                style: poppins,
+                              ),
                             ),
                           )
-                        ],
-                      )),
+                        : SizedBox(
+                            height: 140,
+                            child: Padding(
+                                padding: const EdgeInsets.all(16),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/icons/home2.png',
+                                      width: 17,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            addressprovider
+                                                .data[addressprovider.idx][3],
+                                            style:
+                                                poppins.copyWith(fontSize: 15),
+                                          ),
+                                          const SizedBox(height: 8),
+                                          Text(
+                                            addressprovider
+                                                .data[addressprovider.idx][0],
+                                            maxLines: 4,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: poppins.copyWith(
+                                                fontSize: 13, color: outline),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                )),
+                          ),
+                  ),
                 ),
-              ),
-            ),
+              );
+            }),
             const Divider(),
             Padding(
               padding: const EdgeInsets.only(top: 24),
@@ -361,22 +359,19 @@ class _CartPageState extends State<CartPage> {
                       Provider.of<OrderDataProvider>(context, listen: false);
                   final paymentProvider =
                       Provider.of<PaymentDataProvider>(context, listen: false);
-                  final 
-                  List data =
+                  final List data =
                       await orderProvider.placeOrder(cartProvider.cart);
                   bool success = data[0];
                   int id = data[1];
                   if (success) {
-                    String paymentURL = await paymentProvider.openPaymentPage(id);
+                    String paymentURL =
+                        await paymentProvider.openPaymentPage(id);
                     await urlLauncher(paymentURL);
                     await Future.delayed(const Duration(seconds: 1));
                     toNextPage();
-                    print('yessss');
                   } else {
                     print('noooooo');
                   }
-
-                  
 
                   debugPrint('Pesan Sekarang tertekan');
                   print(cartProvider.cart);
@@ -444,10 +439,14 @@ class _CartPageState extends State<CartPage> {
                     children: [
                       Row(
                         children: [
-                          Text(
-                            foodData['name'],
-                            style: poppins.copyWith(
-                                fontWeight: FontWeight.w400, fontSize: 16),
+                          ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: 160),
+                            child: Text(
+                              foodData['name'],
+                              style: poppins.copyWith(
+                                  fontWeight: FontWeight.w400, fontSize: 16),
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                           const SizedBox(width: 12),
                           GestureDetector(

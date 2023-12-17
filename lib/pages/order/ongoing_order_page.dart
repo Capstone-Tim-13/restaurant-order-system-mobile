@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 Widget ongoingOrder(context, data) {
   final menuProvider = Provider.of<MenuDataProvider>(context, listen: false);
   return FutureBuilder(
-      future: menuProvider.getMenuById(data['order_items'][0]['id']),
+      future: menuProvider.getMenuById(data['order_items'][0]['menuId']),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           // print('waiting');
@@ -110,7 +110,11 @@ Widget ongoingOrder(context, data) {
                           children: [
                             orderButtonMaker(
                                 context, 'Lacak status pesanan', primary2,
-                                color: primary4, route: const OrderStatus())
+                                color: primary4,
+                                route: OrderStatus(
+                                  dataFromAPI: true,
+                                  data: data,
+                                ))
                           ],
                         ),
                       ],

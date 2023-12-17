@@ -246,12 +246,10 @@ class _PopUpMenuDetailState extends State<PopUpMenuDetail> {
                                 padding: const EdgeInsets.only(bottom: 50),
                                 child: GestureDetector(
                                   onTap: () {
-                                    cartHandler.addToCart(
-                                        context,
-                                        widget.data['id'],
-                                        1,
+                                    cartHandler.addToCart(widget.data['id'], 1,
                                         widget.data['price']);
-                                    showAddToCartNotification(context, title);
+                                    showSnackBar(
+                                        context, '$title added to cart.');
                                   },
                                   child: Container(
                                     decoration: BoxDecoration(

@@ -1,43 +1,37 @@
 import 'package:capstone_restaurant/data.dart';
+import 'package:capstone_restaurant/logic/provider_handler.dart';
 import 'package:capstone_restaurant/pages/help/help_page.dart';
 import 'package:capstone_restaurant/pages/home/home.dart';
+import 'package:capstone_restaurant/widgets.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/material.dart';
 
 class OrderStatus extends StatefulWidget {
-  const OrderStatus({super.key});
+  final bool dataFromAPI;
+  final dynamic data;
+
+  const OrderStatus({super.key, required this.dataFromAPI, this.data});
 
   @override
   State<OrderStatus> createState() => _OrderStatusState();
 }
 
 class _OrderStatusState extends State<OrderStatus> {
-
   @override
   void initState() {
     super.initState();
     orderStatusDemo();
   }
-
+  
   Future<void> orderStatusDemo() async {
-    for (int i = 0; i < orderStatusEvents.length; i++) {
-      await Future.delayed(const Duration(seconds: 2));
-      setState(() {
-        orderStatusEvents[i][2] = true;
-      });
+    final orderStatusDemoProvider =
+        Provider.of<OrderStatusDemoProvider>(context, listen: false);
+    orderStatusDemoProvider.resetOrderStatus();
 
-      // if (i == orderStatusEvents.length - 1) {
-      //   await Future.delayed(const Duration(seconds: 2));
-      //   setState(() {
-      //     for (int j = 0; j < orderStatusEvents.length; j++) {
-      //       orderStatusEvents[j][2] = false;
-      //     }
-      //   });
-      //   orderStatusDemo();
-      // }
-    }
+    await orderStatusDemoProvider.orderStatusDemo();
   }
 
   @override
@@ -49,6 +43,7 @@ class _OrderStatusState extends State<OrderStatus> {
   }
 
   showAppBar() {
+    final cartProvider = Provider.of<CartHandler>(context, listen: false);
     return AppBar(
       backgroundColor: moreBright,
       automaticallyImplyLeading: false,
@@ -57,6 +52,7 @@ class _OrderStatusState extends State<OrderStatus> {
         children: [
           GestureDetector(
             onTap: () {
+              widget.dataFromAPI ? null : cartProvider.clearCart();
               Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
@@ -122,14 +118,17 @@ class _OrderStatusState extends State<OrderStatus> {
                 top: Radius.circular(56),
               ),
             ),
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: orderStatusEvents.length,
-              padding: const EdgeInsets.only(bottom: 100),
-              itemBuilder: (BuildContext context, index) {
-                return statusIndicator(orderStatusEvents[index]);
-              },
-            ),
+            child: Consumer<OrderStatusDemoProvider>(
+                builder: (context, orderStatusDemoProvider, child) {
+              return ListView.builder(
+                shrinkWrap: true,
+                itemCount: orderStatusDemoProvider.data.length,
+                padding: const EdgeInsets.only(bottom: 100),
+                itemBuilder: (BuildContext context, index) {
+                  return statusIndicator(orderStatusDemoProvider.data[index]);
+                },
+              );
+            }),
           ),
         ),
       ],
@@ -230,36 +229,75 @@ class _OrderStatusState extends State<OrderStatus> {
             ),
           ),
           child: Stack(children: [
-            Container(
-                margin: const EdgeInsets.only(top: 165),
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                child: SingleChildScrollView(
-                    controller: scrollController,
-                    child: Column(
-                      children: [
-                        ListView.builder(
-                          padding: EdgeInsets.zero,
-                          shrinkWrap: true,
-                          itemCount: 5,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: ((BuildContext context, index) {
-                            return listOrderMaker();
-                          }),
-                        ),
-                        calculatePrice('Subtotal', 'xxxxx'),
-                        calculatePrice('Ongkir', 'xxxxx'),
-                        calculatePrice('Biaya lain-lain', 'xxxxx'),
-                        calculatePrice('Voucher Promo', 'xxxxx'),
-                        calculatePrice('Diskon Ongkir', 'xxxxx'),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: Divider(),
-                        ),
-                        calculatePrice('Total Pembayaran', 'xxxxx'),
-                        const SizedBox(height: 22),
-                      ],
-                    ))),
+            widget.dataFromAPI
+                ? Container(
+                    margin: const EdgeInsets.only(top: 165),
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    child: SingleChildScrollView(
+                        controller: scrollController,
+                        child: Column(
+                          children: [
+                            ListView.builder(
+                              padding: EdgeInsets.zero,
+                              shrinkWrap: true,
+                              itemCount: widget.data['order_items'].length,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: ((BuildContext context, index) {
+                                return listOrderMaker(
+                                    widget.data['order_items'][index]);
+                              }),
+                            ),
+                            calculatePrice('Subtotal',
+                                formatCurrency(widget.data['totalPrice'])),
+                            calculatePrice('Ongkir', '0'),
+                            calculatePrice('Biaya lain-lain', '0'),
+                            calculatePrice('Voucher Promo', '0'),
+                            calculatePrice('Diskon Ongkir', '0'),
+                            const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: Divider(),
+                            ),
+                            calculatePrice('Total Pembayaran',
+                                formatCurrency(widget.data['totalPrice'])),
+                            const SizedBox(height: 22),
+                          ],
+                        )))
+                : Consumer<CartHandler>(builder: (context, cartHandler, child) {
+                    return Container(
+                        margin: const EdgeInsets.only(top: 165),
+                        height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
+                        child: SingleChildScrollView(
+                            controller: scrollController,
+                            child: Column(
+                              children: [
+                                ListView.builder(
+                                  padding: EdgeInsets.zero,
+                                  shrinkWrap: true,
+                                  itemCount: cartHandler.cart.length,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemBuilder: ((BuildContext context, index) {
+                                    return listOrderMakerCart(
+                                        cartHandler.cart[index]);
+                                  }),
+                                ),
+                                calculatePrice('Subtotal',
+                                    cartHandler.getFormattedPrice()),
+                                calculatePrice('Ongkir', '0'),
+                                calculatePrice('Biaya lain-lain', '0'),
+                                calculatePrice('Voucher Promo', '0'),
+                                calculatePrice('Diskon Ongkir', '0'),
+                                const Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 20),
+                                  child: Divider(),
+                                ),
+                                calculatePrice('Total Pembayaran',
+                                    cartHandler.getFormattedPrice()),
+                                const SizedBox(height: 22),
+                              ],
+                            )));
+                  }),
             Container(
               width: MediaQuery.of(context).size.width,
               padding: const EdgeInsets.only(left: 29, right: 30),
@@ -320,69 +358,169 @@ class _OrderStatusState extends State<OrderStatus> {
     );
   }
 
-  Widget listOrderMaker() {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 29, right: 30),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    'Kentang Goreng',
-                    style: poppins.copyWith(
-                        fontWeight: FontWeight.w400, fontSize: 16),
-                  ),
-                  const Spacer(),
-                  Text(
-                    'Rp 34.000',
-                    style: poppins.copyWith(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                        color: primary4),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 6),
-              SizedBox(
-                width: 217,
-                height: 45,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    RichText(
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        text: TextSpan(
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: 'Catatan: ',
-                                style: poppins.copyWith(
-                                    fontWeight: FontWeight.w500,
-                                    color: outline)),
-                            TextSpan(
-                                text:
-                                    'iaosjmjgilaslig iogna niaowngoin12 1ion 1n  fawfa gsad asfa agf s',
-                                style: poppins.copyWith(color: outline)),
+  Widget listOrderMaker(data) {
+    final menuProvider = Provider.of<MenuDataProvider>(context, listen: false);
+    return FutureBuilder(
+        future: menuProvider.getMenuById(data['menuId']),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            // print('waiting');
+            return Center(
+                child: CircularProgressIndicator(
+              color: primary4,
+              strokeWidth: 6,
+            ));
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            Map foodData = snapshot.data!;
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 29, right: 30),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            '${foodData['name']}  x${data['quantity']}',
+                            style: poppins.copyWith(
+                                fontWeight: FontWeight.w400, fontSize: 16),
+                          ),
+                          const Spacer(),
+                          Text(
+                            formatCurrency(foodData['price']),
+                            style: poppins.copyWith(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                                color: primary4),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 6),
+                      SizedBox(
+                        width: 217,
+                        height: 45,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            RichText(
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                text: TextSpan(
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: 'Catatan: ',
+                                        style: poppins.copyWith(
+                                            fontWeight: FontWeight.w500,
+                                            color: outline)),
+                                    TextSpan(
+                                        text: '',
+                                        style:
+                                            poppins.copyWith(color: outline)),
+                                  ],
+                                ))
                           ],
-                        ))
-                  ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ),
-        const Padding(
-          padding: EdgeInsets.only(left: 13, right: 13, bottom: 16),
-          child: Divider(),
-        )
-      ],
-    );
+                const Padding(
+                  padding: EdgeInsets.only(left: 13, right: 13, bottom: 16),
+                  child: Divider(),
+                )
+              ],
+            );
+          }
+        });
   }
 
-  Widget calculatePrice(title, price) {
+  Widget listOrderMakerCart(data) {
+    final menuProvider = Provider.of<MenuDataProvider>(context, listen: false);
+    return
+        // Text(data['menu_id'].toString());
+        FutureBuilder(
+            future: menuProvider.getMenuById(data['menu_id']),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                // print('waiting');
+                return Center(
+                    child: CircularProgressIndicator(
+                  color: primary4,
+                  strokeWidth: 6,
+                ));
+              } else if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              } else {
+                Map foodData = snapshot.data!;
+                return
+                    // Text(foodData.toString());
+                    Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 29, right: 30),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                '${foodData['name']}  x${data['quantity']}',
+                                style: poppins.copyWith(
+                                    fontWeight: FontWeight.w400, fontSize: 16),
+                              ),
+                              const Spacer(),
+                              Text(
+                                formatCurrency(foodData['price']),
+                                style: poppins.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16,
+                                    color: primary4),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 6),
+                          SizedBox(
+                            width: 217,
+                            height: 45,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                RichText(
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    text: TextSpan(
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                            text: 'Catatan: ',
+                                            style: poppins.copyWith(
+                                                fontWeight: FontWeight.w500,
+                                                color: outline)),
+                                        TextSpan(
+                                            text: '',
+                                            style: poppins.copyWith(
+                                                color: outline)),
+                                      ],
+                                    ))
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 13, right: 13, bottom: 16),
+                      child: Divider(),
+                    )
+                  ],
+                );
+              }
+            });
+  }
+
+  Widget calculatePrice(title, String price) {
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
       child: Column(

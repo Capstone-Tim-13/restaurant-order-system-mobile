@@ -136,7 +136,7 @@ class _ConfirmationPageState extends State<ConfirmationPage>
                         Navigator.push(
                             context,
                             PageTransition(
-                                child: const OrderStatus(),
+                                child: const OrderStatus(dataFromAPI: false,),
                                 type: PageTransitionType.fade));
                         debugPrint('Lihat Status Pesanan ');
                       },
@@ -168,68 +168,68 @@ class _ConfirmationPageState extends State<ConfirmationPage>
     );
   }
 
-  Widget confirmPage2() {
-    return Column(
-      children: [
-        Image.asset(
-          'assets/images/order/confirm2.png',
-          // fit: BoxFit.fill,
-        ),
-        Expanded(
-          child: Container(
-            padding: const EdgeInsets.only(top: 9),
-            width: MediaQuery.of(context).size.width,
-            decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(56))),
-            child: Column(
-              children: [
-                Image.asset('assets/images/login/handle.png'),
-                const SizedBox(height: 60),
-                Text(
-                  'Pesananmu sudah di \nkonfirmasi yeay!\nYuk, lihat status pesananmu',
-                  textAlign: TextAlign.center,
-                  style: poppins.copyWith(
-                      fontSize: 18, fontWeight: FontWeight.w500),
-                ),
-                const Spacer(),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 57),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          PageTransition(
-                              child: const OrderStatus(),
-                              type: PageTransitionType.fade));
-                      debugPrint('Lihat Status Pesanan ');
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: primary4,
-                        borderRadius: BorderRadius.circular(37),
-                      ),
-                      width: 335,
-                      height: 48,
-                      child: Center(
-                        child: Text(
-                          'Lihat Status Pesanan',
-                          style: poppins.copyWith(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 16,
-                              color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        )
-      ],
-    );
-  }
+  // Widget confirmPage2() {
+  //   return Column(
+  //     children: [
+  //       Image.asset(
+  //         'assets/images/order/confirm2.png',
+  //         // fit: BoxFit.fill,
+  //       ),
+  //       Expanded(
+  //         child: Container(
+  //           padding: const EdgeInsets.only(top: 9),
+  //           width: MediaQuery.of(context).size.width,
+  //           decoration: const BoxDecoration(
+  //               color: Colors.white,
+  //               borderRadius: BorderRadius.vertical(top: Radius.circular(56))),
+  //           child: Column(
+  //             children: [
+  //               Image.asset('assets/images/login/handle.png'),
+  //               const SizedBox(height: 60),
+  //               Text(
+  //                 'Pesananmu sudah di \nkonfirmasi yeay!\nYuk, lihat status pesananmu',
+  //                 textAlign: TextAlign.center,
+  //                 style: poppins.copyWith(
+  //                     fontSize: 18, fontWeight: FontWeight.w500),
+  //               ),
+  //               const Spacer(),
+  //               Padding(
+  //                 padding: const EdgeInsets.only(bottom: 57),
+  //                 child: GestureDetector(
+  //                   onTap: () {
+  //                     Navigator.push(
+  //                         context,
+  //                         PageTransition(
+  //                             child: const OrderStatus(),
+  //                             type: PageTransitionType.fade));
+  //                     debugPrint('Lihat Status Pesanan ');
+  //                   },
+  //                   child: Container(
+  //                     decoration: BoxDecoration(
+  //                       color: primary4,
+  //                       borderRadius: BorderRadius.circular(37),
+  //                     ),
+  //                     width: 335,
+  //                     height: 48,
+  //                     child: Center(
+  //                       child: Text(
+  //                         'Lihat Status Pesanan',
+  //                         style: poppins.copyWith(
+  //                             fontWeight: FontWeight.w700,
+  //                             fontSize: 16,
+  //                             color: Colors.white),
+  //                       ),
+  //                     ),
+  //                   ),
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       )
+  //     ],
+  //   );
+  // }
 
   Future addCancelreason(context) {
     return showModalBottomSheet(

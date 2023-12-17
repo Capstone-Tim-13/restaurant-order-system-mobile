@@ -35,7 +35,8 @@ summonDialog(context, {customTitle, customSubtitle}) {
           )));
 }
 
-Widget fieldMaker(title, hint, controller, {prefilled, active}) {
+Widget fieldMaker(context, title, hint, controller,
+    {prefilled, active, focusNode, reqFocus, textInputAction, inputType}) {
   return Padding(
     padding: const EdgeInsets.only(bottom: 17),
     child: Column(
@@ -47,6 +48,12 @@ Widget fieldMaker(title, hint, controller, {prefilled, active}) {
         ),
         const SizedBox(height: 2),
         TextField(
+          keyboardType: inputType,
+          focusNode: focusNode,
+          onEditingComplete: () {
+            FocusScope.of(context).requestFocus(reqFocus);
+          },
+          textInputAction: textInputAction,
           enabled: active,
           controller: controller,
           onTap: () {
@@ -83,7 +90,7 @@ urlLauncher(String request) async {
 
 addToMenuFav(id) {}
 
-String formatCurrency(int price) {
+String formatCurrency(price) {
   final currencyFormatter = NumberFormat.currency(
     locale: 'id_ID',
     symbol: 'Rp ',
@@ -285,10 +292,10 @@ Widget favMenuMaker(context, id) {
                                 // ),
                                 GestureDetector(
                                   onTap: () {
-                                    cartHandler.addToCart(context,
+                                    cartHandler.addToCart(
                                         foodData['id'], 1, foodData['price']);
-                                    showAddToCartNotification(
-                                        context, foodData['name']);
+                                    showSnackBar(context,
+                                        '${foodData['name']} added to cart.');
                                   },
                                   child: Container(
                                     decoration: BoxDecoration(
@@ -321,9 +328,10 @@ Widget favMenuMaker(context, id) {
       });
 }
 
-void showAddToCartNotification(BuildContext context, String title) {
+void showSnackBar(BuildContext context, String msg) {
   ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(      
+    SnackBar(
+      duration: const Duration(seconds: 1),
       content: Row(
         children: [
           const Icon(
@@ -335,7 +343,7 @@ void showAddToCartNotification(BuildContext context, String title) {
           Expanded(
             child: SizedBox(
               child: Text(
-                '$title added to cart.',
+                msg,
                 style: const TextStyle(fontSize: 16),
                 overflow: TextOverflow.ellipsis,
               ),
@@ -347,6 +355,19 @@ void showAddToCartNotification(BuildContext context, String title) {
       behavior: SnackBarBehavior.floating,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(20)),
+      ),
+    ),
+  );
+}
+
+Widget noDataPopUp(context, text, double height) {
+  return SizedBox(
+    width: MediaQuery.of(context).size.width,
+    height: height,
+    child: Center(
+      child: Text(
+        text,
+        style: poppins.copyWith(fontSize: 17),
       ),
     ),
   );

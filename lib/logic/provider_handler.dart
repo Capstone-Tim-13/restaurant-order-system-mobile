@@ -12,16 +12,16 @@ class UserDataProvider with ChangeNotifier {
   List<String> get getData => userData;
 
   Future<bool> userLogin(data) async {
-    // dynamic result;
     try {
       final response = await dio
           .post(userLoginURL, data: {"email": data[0], "password": data[1]});
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         // result = response.data;
         userData.addAll([
           response.data['results']['username'],
           response.data['results']['email'],
-          response.data['results']['access_token']
+          response.data['results']['access_token'],
+          response.data['results']['id'].toString()
         ]);
         localUserData = userData;
         notifyListeners();
@@ -29,9 +29,9 @@ class UserDataProvider with ChangeNotifier {
       } else {
         throw Exception('Failed to load data from API');
       }
-    } catch (error) {
+    } catch (e) {
+      debugPrint('Error $e');
       return false;
-      // throw Exception('Failed to load data from API: $error');
     }
   }
 
@@ -65,6 +65,27 @@ class UserDataProvider with ChangeNotifier {
         throw Exception('Failed to load data from API');
       }
     } catch (error) {
+      return false;
+      // throw Exception('Failed to load data from API: $error');
+    }
+  }
+
+  Future<bool> updatePassword(newPass) async {
+    try {
+      final response = await dio.put(
+          '$userUpdatePasswordURL/${int.tryParse(localUserData[3])}',
+          data: {"password": newPass},
+          options: Options(
+              headers: {'Authorization': 'Bearer ${localUserData[2]}'}));
+      if (response.statusCode == 200) {
+        // result = response.data;
+        notifyListeners();
+        return response.data['response']['success'];
+      } else {
+        throw Exception('Failed to load data from API');
+      }
+    } catch (error) {
+      debugPrint('Error $error');
       return false;
       // throw Exception('Failed to load data from API: $error');
     }
@@ -209,7 +230,7 @@ class OrderDataProvider with ChangeNotifier {
     }
   }
 
-  Future<void> fetchData() async {
+  Future fetchData() async {
     ongoingData.clear();
     historyData.clear();
     try {
@@ -237,7 +258,9 @@ class OrderDataProvider with ChangeNotifier {
         throw Exception('Failed to load data');
       }
     } catch (error) {
-      throw Exception('Failed to load data: $error');
+      debugPrint('Failed to load data from API: $error');
+      return [];
+      // throw Exception('Failed to load data: $error');
     }
   }
 }
@@ -285,7 +308,7 @@ class CartHandler with ChangeNotifier {
   List<String?> get notes => userNotes;
   int get price => totalPrice;
 
-  void addToCart(context, int id, int qty, num price) {
+  void addToCart(int id, int qty, num price) {
     int formatPrice = price.toInt();
     bool isItemExist = false;
 
@@ -341,6 +364,11 @@ class CartHandler with ChangeNotifier {
   String getFormattedPrice() {
     return formatCurrency(totalPrice);
   }
+
+  void clearCart() {
+    userCart.clear();
+    notifyListeners();
+  }
 }
 
 class BannerProvider with ChangeNotifier {
@@ -350,5 +378,51 @@ class BannerProvider with ChangeNotifier {
   void changeIndex(int newIndex) {
     currentIndex = newIndex;
     notifyListeners();
+  }
+}
+
+class AddressProvider with ChangeNotifier {
+  List<dynamic> userAddress = [];
+  int defaultAddress = 0;
+  int get idx => defaultAddress;
+  List<dynamic> get data => userAddress;
+
+  void addNewAddress(data) {
+    userAddress.add(data);
+    notifyListeners();
+  }
+
+  void editAddress(idx, data) {
+    userAddress[idx] = data;
+    notifyListeners();
+  }
+
+  void setDefaultAddress(idx) {
+    defaultAddress = idx;
+    notifyListeners();
+  }
+
+  void deleteAddress(idx) {
+    userAddress.removeAt(idx);
+    notifyListeners();
+  }
+}
+
+class OrderStatusDemoProvider with ChangeNotifier {
+  List copyData = orderStatusEvents;
+  List get data => copyData;
+
+  void resetOrderStatus() {
+    for (int i = 0; i < orderStatusEvents.length; i++) {
+      copyData[i][2] = false;
+    }
+  }
+
+  Future<void> orderStatusDemo() async {
+    for (int i = 0; i < orderStatusEvents.length; i++) {
+      await Future.delayed(const Duration(seconds: 2));
+      copyData[i][2] = true;
+      notifyListeners();
+    }
   }
 }

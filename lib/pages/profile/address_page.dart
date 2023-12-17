@@ -1,8 +1,10 @@
-import 'package:capstone_restaurant/data.dart';
+import 'package:capstone_restaurant/logic/provider_handler.dart';
 import 'package:capstone_restaurant/pages/profile/add_address_page.dart';
 import 'package:capstone_restaurant/style.dart';
+import 'package:capstone_restaurant/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 class AddressPage extends StatefulWidget {
   final bool isRebuild;
@@ -13,16 +15,6 @@ class AddressPage extends StatefulWidget {
 }
 
 class _AddressPageState extends State<AddressPage> {
-  List currentAddressList = [];
-
-  @override
-  void initState() {
-    super.initState();
-    setState(() {
-      currentAddressList = savedAddress;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,18 +62,12 @@ class _AddressPageState extends State<AddressPage> {
                       fontSize: 16, fontWeight: FontWeight.w500),
                 ),
                 GestureDetector(
-                  onTap: () async {
-                    final result = await Navigator.push(
+                  onTap: () {
+                    Navigator.push(
                         context,
                         PageTransition(
-                            child: const AddAddress(),
+                            child: const AddAddress(editMode: false),
                             type: PageTransitionType.fade));
-                    if (result != null) {
-                      setState(() {
-                        currentAddressList = result;
-                      });
-                    }
-                    debugPrint('Tambah alamat tertekan');
                   },
                   child: Text(
                     '+ Tambah Alamat',
@@ -91,17 +77,24 @@ class _AddressPageState extends State<AddressPage> {
               ],
             ),
             const SizedBox(height: 23),
-            SizedBox(
-              child: ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                padding: EdgeInsets.zero,
-                itemCount: currentAddressList.length,
-                itemBuilder: (context, index) {
-                  return showAddressList(index, currentAddressList[index]);
-                },
-              ),
-            )
+            Consumer<AddressProvider>(
+                builder: (context, addressprovider, child) {
+              return addressprovider.data.isEmpty
+                  ? noDataPopUp(context, 'Belum ada alamat tersimpan.',
+                      MediaQuery.of(context).size.height / 1.5)
+                  : SizedBox(
+                      child: ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        padding: EdgeInsets.zero,
+                        itemCount: addressprovider.data.length,
+                        itemBuilder: (context, index) {
+                          return showAddressList(
+                              index, addressprovider.data[index]);
+                        },
+                      ),
+                    );
+            })
           ],
         ),
       ),
@@ -109,30 +102,33 @@ class _AddressPageState extends State<AddressPage> {
   }
 
   Widget showAddressList(index, data) {
-    String tag = data[0];
-    String name = data[1];
-    String phone = data[2];
-    String address = data[3];
-    String note = data[4];
+    String detailLokasi = data[0];
+    String namaLengkap = data[1];
+    String noHp = data[2];
+    String tag = data[3];
+    String patokan = data[4];
     return GestureDetector(
       onTap: () {
         Navigator.push(
             context,
             PageTransition(
                 child: AddAddress(
-                    title: 'Edit Address',
-                    tag: tag,
-                    name: name,
-                    phone: phone,
-                    address: address,
-                    note: note),
+                  title: 'Edit Address',
+                  detailLokasi: detailLokasi,
+                  namaLengkap: namaLengkap,
+                  noHp: noHp,
+                  tag: tag,
+                  patokan: patokan,
+                  editMode: true,
+                  idx: index,
+                ),
                 type: PageTransitionType.fade));
         debugPrint('address $tag tertekan');
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 24),
-        decoration:
-            homePageMenuBuilder.copyWith(borderRadius: BorderRadius.circular(10)),
+        decoration: homePageMenuBuilder.copyWith(
+            borderRadius: BorderRadius.circular(10)),
         child: Padding(
             padding: const EdgeInsets.only(left: 16, bottom: 16),
             child: Column(
@@ -158,7 +154,7 @@ class _AddressPageState extends State<AddressPage> {
                 Row(
                   children: [
                     Text(
-                      '$name - $phone',
+                      '$namaLengkap - $noHp',
                       style: poppins.copyWith(
                           fontSize: 13, fontWeight: FontWeight.w500),
                     )
@@ -166,12 +162,12 @@ class _AddressPageState extends State<AddressPage> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  note,
+                  patokan,
                   style: poppins.copyWith(fontSize: 11),
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  address,
+                  detailLokasi,
                   style: poppins.copyWith(fontSize: 13, color: outline),
                 ),
               ],
@@ -181,6 +177,8 @@ class _AddressPageState extends State<AddressPage> {
   }
 
   Widget threeDots(idx) {
+    final addressprovider =
+        Provider.of<AddressProvider>(context, listen: false);
     return PopupMenuButton(
       surfaceTintColor: Colors.white,
       iconSize: 20,
@@ -192,23 +190,25 @@ class _AddressPageState extends State<AddressPage> {
             style: poppins.copyWith(fontSize: 13),
           ),
         ),
-        // PopupMenuItem(
-        //   value: 2,
-        //   child: Text(
-        //     'Edit address',
-        //     style: poppins.copyWith(fontSize: 13),
-        //   ),
-        // ),
+        PopupMenuItem(
+          value: 2,
+          child: Text(
+            'Delete address',
+            style: poppins.copyWith(fontSize: 13),
+          ),
+        ),
       ],
       onSelected: (value) async {
         switch (value) {
           case 1:
-            setState(() {
-              defaultAddress = idx;
-            });
-            widget.isRebuild ? Navigator.pop(context, idx) : null;
-            debugPrint('address ${currentAddressList[idx]}');
-            debugPrint('address $idx');
+            print(addressprovider.data[idx]);
+            addressprovider.setDefaultAddress(idx);
+            widget.isRebuild ? Navigator.pop(context) : null;
+            showSnackBar(
+                context, '${addressprovider.data[idx][3]} set as default.');
+          case 2:
+            showSnackBar(context, '${addressprovider.data[idx][3]} deleted.');
+            addressprovider.deleteAddress(idx);
         }
       },
     );

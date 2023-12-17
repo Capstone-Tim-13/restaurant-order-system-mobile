@@ -33,7 +33,7 @@ class _SplashState extends State<Splash> {
       isLogin = result;
     });
     print(result);
-    print(localUserData[2]);
+    print(localUserData);
   }
 
   @override
@@ -46,7 +46,7 @@ class _SplashState extends State<Splash> {
       splashIconSize: double.infinity,
       backgroundColor: primary3,
       nextScreen: isLogin ? const Home(setIdx: 0) : const OnboardingPage(),
-      // nextScreen: OnboardingPage(),
+      // nextScreen: const Home(setIdx: 0),
       pageTransitionType: PageTransitionType.fade,
       splashTransition: SplashTransition.fadeTransition,
       duration: 2000,

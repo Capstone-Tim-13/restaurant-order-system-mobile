@@ -1,6 +1,7 @@
 String userLoginURL = 'https://altaresto.my.id/user/login';
 String userRegisterURL = 'https://altaresto.my.id/user/register';
 String userGetDataURL = 'https://altaresto.my.id/user';
+String userUpdatePasswordURL = 'https://altaresto.my.id/user/password';
 
 String menuFindAllURL = 'https://altaresto.my.id/user/menu';
 String menuFindIdURL = 'https://altaresto.my.id/user/menu';

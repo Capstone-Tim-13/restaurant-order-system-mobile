@@ -10,7 +10,7 @@ class NotificationPage extends StatefulWidget {
 }
 
 class _NotificationPageState extends State<NotificationPage> {
-  List isUnread = [true, true, true, false, false, false, false, false];
+  List isUnread = [true, true, false];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,22 +67,11 @@ class _NotificationPageState extends State<NotificationPage> {
     );
   }
 
-  // Widget showNotification() {
-  //   return Expanded(
-  //       child: ListView.builder(
-  //     padding: EdgeInsets.zero,
-  //     itemCount: isUnread.length,
-  //     itemBuilder: ((BuildContext context, index) {
-  //       return notificationMaker(isUnread[index]);
-  //     }),
-  //   ));
-  // }
-
   Widget notificationMaker(unread) {
     return Container(
         decoration: BoxDecoration(
             border: Border(
-          top: BorderSide(color: outline, width: 0.5),
+          top: BorderSide(color: outline, width: 1),
         )),
         height: 108,
         width: MediaQuery.of(context).size.width,

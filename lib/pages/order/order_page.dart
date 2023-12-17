@@ -1,6 +1,7 @@
 import 'package:capstone_restaurant/logic/provider_handler.dart';
 import 'package:capstone_restaurant/pages/order/ongoing_order_page.dart';
 import 'package:capstone_restaurant/style.dart';
+import 'package:capstone_restaurant/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
@@ -89,19 +90,13 @@ class _OrderPageState extends State<OrderPage> {
                     padding: EdgeInsets.zero,
                     itemCount: orderProvider.ongoing.length,
                     itemBuilder: ((BuildContext context, index) {
-                      // return Text(orderProvider.ongoing[index].toString());
-
                       return ongoingOrder(
                           context, orderProvider.ongoing[index]);
                     }),
                   ));
                 } else {
-                  return Center(
-                    child: Text(
-                      'Belum ada pesanan',
-                      style: poppins.copyWith(fontSize: 17),
-                    ),
-                  );
+                  return noDataPopUp(context, 'Belum ada pesanan',
+                      MediaQuery.of(context).size.height);
                 }
               }),
               Consumer<OrderDataProvider>(
@@ -117,12 +112,8 @@ class _OrderPageState extends State<OrderPage> {
                     }),
                   ));
                 } else {
-                  return Center(
-                    child: Text(
-                      'Belum ada riwayat pesanan',
-                      style: poppins.copyWith(fontSize: 17),
-                    ),
-                  );
+                  return noDataPopUp(context, 'Belum ada riwayat pesanan',
+                      MediaQuery.of(context).size.height);
                 }
               }),
 

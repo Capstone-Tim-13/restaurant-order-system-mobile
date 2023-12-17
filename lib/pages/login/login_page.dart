@@ -14,12 +14,16 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController emailInput = TextEditingController();
   final TextEditingController passwordInput = TextEditingController();
+  final FocusNode emailFocusNode = FocusNode();
+  final FocusNode passwordFocusNode = FocusNode();
   bool passwordVisible = true;
 
   @override
   void dispose() {
     emailInput.dispose();
     passwordInput.dispose();
+    emailFocusNode.dispose();
+    passwordFocusNode.dispose();
     super.dispose();
   }
 
@@ -184,6 +188,11 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget userInput(controller) {
     return TextField(
+      focusNode: emailFocusNode,
+      onEditingComplete: () {
+        FocusScope.of(context).requestFocus(passwordFocusNode);
+      },
+      textInputAction: TextInputAction.next,
       keyboardType: TextInputType.emailAddress,
       controller: controller,
       style: poppins.copyWith(fontSize: 16),
@@ -192,6 +201,11 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget userPasswordInput(controller) {
     return TextFormField(
+      focusNode: passwordFocusNode,
+      textInputAction: TextInputAction.send,
+      onFieldSubmitted: (value) {
+        userInputCheck(context, emailInput.text, passwordInput.text);
+      },
       controller: controller,
       obscureText: passwordVisible,
       style: poppins.copyWith(fontSize: 16),

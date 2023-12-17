@@ -66,12 +66,8 @@ class _FavoriteMenuState extends State<FavoriteMenu> {
           ],
         );
       } else {
-        return Center(
-          child: Text(
-            'Belum ada menu favorit',
-            style: poppins.copyWith(fontSize: 17),
-          ),
-        );
+        return noDataPopUp(context, 'Belum ada menu favorit',
+            MediaQuery.of(context).size.height);
       }
     });
   }

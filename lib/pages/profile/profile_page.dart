@@ -176,11 +176,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                           await SharedPreferences.getInstance();
                                       await prefs.remove('isLogin');
                                       await prefs.remove('userData');
-                                      Navigator.pushReplacement(
-                                          context,
-                                          PageTransition(
-                                              child: const OnboardingPage(),
-                                              type: PageTransitionType.fade));
+                                      logOut();
                                     }
                                     debugPrint('Keluar tertekan');
                                   },
@@ -207,6 +203,13 @@ class _ProfilePageState extends State<ProfilePage> {
         ],
       ),
     );
+  }
+
+  logOut() {
+    Navigator.pushReplacement(
+        context,
+        PageTransition(
+            child: const OnboardingPage(), type: PageTransitionType.fade));
   }
 
   Future<bool> exitDialog() async {

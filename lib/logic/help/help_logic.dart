@@ -36,7 +36,7 @@ Future<void> submit(context, question) async {
               'Content-Length': '<calculated when request is sent>'
             }));
     if (response.statusCode == 200) {
-      print('menu: ${menuProvider.getMenu}');
+      // print('menu: ${menuProvider.getMenu}');
       final data = response.data;
       chatbot.updateOutput(data['choices'][0]['message']['content']);
       chatbot.updateHistory();

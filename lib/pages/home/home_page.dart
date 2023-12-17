@@ -123,8 +123,7 @@ Widget showBanner(context, setState) {
                     },
                   )),
             ),
-            Consumer<BannerProvider>(
-                builder: (context, bannerProvider, child) {
+            Consumer<BannerProvider>(builder: (context, bannerProvider, child) {
               return Positioned(
                   right: 26,
                   bottom: 34,
@@ -251,19 +250,21 @@ Widget showRecommendation(context) {
         ),
       ),
       const SizedBox(height: 24),
-      SizedBox(
-        width: MediaQuery.of(context).size.width - 21,
-        height: 380,
-        child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.only(bottom: 25),
-            shrinkWrap: true,
-            itemCount: menuProvider.getMenu.length,
-            itemBuilder: (BuildContext context, index) {
-              return recommendationMenuMaker(
-                  context, menuProvider.getMenu[index]);
-            }),
-      ),
+      menuProvider.getMenu.isEmpty
+          ? noDataPopUp(context, 'Belum ada menu', 380)
+          : SizedBox(
+              width: MediaQuery.of(context).size.width - 21,
+              height: 380,
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.only(bottom: 25),
+                  shrinkWrap: true,
+                  itemCount: menuProvider.getMenu.length,
+                  itemBuilder: (BuildContext context, index) {
+                    return recommendationMenuMaker(
+                        context, menuProvider.getMenu[index]);
+                  }),
+            ),
     ],
   );
 }
@@ -283,26 +284,18 @@ Widget showFavMenu(context, setState) {
       ),
       Consumer<FavoritesMenuProvider>(
         builder: (context, favProvider, child) {
-          return favProvider.data.isNotEmpty
-              ? SizedBox(
+          return favProvider.data.isEmpty
+              ? noDataPopUp(context, 'Belum ada menu favorit', 270)
+              : SizedBox(
                   height: 270,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     padding: EdgeInsets.zero,
-                    shrinkWrap: true,
                     itemCount: favProvider.data.length,
-                    itemBuilder: (BuildContext context, index) {
+                    itemBuilder: ((BuildContext context, index) {
+                      // return Text('aaaa');
                       return favMenuMaker(context, favProvider.data[index]);
-                    },
-                  ),
-                )
-              : SizedBox(
-                  height: 265,
-                  child: Center(
-                    child: Text(
-                      'Belum ada menu favorit',
-                      style: poppins.copyWith(fontSize: 17),
-                    ),
+                    }),
                   ),
                 );
         },
@@ -376,19 +369,21 @@ Widget showBestSeller(context) {
               )),
         ),
         const SizedBox(height: 16),
-        SizedBox(
-          width: MediaQuery.of(context).size.width - 21,
-          height: 281,
-          child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.only(bottom: 12),
-              shrinkWrap: true,
-              itemCount: menuProvider.getMenu.length,
-              itemBuilder: (BuildContext context, index) {
-                return bestSellerMenuMaker(
-                    context, menuProvider.getMenu[index]);
-              }),
-        ),
+        menuProvider.getMenu.isEmpty
+            ? noDataPopUp(context, 'Belum ada menu terlaris', 281)
+            : SizedBox(
+                width: MediaQuery.of(context).size.width - 21,
+                height: 281,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsets.only(bottom: 12),
+                    shrinkWrap: true,
+                    itemCount: menuProvider.getMenu.length,
+                    itemBuilder: (BuildContext context, index) {
+                      return bestSellerMenuMaker(
+                          context, menuProvider.getMenu[index]);
+                    }),
+              ),
       ],
     ),
   );
