@@ -1,9 +1,9 @@
-// Ali, Alwin, Bima, Katarina, Rachel
-
+import 'package:capstone_restaurant/pages/login/login_page.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});
@@ -38,9 +38,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 119),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.25),
                   Image.asset('assets/images/altaLogoW.png'),
-                  const SizedBox(height: 119),
+                  const Spacer(),
                   Text(
                     'Makanan siap disajikan untukmu',
                     style: poppins.copyWith(
@@ -79,6 +79,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       ),
                     ),
                   ),
+                  const Spacer()
                 ],
               ),
             ),
@@ -146,7 +147,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
               GestureDetector(
                 onTap: () {
                   if (currentCarouselIndex == 3) {
-                    Navigator.pushNamed(context, '/login');
+                    Navigator.push(
+                        context,
+                        PageTransition(
+                            child: const LoginPage(),
+                            type: PageTransitionType.fade));
                   } else {
                     carouselController.nextPage(curve: Curves.easeOutCubic);
                   }
@@ -172,7 +177,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
               const SizedBox(height: 16),
               GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, '/login');
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          child: const LoginPage(),
+                          type: PageTransitionType.fade));
                 },
                 child: Text(
                   'Lewati',
@@ -191,9 +200,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
   }
 
   Widget greetingsmaker(title, subtitle, image) {
-    return Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-      Image.asset(image),
-      Padding(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Expanded(
+          child: Image.asset(image, scale: 1),
+        ),
+        Padding(
           padding: const EdgeInsets.symmetric(horizontal: 33),
           child: Column(
             children: [
@@ -209,9 +222,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 style:
                     poppins.copyWith(fontWeight: FontWeight.w500, fontSize: 16),
                 textAlign: TextAlign.center,
-              )
+              ),
             ],
-          )),
-    ]);
+          ),
+        ),
+      ],
+    );
   }
 }

@@ -58,7 +58,7 @@ InputDecoration userInputNote = const InputDecoration(
   ),
 );
 
-BoxDecoration homePageMenu = BoxDecoration(
+BoxDecoration homePageMenuBuilder = BoxDecoration(
     color: primary2,
     borderRadius: BorderRadius.circular(32),
     boxShadow: const [

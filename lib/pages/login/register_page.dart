@@ -1,9 +1,9 @@
-// Delia
-
-import 'package:capstone_restaurant/pages/login/login_page.dart';
+import 'package:capstone_restaurant/logic/login/register_logic.dart';
+import 'package:capstone_restaurant/pages/login/privacy_policy_page.dart';
 import 'package:capstone_restaurant/style.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -13,47 +13,26 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final TextEditingController _namaController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _konfirmasiPasswordController =
-      TextEditingController();
+  final TextEditingController nameInput = TextEditingController();
+  final TextEditingController emailInput = TextEditingController();
+  final TextEditingController passwordInput = TextEditingController();
+  final TextEditingController retypePasswordInput = TextEditingController();
+  final FocusNode emailFocusNode = FocusNode();
+  final FocusNode passFocusNode = FocusNode();
+  final FocusNode pass2FocusNode = FocusNode();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool passwordVisible = true;
   bool retypePasswordVisible = true;
-  bool _isNamaValid = false;
-  bool _isEmailValid = false;
-  bool _isPasswordVisible = false;
-  bool _isKonfirmasiPasswordVisible = false;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _namaController.addListener(() {
-      setState(() {
-        _isNamaValid = _namaController.text.isNotEmpty;
-      });
-    });
-
-    _emailController.addListener(() {
-      setState(() {
-        _isEmailValid = _isValidEmail(_emailController.text);
-      });
-    });
-  }
-
-  bool _isValidEmail(String email) {
-    final emailPattern =
-        RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
-    return emailPattern.hasMatch(email);
-  }
 
   @override
   void dispose() {
-    _namaController.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
-    _konfirmasiPasswordController.dispose();
+    nameInput.dispose();
+    emailInput.dispose();
+    passwordInput.dispose();
+    retypePasswordInput.dispose();
+    emailFocusNode.dispose();
+    passFocusNode.dispose();
+    pass2FocusNode.dispose();
     super.dispose();
   }
 
@@ -114,27 +93,17 @@ class _RegisterPageState extends State<RegisterPage> {
                   style: poppins.copyWith(fontSize: 14, color: primary4),
                 ),
                 const SizedBox(height: 24),
-                Text('Nama',
-                    style: poppins.copyWith(fontSize: 16, color: outline)),
-                userInput(_namaController),
-                const SizedBox(height: 16),
-                Text('Email',
-                    style: poppins.copyWith(fontSize: 16, color: outline)),
-                userInput(_emailController),
-                const SizedBox(height: 16),
-                Text('Password',
-                    style: poppins.copyWith(fontSize: 16, color: outline)),
-                userPasswordInput(_passwordController, 'passwordVisible'),
-                const SizedBox(height: 16),
-                Text('Konfirmasi Password',
-                    style: poppins.copyWith(fontSize: 16, color: outline)),
-                userPasswordInput(
-                    _konfirmasiPasswordController, 'retypePasswordVisible'),
+                userInputData(),
               ],
             ),
             const SizedBox(height: 32),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                if (formKey.currentState?.validate() == true) {
+                  passwordCheck(context, nameInput.text, emailInput.text,
+                      passwordInput.text, retypePasswordInput.text);
+                }
+              },
               child: Container(
                 decoration: BoxDecoration(
                   color: primary4,
@@ -186,6 +155,11 @@ class _RegisterPageState extends State<RegisterPage> {
                     style: poppins.copyWith(color: Colors.green, fontSize: 12),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
+                        Navigator.push(
+                            context,
+                            PageTransition(
+                                child: const PrivacyPolicy(),
+                                type: PageTransitionType.fade));
                         debugPrint('open privacy n policy');
                       },
                   ),
@@ -194,77 +168,144 @@ class _RegisterPageState extends State<RegisterPage> {
                 ],
               ),
             ),
-            const SizedBox(height: 24),
-            SizedBox(
-              child: Column(
-                children: [
-                  Text(
-                    'Atau',
-                    style: poppins.copyWith(fontSize: 16),
-                  ),
-                  const SizedBox(height: 24),
-                  loginWithSocial('assets/images/login/facebook.png',
-                      'Login dengan Facebook', facebookBlue),
-                  const SizedBox(height: 16),
-                  loginWithSocial('assets/images/login/google.png',
-                      'Login dengan Google', googleBlue),
-                  const SizedBox(height: 67),
-                ],
-              ),
-            )
           ],
         ),
       ),
     );
   }
 
-  Widget userInput(controller) {
-    return TextField(
-      controller: controller,
-      style: poppins.copyWith(fontSize: 16),
-    );
-  }
+  Widget userInputData() {
+    return Form(
+      key: formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Nama', style: poppins.copyWith(fontSize: 16, color: outline)),
+          TextFormField(
+            controller: nameInput,
+            onEditingComplete: () {
+              FocusScope.of(context).requestFocus(emailFocusNode);
+            },
+            textInputAction: TextInputAction.next,
+            style: poppins.copyWith(fontSize: 16),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Username harus terisi';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 16),
+          Text('Email', style: poppins.copyWith(fontSize: 16, color: outline)),
+          TextFormField(
+            controller: emailInput,
+            focusNode: emailFocusNode,
+            onEditingComplete: () {
+              FocusScope.of(context).requestFocus(passFocusNode);
+            },
+            textInputAction: TextInputAction.next,
+            style: poppins.copyWith(fontSize: 16),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Email harus terisi';
+              }
+              if (value.contains('@gmail.com') ||
+                  value.contains('@yahoo.com') ||
+                  value.contains('@icloud.com')) {
+                return null; // Email valid
+              } else {
+                return 'Email tidak valid';
+              }
+            },
+          ),
+          const SizedBox(height: 16),
+          Text('Password',
+              style: poppins.copyWith(fontSize: 16, color: outline)),
+          TextFormField(
+            focusNode: passFocusNode,
+            onEditingComplete: () {
+              FocusScope.of(context).requestFocus(pass2FocusNode);
+            },
+            textInputAction: TextInputAction.next,
+            controller: passwordInput,
+            obscureText: passwordVisible, // Perubahan di sini
+            style: poppins.copyWith(fontSize: 16),
+            decoration: InputDecoration(
+                suffixIcon: IconButton(
+                    icon: Icon(
+                      passwordVisible
+                          ? Icons.visibility
+                          : Icons.visibility_off, // Perubahan di sini
+                      color: outline,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        passwordVisible = !passwordVisible; // Perubahan di sini
+                      });
+                    })),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Password harus terisi';
+              }
+              if (value.length < 8) {
+                return 'Password harus mengandung panjang minimal 8 karakter';
+              }
+              RegExp regex =
+                  RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
 
-  Widget userPasswordInput(controller, isVisible) {
-    if (isVisible == 'passwordVisible') {
-      return TextFormField(
-        controller: controller,
-        obscureText: passwordVisible, // Perubahan di sini
-        style: poppins.copyWith(fontSize: 16),
-        decoration: InputDecoration(
-            suffixIcon: IconButton(
-                icon: Icon(
-                  passwordVisible
-                      ? Icons.visibility
-                      : Icons.visibility_off, // Perubahan di sini
-                  color: outline,
-                ),
-                onPressed: () {
-                  setState(() {
-                    passwordVisible = !passwordVisible; // Perubahan di sini
-                  });
-                })),
-      );
-    } else {
-      return TextFormField(
-        controller: controller,
-        obscureText: retypePasswordVisible, // Perubahan di sini
-        style: poppins.copyWith(fontSize: 16),
-        decoration: InputDecoration(
-            suffixIcon: IconButton(
-                icon: Icon(
-                  retypePasswordVisible
-                      ? Icons.visibility
-                      : Icons.visibility_off, // Perubahan di sini
-                  color: outline,
-                ),
-                onPressed: () {
-                  setState(() {
-                    retypePasswordVisible =
-                        !retypePasswordVisible; // Perubahan di sini
-                  });
-                })),
-      );
-    }
+              if (!regex.hasMatch(value)) {
+                return 'Password harus mengandung:\n1 huruf besar\n1 huruf kecil\n1 digit angka';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 16),
+          Text('Konfirmasi Password',
+              style: poppins.copyWith(fontSize: 16, color: outline)),
+          TextFormField(
+            focusNode: pass2FocusNode,
+            onEditingComplete: () {
+              if (formKey.currentState?.validate() == true) {
+                passwordCheck(context, nameInput.text, emailInput.text,
+                    passwordInput.text, retypePasswordInput.text);
+              }
+            },
+            textInputAction: TextInputAction.send,
+            controller: retypePasswordInput,
+            obscureText: retypePasswordVisible, // Perubahan di sini
+            style: poppins.copyWith(fontSize: 16),
+            decoration: InputDecoration(
+                suffixIcon: IconButton(
+                    icon: Icon(
+                      retypePasswordVisible
+                          ? Icons.visibility
+                          : Icons.visibility_off, // Perubahan di sini
+                      color: outline,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        retypePasswordVisible =
+                            !retypePasswordVisible; // Perubahan di sini
+                      });
+                    })),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Password harus terisi';
+              }
+              if (value.length < 8) {
+                return 'Password harus mengandung panjang minimal 8 karakter';
+              }
+              RegExp regex =
+                  RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
+
+              if (!regex.hasMatch(value)) {
+                return 'Password harus mengandung:\n1 huruf besar\n1 huruf kecil\n1 digit angka';
+              }
+              return null;
+            },
+          )
+        ],
+      ),
+    );
   }
 }
