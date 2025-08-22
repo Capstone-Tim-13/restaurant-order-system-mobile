@@ -89,6 +89,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     version: "1.17.2"
   convert:
     dependency: transitive
@@ -98,6 +99,9 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.1"
+=======
+    version: "1.18.0"
+>>>>>>> Stashed changes
 =======
     version: "1.18.0"
 >>>>>>> Stashed changes
@@ -340,9 +344,12 @@ packages:
       url: "https://pub.dev"
     source: hosted
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     version: "1.9.1"
   nested:
 =======
+=======
+>>>>>>> Stashed changes
     version: "1.10.0"
   page_transition:
 >>>>>>> Stashed changes
@@ -526,6 +533,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     version: "2.1.1"
   stream_transform:
     dependency: transitive
@@ -535,6 +543,9 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
+=======
+    version: "2.1.2"
+>>>>>>> Stashed changes
 =======
     version: "2.1.2"
 >>>>>>> Stashed changes
@@ -578,6 +589,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     version: "0.6.0"
   timeline_tile:
     dependency: "direct main"
@@ -587,6 +599,9 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+=======
+    version: "0.6.1"
+>>>>>>> Stashed changes
 =======
     version: "0.6.1"
 >>>>>>> Stashed changes
@@ -712,9 +727,12 @@ packages:
     version: "3.1.2"
 sdks:
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   dart: ">=3.1.0 <4.0.0"
   flutter: ">=3.13.0"
 =======
+=======
+>>>>>>> Stashed changes
   dart: ">=3.2.0-194.0.dev <4.0.0"
   flutter: ">=3.7.0"
 >>>>>>> Stashed changes
