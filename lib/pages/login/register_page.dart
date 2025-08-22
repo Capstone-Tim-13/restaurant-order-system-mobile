@@ -23,7 +23,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool passwordVisible = true;
   bool retypePasswordVisible = true;
-
+=
   @override
   void dispose() {
     nameInput.dispose();
